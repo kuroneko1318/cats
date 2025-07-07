@@ -5,7 +5,7 @@ using UnityEngine;
 
 //全キャラ共通のステータス
 
-public class CharacterBase{
+public abstract class CharacterBase : MonoBehaviour{
 
     public int hp;
     public int maxHp;
@@ -14,5 +14,7 @@ public class CharacterBase{
     public float moveSpeed;
     public float coolTime;
 
-
+    public abstract void TakeDamage();
+    public abstract void HealHp();
+    public abstract void Dead();
 }

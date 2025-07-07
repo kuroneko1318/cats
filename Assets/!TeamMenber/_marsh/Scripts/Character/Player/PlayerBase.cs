@@ -5,6 +5,17 @@ using UnityEngine;
 //Update ‚ÉƒvƒŒƒCƒ„[‚Ì‘€ì‚Ô‚¿‚Ş
 
 public class PlayerBase : CharacterBase {
+    public override void Dead() {
+        throw new System.NotImplementedException();
+    }
+
+    public override void HealHp() {
+        throw new System.NotImplementedException();
+    }
+
+    public override void TakeDamage() {
+        throw new System.NotImplementedException();
+    }
 
     void Update() {
 
