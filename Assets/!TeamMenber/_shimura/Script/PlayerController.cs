@@ -21,7 +21,7 @@ public class PlayerController : CharacterBase {
 
     // 回避処理関連
     private bool isAvoiding = false;         // 回避中フラグ
-    private bool isInvincible = false;       // 無敵状態フラグ
+    
     private float avoidanceTimer = 0;        // 回避時間の残り
     private float avoidanceDuration = 0.2f;  // 回避の持続時間
 
@@ -127,5 +127,13 @@ public class PlayerController : CharacterBase {
 
     // 死亡処理（未実装）
     public override void Dead() {
+    }
+
+    public override void Attack() {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Move() {
+        throw new System.NotImplementedException();
     }
 }
