@@ -13,8 +13,10 @@ using UnityEngine;
 //  5. GetSkillCount() で登録されているスキル数を取得できるので、UI等で活用可能
 //  6. GetSkillNames() で登録スキルの名前リストを取得可能
 //  【例】
+//  Start等で使用↓
 //  SkillManager skillManager = new SkillManager();
 //  skillManager.RegisterSkill(new スキルのコンストラクタ);
+//  Updateで使用↓
 //  skillManager.UseSkill(Listで登録されたインデックス, スキル使用者);
 //  【注意】
 //  スキルはリストの順番で管理されるため、インデックスを間違えない
