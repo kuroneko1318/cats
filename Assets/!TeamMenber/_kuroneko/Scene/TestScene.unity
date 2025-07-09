@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1719881684}
-  offset: {x: 0, y: 2.5, z: -5}
+  offset: {x: 0, y: 2.5, z: -4}
   mouseSensitivity: 3
   distance: 4
   minYAngle: -35
