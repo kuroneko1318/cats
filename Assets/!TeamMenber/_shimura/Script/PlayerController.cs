@@ -9,6 +9,7 @@ public class PlayerController : CharacterBase {
     PlayerInput input;
     InputAction moveAction;
     InputAction jumpAction;
+    InputAction attackAction;
     InputAction avoidanceAction;
 
     // 物理挙動
@@ -29,6 +30,14 @@ public class PlayerController : CharacterBase {
     private float avoidanceCooldown = 1.0f;  // 回避のクールタイム（秒）
     private float cooldownTimer = 0f;        // クールタイムの残り時間
 
+
+
+
+    public Collider attackCollider;
+    public int comboStep = 0;
+    private float comboResetTime = 1.0f;
+    private float comboTimer = 0f;
+
     void Start() {
         // PlayerInput コンポーネントの取得
         input = GetComponent<PlayerInput>();
@@ -47,6 +56,11 @@ public class PlayerController : CharacterBase {
         if (avoidanceAction == null) {
             Debug.LogError("Avoidance アクションが見つかりません");
         }
+
+        attackAction = input.actions["Attack"];
+        if (attackAction == null) {
+            Debug.LogError("Attack アクションが見つかりません");
+        }
     }
 
     void Update() {
@@ -54,6 +68,7 @@ public class PlayerController : CharacterBase {
         RotMove();      // 回転処理
         Avoidance();    // 回避処理
         Stop();         // 停止処理（慣性制御）
+        Attack();
     }
 
     // プレイヤーの向きを移動方向に合わせる処理
@@ -114,6 +129,53 @@ public class PlayerController : CharacterBase {
         if (!isAvoiding && !moveAction.IsInProgress() && !avoidanceAction.IsInProgress()) {
             rb.velocity = Vector3.zero;
         }
+    }
+
+    public void Attack() {
+
+        if (isAvoiding) return;
+
+        if (attackAction.WasPressedThisFrame()) {
+            comboStep++;
+
+            if (comboStep > 3) comboStep = 1; // 最大3段階まで
+
+            comboTimer = comboResetTime; // コンボタイマーリセット
+
+            // アニメーション再生（例：Attack1, Attack2, Attack3）
+            //animator.SetTrigger("Attack" + comboStep);
+
+            // 攻撃判定サイズ変更
+            StartCoroutine(EnableAttackCollider(comboStep));
+        }
+
+        // コンボタイマーの管理
+        if (comboStep > 0) {
+            comboTimer -= Time.deltaTime;
+            if (comboTimer <= 0f) {
+                comboStep = 0; // コンボリセット
+            }
+        }
+    }
+
+    private IEnumerator EnableAttackCollider(int step) {
+        // 攻撃判定サイズ変更（例：1撃目小、2撃目中、3撃目大）
+        switch (step) {
+            case 1:
+                attackCollider.transform.localScale = Vector3.one * 1.0f;
+                break;
+            case 2:
+                attackCollider.transform.localScale = Vector3.one * 1.5f;
+                break;
+            case 3:
+                attackCollider.transform.localScale = Vector3.one * 2.0f;
+                break;
+        }
+
+        attackCollider.enabled = true;
+        yield return new WaitForSeconds(0.2f); // 判定時間
+        attackCollider.enabled = false;
+
     }
 
     // ダメージ処理（未実装）
