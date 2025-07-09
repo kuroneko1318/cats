@@ -5,7 +5,7 @@ using UnityEngine;
 
 //全キャラ共通のステータス
 
-public abstract class CharacterBase : MonoBehaviour{
+public abstract class CharacterBase : MonoBehaviour {
 
     public int hp;
     public int maxHp;
