@@ -68,7 +68,7 @@ public class PlayerController : CharacterBase {
         RotMove();      // 回転処理
         Avoidance();    // 回避処理
         Stop();         // 停止処理（慣性制御）
-        Attack();
+        LowAttack();
     }
 
     // プレイヤーの向きを移動方向に合わせる処理
@@ -131,7 +131,7 @@ public class PlayerController : CharacterBase {
         }
     }
 
-    public void Attack() {
+    public void LowAttack() {
 
         if (isAvoiding) return;
 
