@@ -13,8 +13,13 @@ public abstract class CharacterBase : MonoBehaviour{
     public float stamina;
     public float moveSpeed;
     public float coolTime;
+    public bool isInvincible = false;
 
     public abstract void TakeDamage();
     public abstract void HealHp();
     public abstract void Dead();
+    public abstract void Attack();
+    public abstract void Move();
+
+
 }
