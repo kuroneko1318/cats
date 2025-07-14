@@ -20,6 +20,7 @@ public class ItemManager : SystemObject<ItemManager> {
         itemList.Add(new ItemBase("ÎA", 4003, eItemType.Material));
         itemList.Add(new ItemBase("ÎB", 4004, eItemType.Material));
         itemList.Add(new ItemBase("“S", 4005, eItemType.Material));
+        itemList.Add(new ItemBase("‰ñ•œ–ò", 5001, eItemType.Heal));
     }
 
     //  ID‚©‚çƒAƒCƒeƒ€‚ğæ“¾‚·‚é

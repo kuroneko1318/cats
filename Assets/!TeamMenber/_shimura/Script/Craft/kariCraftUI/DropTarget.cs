@@ -1,22 +1,19 @@
 ﻿
-
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-// このスクリプトは、指定された名前の UI Image 上でのみドロップを成功と判定します
 public class DropTarget : MonoBehaviour, IDropHandler {
-    private Image validDropArea; // ドロップ先の Image を自動取得
+    private Image validDropArea;
 
-    void Start() {
+    void Start() {
         // "DropTarget" という名前の GameObject を探して Image を取得
-        GameObject targetObject = GameObject.Find("Item1");
+        GameObject targetObject = GameObject.Find("DropTarget");
         if (targetObject != null) {
             validDropArea = targetObject.GetComponent<Image>();
         }
 
-        // 見つからなかった場合は警告を表示
-        if (validDropArea == null) {
+        if (validDropArea == null) {
             Debug.LogWarning("DropTarget が見つからないか、Image コンポーネントがありません");
         }
     }
@@ -33,11 +30,17 @@ public class DropTarget : MonoBehaviour, IDropHandler {
         if (dropRect.rect.Contains(localMousePos)) {
             Debug.Log("有効なドロップ領域に入りました！");
             draggable.droppedOnValidTarget = true;
-            draggable.transform.SetParent(validDropArea.transform);
-        }
+
+            // 親を変更（ターゲットの子にする）
+            draggable.transform.SetParent(validDropArea.transform);
+
+            // RectTransform を完全に重ねるように調整
+            RectTransform draggableRect = draggable.GetComponent<RectTransform>();
+            draggableRect.anchoredPosition = Vector2.zero; // 中央に配置
+            draggableRect.sizeDelta = dropRect.sizeDelta;  // サイズを合わせる
+        }
         else {
             Debug.Log("ドロップ位置が有効領域外です");
         }
     }
 }
-

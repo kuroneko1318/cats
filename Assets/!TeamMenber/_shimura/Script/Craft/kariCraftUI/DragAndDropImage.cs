@@ -35,7 +35,7 @@ public class DragAndDropImage : MonoBehaviour, IBeginDragHandler, IDragHandler, 
 
         // ドロップ先が有効でなければ元の位置に戻す
         if (!droppedOnValidTarget) {
-            rectTransform.anchoredPosition = originalPosition;
+            rectTransform.anchoredPosition =new Vector3(0,0,0);
         }
     }
 }

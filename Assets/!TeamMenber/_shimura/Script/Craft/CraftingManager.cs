@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CraftingManager {
+public class CraftingManager:SystemObject<CraftingManager> {
 
     private ItemManager itemManager;
 

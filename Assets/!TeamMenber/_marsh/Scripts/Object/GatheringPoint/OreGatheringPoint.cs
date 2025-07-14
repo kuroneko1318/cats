@@ -13,7 +13,7 @@ public class OreGatheringPoint : GatheringPoint {
 
     protected override void Gather() {
         Debug.Log("zÎ‚©‚ç“SzÎ‚ğÌæ‚µ‚Ü‚µ‚½I");
-        bag.AddItem()
+        //bag.AddItem()
     }
 
     private void Update() {
