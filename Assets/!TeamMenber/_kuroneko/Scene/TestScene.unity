@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 491226858}
   - component: {fileID: 491226857}
   - component: {fileID: 491226860}
+  - component: {fileID: 491226861}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -230,9 +231,58 @@ MonoBehaviour:
   target: {fileID: 1719881684}
   offset: {x: 0, y: 2.5, z: -4}
   mouseSensitivity: 3
-  distance: 4
   minYAngle: -35
   maxYAngle: 60
+--- !u!114 &491226861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491226856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 54b5e5c6c7296ac41b84c2149222a7f3, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a938ef64-3413-4526-bd0c-fd3219486516
+    m_ActionName: Player/Move[/Keyboard/a,/Keyboard/d,/Keyboard/w,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bd230d9a-ad40-41de-b99d-dd17148c280b
+    m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6cc9ca64-ca68-4927-9d93-8bcbaa76be15
+    m_ActionName: Player/Avoidance[/Keyboard/ctrl]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 32d3462d-196c-45f2-b208-93e2e97ccb38
+    m_ActionName: Player/Attack[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eaf1be8f-f1ab-400f-af0f-1290ec919211
+    m_ActionName: Player/CameraMove[/Mouse/delta]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1560627908
 GameObject:
   m_ObjectHideFlags: 0

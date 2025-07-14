@@ -1,95 +1,65 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CameraManager : MonoBehaviour
 {
-    [Header("’Ç]‘ÎÛiƒvƒŒƒCƒ„[‚È‚Çj")]
-    public Transform target; // ƒJƒƒ‰‚ª’Ç]‚·‚éƒIƒuƒWƒFƒNƒgiƒvƒŒƒCƒ„[‚È‚Çj
+    [Header("è¿½å¾“å¯¾è±¡ï¼ˆãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãªã©ï¼‰")]
+    public Transform target;
 
-    [Header("ƒJƒƒ‰‚Ì‘Š‘ÎˆÊ’ui”wŒãEã‚©‚çj")]
-    public Vector3 offset = new Vector3(0, 2.5f, -4f); // ƒ^[ƒQƒbƒg‚©‚çŒ©‚½‘Š‘Î“I‚ÈˆÊ’u
+    [Header("ã‚«ãƒ¡ãƒ©ã®ç›¸å¯¾ä½ç½®ï¼ˆèƒŒå¾Œãƒ»ä¸Šã‹ã‚‰ï¼‰")]
+    public Vector3 offset = new Vector3(0, 2.5f, -4f);
 
-    [Header("Š´“x")]
-    public float mouseSensitivity = 1.5f; // ‹“_ˆÚ“®‚ÌŠ´“xiƒ}ƒEƒXEƒXƒeƒBƒbƒN‹¤’Êj
+    [Header("æ„Ÿåº¦")]
+    public float mouseSensitivity = 1.5f;
 
-    [Header("‹ÂŠp‚Ì§ŒÀ")]
-    public float minYAngle = -35f; // ƒJƒƒ‰‚ª‰º‚ğŒü‚­ŒÀŠEŠp“x
-    public float maxYAngle = 60f;  // ƒJƒƒ‰‚ªã‚ğŒü‚­ŒÀŠEŠp“x
+    [Header("ä»°è§’ã®åˆ¶é™")]
+    public float minYAngle = -35f;
+    public float maxYAngle = 60f;
 
-    // Œ»İ‚Ì‰ñ“]Šp“x
-    private float rotX = 0f; // ‚’¼•ûŒü‚Ì‰ñ“]iã‰ºj
-    private float rotY = 0f; // …•½•ûŒü‚Ì‰ñ“]i¶‰Ej
+    private float rotX = 0f;
+    private float rotY = 0f;
 
-    // VInputSystem‚Åó‚¯æ‚Á‚½u‹“_“ü—Íiƒ}ƒEƒX or ƒXƒeƒBƒbƒNjv‚Ì’l
     private Vector2 lookInput = Vector2.zero;
 
-    // “ü—Íİ’èiInputActionAsset‚©‚ç¶¬‚µ‚½ƒvƒŒƒCƒ„[—pƒNƒ‰ƒXj
-    private PlayerInput inputActions;
+    // å…¥åŠ›ã‚¢ã‚»ãƒƒãƒˆï¼ˆ.inputactions ã‹ã‚‰ç”Ÿæˆã•ã‚ŒãŸã‚¯ãƒ©ã‚¹ï¼‰
+    private PlayerInput inputAction;
+    private InputAction cameraMoveAction;
 
-    /// <summary>
-    /// ‹N“®‚É“ü—Íİ’è‚ğ\’zE“ü—ÍƒCƒxƒ“ƒg‚ğ“o˜^
-    /// </summary>
     void Awake() {
-        inputActions = new PlayerInput(); // “ü—ÍƒAƒZƒbƒgƒNƒ‰ƒX‚ğ¶¬
+        // å…¥åŠ›ã‚¢ã‚»ãƒƒãƒˆã‚’åˆæœŸåŒ–
+        inputAction = new PlayerInput();
+        cameraMoveAction = inputAction.actions["CameraMove"];
 
-        // Look“ü—Íi‹“_ˆÚ“®Fƒ}ƒEƒX‚Ü‚½‚Í‰EƒXƒeƒBƒbƒNj‚Ìæ“¾
-        //inputActions.Player.CameraMove.performed += ctx => {
-        //    lookInput = ctx.ReadValue<Vector2>(); // ƒ}ƒEƒXˆÚ“®‚âƒXƒeƒBƒbƒN‚Ì“ü—Í‚ğó‚¯æ‚é
-        //};
 
-        //// “ü—Í‚ª~‚Ü‚Á‚½‚Æ‚«iƒXƒeƒBƒbƒN‚ğ—£‚µ‚½‚È‚Çj‚Íƒ[ƒ‚É
-        //inputActions.Player.Look.canceled += ctx => {
-        //    lookInput = Vector2.zero;
-        //};
+        // å…¥åŠ›ãŒã‚ã‚‹å ´åˆã®ã¿ã‚«ãƒ¡ãƒ©ç§»å‹•
+        if (cameraMoveAction.IsInProgress()) {
+            lookInput = cameraMoveAction.ReadValue<Vector2>();
+        }
     }
 
-    /// <summary>
-    /// ‚±‚ÌƒXƒNƒŠƒvƒg‚ª—LŒø‚É‚È‚Á‚½‚Æ‚«‚É“ü—Í‚ğ—LŒø‰»
-    /// </summary>
-    void OnEnable() {
-        //inputActions.Player.Enable(); // ƒvƒŒƒCƒ„[—p“ü—ÍƒAƒNƒVƒ‡ƒ“‚ğ—LŒø‚É
-    }
-
-    /// <summary>
-    /// –³Œø‰»‚³‚ê‚½‚Æ‚«‚É“ü—Í‚ğ–³Œø‚É‚·‚é
-    /// </summary>
-    void OnDisable() {
-        //inputActions.Player.Disable(); // •s—v‚É‚È‚Á‚½‚ç“ü—Í‚ğ~‚ß‚éiƒpƒtƒH[ƒ}ƒ“ƒXŒüãj
-    }
-
-    /// <summary>
-    /// ƒQ[ƒ€ŠJn‚ÉƒJ[ƒ\ƒ‹‚ğ”ñ•\¦•ƒƒbƒNiƒ}ƒEƒX‚ğ©—R‹“_—p‚ÉŒÅ’èj
-    /// </summary>
     void Start() {
-        Cursor.lockState = CursorLockMode.Locked; // ƒJ[ƒ\ƒ‹‚ğ‰æ–Ê’†‰›‚ÉƒƒbƒN
-        Cursor.visible = false;                   // ƒJ[ƒ\ƒ‹‚ğ”ñ•\¦
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
-    /// <summary>
-    /// ƒtƒŒ[ƒ€‚ÌÅŒã‚ÉƒJƒƒ‰‚ğˆÚ“®iƒvƒŒƒCƒ„[ˆÚ“®Œã‚É”½‰fj
-    /// </summary>
     void LateUpdate() {
-        if (target == null) return; // ’Ç]‘ÎÛ‚ª‚¢‚È‚¯‚ê‚Î‰½‚à‚µ‚È‚¢
+        if (target == null) return;
 
-        // ‹“_ˆÚ“®iƒ}ƒEƒX or ƒXƒeƒBƒbƒNj‚ğŠ´“x•t‚«‚Å“K—p
-        rotY += lookInput.x * mouseSensitivity;  // ‰¡•ûŒü‚Ì‰ñ“]i‰EƒXƒeƒBƒbƒN‰¡ or ƒ}ƒEƒXXj
-        rotX -= lookInput.y * mouseSensitivity;  // c•ûŒü‚Ì‰ñ“]iã‚Åƒ}ƒCƒiƒXj
+        // è¦–ç‚¹å…¥åŠ›ã‚’å…ƒã«ã‚«ãƒ¡ãƒ©è§’åº¦ã‚’æ›´æ–°
+        rotY += lookInput.x * mouseSensitivity;
+        rotX -= lookInput.y * mouseSensitivity;
 
-        // ã‰º‚Ì‰ñ“]‚É§ŒÀ‚ğ‚©‚¯‚éi^ãE^‰º‚ğŒü‚«‚·‚¬‚È‚¢‚æ‚¤‚Éj
+        // å‚ç›´è§’åº¦ã®åˆ¶é™
         rotX = Mathf.Clamp(rotX, minYAngle, maxYAngle);
 
-        // ŒvZ‚µ‚½‰ñ“]‚ğƒNƒH[ƒ^ƒjƒIƒ“i3D‰ñ“]j‚É•ÏŠ·
-        Quaternion rotation = Quaternion.Euler(rotX, rotY, 0f);
-
-        // ‰ñ“]Œã‚ÌƒJƒƒ‰ˆÊ’u‚ğZoiƒvƒŒƒCƒ„[ˆÊ’u + ƒIƒtƒZƒbƒgj
+        // å›è»¢è¨ˆç®—
+        Quaternion rotation = Quaternion.Euler(rotX, rotY, 0);
         Vector3 targetPosition = target.position + rotation * offset;
 
-        // ƒJƒƒ‰‚ÌˆÊ’u‚ğXV
+        // ã‚«ãƒ¡ãƒ©ç§»å‹•ã¨æ³¨è¦–
         transform.position = targetPosition;
-
-        // ƒvƒŒƒCƒ„[‚Ì­‚µãi1.5m‚­‚ç‚¢j‚ğ’‹iã”¼g‚ğ‰f‚·‚æ‚¤‚Éj
         transform.LookAt(target.position + Vector3.up * 1.5f);
     }
 }
