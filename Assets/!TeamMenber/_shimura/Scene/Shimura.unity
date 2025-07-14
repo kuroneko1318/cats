@@ -208,12 +208,57 @@ Transform:
   m_GameObject: {fileID: 52699758}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 0, y: 11.26, z: -4.18}
+  m_LocalPosition: {x: 0, y: 18.47, z: -8.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
+--- !u!1 &259236184 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1912997703677385084, guid: c1aaf7cc49fa5204884126ec87f06d11, type: 3}
+  m_PrefabInstance: {fileID: 3590673503824600502}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &259236192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259236184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1ca46b33bfdfaa4e83535061259f333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCollider: {fileID: 344132935}
+  comboStep: 0
+--- !u!1 &344132931 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4845429698605384351, guid: c1aaf7cc49fa5204884126ec87f06d11, type: 3}
+  m_PrefabInstance: {fileID: 3590673503824600502}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &344132935
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344132931}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.0000001, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &458492330
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,11 +522,24 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 116
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2897822770273150442, guid: c1aaf7cc49fa5204884126ec87f06d11, type: 3}
+    - target: {fileID: 6806948643724630523, guid: c1aaf7cc49fa5204884126ec87f06d11, type: 3}
+      propertyPath: attackCollider
+      value: 
+      objectReference: {fileID: 344132935}
+    - target: {fileID: 8207556701938581971, guid: c1aaf7cc49fa5204884126ec87f06d11, type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 54b5e5c6c7296ac41b84c2149222a7f3, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1912997703677385084, guid: c1aaf7cc49fa5204884126ec87f06d11, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 259236192}
+    - targetCorrespondingSourceObject: {fileID: 4845429698605384351, guid: c1aaf7cc49fa5204884126ec87f06d11, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 344132935}
   m_SourcePrefab: {fileID: 100100000, guid: c1aaf7cc49fa5204884126ec87f06d11, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

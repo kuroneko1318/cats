@@ -60,6 +60,49 @@ public class PlayerAttack : MonoBehaviour {
             }
         }
 
+
+
+
+
+
+        // コンボ猶予時間の管理
+        if (comboStep > 0) {
+            comboTimer -= Time.deltaTime;
+            if (comboTimer <= 0f) {
+                comboStep = 0;           // コンボリセット
+                StartAttackCooldown();  // コンボ中断時もクールタイム開始
+            }
+        }
+    }
+
+    public void StrongAttack() {
+        if (isAttackCooldown) return; // クールタイム中は攻撃不可
+
+        // 攻撃ボタンが押された瞬間
+        if (attackAction.WasPressedThisFrame()) {
+            comboStep++; // コンボ段階を進める
+
+            if (comboStep > 2) comboStep = 1; // 最大3段階まで
+
+            comboTimer = comboResetTime; // コンボ猶予タイマーをリセット
+
+            // アニメーション再生（例：Attack1, Attack2, Attack3）
+            // animator.SetTrigger("Attack" + comboStep);
+
+            // 攻撃判定をサイズに応じて有効化
+            StartCoroutine(EnableAttackCollider(comboStep));
+
+            // 3段目まで出し切ったらクールタイム開始
+            if (comboStep == 2) {
+                StartAttackCooldown();
+            }
+        }
+
+
+
+
+
+
         // コンボ猶予時間の管理
         if (comboStep > 0) {
             comboTimer -= Time.deltaTime;
@@ -105,4 +148,6 @@ public class PlayerAttack : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);       // 判定持続時間
         attackCollider.enabled = false;              // 攻撃判定を無効化
     }
+
+    
 }
