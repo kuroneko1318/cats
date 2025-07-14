@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Progress;
 
+//    Weapon,     // 武器(1000~1999)
+//    Armor,      // 防具(2000~2999)
+//    Heal,       // 回復アイテム（3000~3999）
+//    Material,   // 素材アイテム（4000~4999）
+//    Money       // 換金アイテム・通貨など(5000~5999)
+
 public class ItemManager : SystemObject<ItemManager> {
 
     public static ItemManager instance = null;
@@ -11,7 +17,7 @@ public class ItemManager : SystemObject<ItemManager> {
     private List<ItemBase> itemList = new List<ItemBase>();
 
     //  コンストラクタ：初期化時に全アイテムを登録
-    public ItemManager() {
+    public override void Initialize() {
         instance = this;
 
         // ここでアイテム5種を登録（ID）
@@ -20,6 +26,7 @@ public class ItemManager : SystemObject<ItemManager> {
         itemList.Add(new ItemBase("石A", 4003, eItemType.Material));
         itemList.Add(new ItemBase("石B", 4004, eItemType.Material));
         itemList.Add(new ItemBase("鉄", 4005, eItemType.Material));
+        itemList.Add(new ItemBase("鉄", 4006, eItemType.Material));
     }
 
     //  IDからアイテムを取得する

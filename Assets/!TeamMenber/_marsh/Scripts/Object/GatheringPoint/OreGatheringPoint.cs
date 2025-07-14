@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
+using static ItemManager;
+
 public class OreGatheringPoint : GatheringPoint {
 
     Inventory bag;
@@ -13,7 +15,7 @@ public class OreGatheringPoint : GatheringPoint {
 
     protected override void Gather() {
         Debug.Log("zÎ‚©‚ç“SzÎ‚ğÌæ‚µ‚Ü‚µ‚½I");
-        bag.AddItem()
+        bag.AddItem(instance.GetItemByID("");
     }
 
     private void Update() {
