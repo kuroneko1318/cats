@@ -2,38 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//基本的にマネージャーはここで管理する
-//他のマネージャーで作った内容をここで使う
-
-public class GameManager : MonoBehaviour {
-
-    private GameObject pauseUI;
-
-    public static GameManager Instance { get; private set; }
-
-    public PauseManager pauseManager;
-
-    void Awake() {
-        if (Instance == null) {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else {
-            Destroy(gameObject);
-        }
+public class GameManager : SystemObject<GameManager> {
+    public enum GameState {
+        Title,
+        InGame,
+        Ending
     }
 
-    private void Update() {
-        if(Input.GetKeyDown(KeyCode.Escape)) {
-            PauseGame();
-        }
+    public GameState CurrentState { get; private set; }
+
+    public override void Initialize() {
+        CurrentState = GameState.Title;
+        Debug.Log("GameManager initialized. Current state: Title");
     }
 
-    public void PauseGame() {
-        if (pauseManager.isPaused)
-            pauseManager.Resume(pauseUI);
-        else
-            pauseManager.Pause(pauseUI);
+    public void ChangeState(GameState newState) {
+        CurrentState = newState;
+        Debug.Log($"Game state changed to: {newState}");
     }
-
 }

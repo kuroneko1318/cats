@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Progress;
 
-public class ItemManager
-{
+public class ItemManager : SystemObject<ItemManager> {
 
     public static ItemManager instance = null;
 

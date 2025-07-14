@@ -4,18 +4,18 @@ using UnityEngine.SceneManagement;
 //ポーズメニュー表示用
 //TimeScaleを使うことで時間を止める
 
-public class PauseManager : MonoBehaviour {
+public class PauseManager : SystemObject<PauseManager> {
     public bool isPaused = false;
+    private GameObject pauseUI;
 
-
-    public void Resume(GameObject obj) {
-        obj.SetActive(false);
+    public void Resume() {
+        pauseUI.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
     }
 
-    public void Pause(GameObject obj) {
-        obj.SetActive(true);
+    public void Pause() {
+        pauseUI.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
     }
