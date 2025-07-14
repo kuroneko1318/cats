@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class CameraManager : MonoBehaviour
 {
@@ -29,14 +30,16 @@ public class CameraManager : MonoBehaviour
 
     void Awake() {
         // 入力アセットを初期化
-        inputAction = new PlayerInput();
-        cameraMoveAction = inputAction.actions["CameraMove"];
-
-
-        // 入力がある場合のみカメラ移動
-        if (cameraMoveAction.IsInProgress()) {
-            lookInput = cameraMoveAction.ReadValue<Vector2>();
-        }
+        //inputAction = GetComponent<PlayerInput>();
+        //if (inputAction == null) {
+        //    Debug.LogError("PlayerInput が取得できませんでした");
+        //    return;
+        //}
+        //cameraMoveAction = inputAction.actions["CameraMove"];
+        //if (cameraMoveAction == null) {
+        //    Debug.LogError("CameraMove が取得できませんでした");
+        //    return;
+        //}
     }
 
     void Start() {
@@ -46,6 +49,9 @@ public class CameraManager : MonoBehaviour
 
     void LateUpdate() {
         if (target == null) return;
+
+        // マウスでのカメラ移動
+        lookInput = Mouse.current.delta.ReadValue();
 
         // 視点入力を元にカメラ角度を更新
         rotY += lookInput.x * mouseSensitivity;
@@ -61,5 +67,6 @@ public class CameraManager : MonoBehaviour
         // カメラ移動と注視
         transform.position = targetPosition;
         transform.LookAt(target.position + Vector3.up * 1.5f);
+
     }
 }
