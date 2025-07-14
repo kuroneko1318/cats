@@ -6,11 +6,15 @@ using static UnityEditor.Progress;
 public class ItemManager
 {
 
+    public static ItemManager instance = null;
+
     // ゲーム内に存在する全アイテムの一覧（Listで管理）
     private List<ItemBase> itemList = new List<ItemBase>();
 
     //  コンストラクタ：初期化時に全アイテムを登録
     public ItemManager() {
+        instance = this;
+
         // ここでアイテム5種を登録（ID）
         itemList.Add(new ItemBase("薬草", 4001, eItemType.Material));
         itemList.Add(new ItemBase("棒", 4002, eItemType.Material));

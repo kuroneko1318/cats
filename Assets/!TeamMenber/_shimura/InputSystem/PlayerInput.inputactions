@@ -43,12 +43,12 @@
                 },
                 {
                     "name": "CameraMove",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "eaf1be8f-f1ab-400f-af0f-1290ec919211",
-                    "expectedControlType": "",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -143,7 +143,7 @@
                 {
                     "name": "",
                     "id": "35be1840-9e98-46a5-86f7-66670b45a252",
-                    "path": "",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
