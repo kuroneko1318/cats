@@ -15,7 +15,7 @@ public class OreGatheringPoint : GatheringPoint {
 
     protected override void Gather() {
         Debug.Log("zÎ‚©‚ç“SzÎ‚ğÌæ‚µ‚Ü‚µ‚½I");
-        bag.AddItem(instance.GetItemByID("");
+        bag.AddItem(instance.GetItemByName("ÎA"), 50);
     }
 
     private void Update() {
