@@ -28,7 +28,7 @@ public class CraftingManager:SystemObject<CraftingManager> {
         // 合成ルール（例：薬草 + 鉄 → 回復薬）
         if ((item1.itemName == "薬草" && item2.itemName == "鉄") ||
  (item1.itemName == "鉄" && item2.itemName == "薬草")) {
-            return ItemManager.instance.GetItemByID(_POTION_ID);
+            return ItemManager.Instance.GetItemByID(_POTION_ID);
         }
 
         // 他の合成ルールを追加可能
