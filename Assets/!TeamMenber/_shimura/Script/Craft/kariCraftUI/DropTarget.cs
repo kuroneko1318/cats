@@ -8,7 +8,7 @@ public class DropTarget : MonoBehaviour, IDropHandler {
 
     void Start() {
         // "DropTarget" という名前の GameObject を探して Image を取得
-        GameObject targetObject = GameObject.Find("DropTarget");
+        GameObject targetObject = GameObject.Find("Image1");
         if (targetObject != null) {
             validDropArea = targetObject.GetComponent<Image>();
         }
