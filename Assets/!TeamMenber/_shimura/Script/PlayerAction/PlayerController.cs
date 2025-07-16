@@ -70,7 +70,7 @@ public class PlayerController : CharacterBase {
 
         // 一定以上動いた場合のみ回転を更新
         
-        transform.rotation = Quaternion.LookRotation(diff);
+       // transform.rotation = Quaternion.LookRotation(diff);
         
     }
 
