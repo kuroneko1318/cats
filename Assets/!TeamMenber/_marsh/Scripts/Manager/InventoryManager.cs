@@ -85,7 +85,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
         }
 
         // スロットごとに表示
-        foreach (var slot in inventory.slots) {
+        foreach (var slot in bag.slots) {
             if (!slot.IsEmpty) {
                 GameObject itemObj = Instantiate(itemTextPrefab, contentParent);
                 var text = itemObj.GetComponent<TextMeshProUGUI>();
