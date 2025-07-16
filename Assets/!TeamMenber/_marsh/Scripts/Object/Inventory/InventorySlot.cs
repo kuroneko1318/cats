@@ -2,22 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [System.Serializable]
 public class InventorySlot {
+    public string name;
+    public int amount;
     public ItemBase item;
-    public int quantity;
 
-    public bool IsEmpty => item == null || quantity <= 0;
+    public bool IsEmpty => item == null;
 
     public void AddItem(ItemBase newItem, int amount) {
-        if (item == null) {
+        if (newItem == null || amount <= 0) {
+            Debug.LogWarning("AddItem: –³Œø‚ÈƒAƒCƒeƒ€‚Ü‚½‚Í”—Ê‚Å‚·");
+            return;
+        }
+
+        if (IsEmpty) {
             item = newItem;
-            quantity = amount;
+            this.amount = amount;
+            name = newItem.itemName;
         }
         else if (item.itemID == newItem.itemID) {
-            quantity += amount;
+            this.amount += amount;
+        }
+    }
+
+    public void RemoveItem(int removeAmount) {
+        amount -= removeAmount;
+        if (amount <= 0) {
+            item = null;
+            amount = 0;
+            name = null;
         }
     }
 }
-

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseManager : SystemObject<PauseManager> {
     public bool isPaused = false;
-    private GameObject pauseUI;
+    private GameObject pauseUI = null;
 
     public void Resume() {
         pauseUI.SetActive(false);

@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour {
-    public int slotCount = 20;
+    //インベントリスロットの最大数
+    public int slotCount = 100;
+    //インベントリの中身保存用
     public InventorySlot[] slots;
 
+    //実行時にインベントリのスロット生成する
     private void Awake() {
         slots = new InventorySlot[slotCount];
         for (int i = 0; i < slotCount; i++) {
@@ -13,6 +16,7 @@ public class Inventory : MonoBehaviour {
         }
     }
 
+    //アイテムの追加
     public bool AddItem(ItemBase item, int amount = 1) {
         // 既存スタックに追加
         foreach (var slot in slots) {
@@ -33,4 +37,25 @@ public class Inventory : MonoBehaviour {
         Debug.Log("インベントリがいっぱいです");
         return false;
     }
+
+    /// <summary>
+    /// アイテムの削除
+    /// </summary>
+    /// <param 削除したいアイテム="item"></param>
+    /// <param 数量="amount"></param>
+    /// <returns></returns>
+    public bool RemoveItem(ItemBase item, int amount = 1) {
+        foreach (var slot in slots) {
+            if (!slot.IsEmpty && slot.item.itemID == item.itemID) {
+                if (slot.amount >= amount) {
+                    slot.RemoveItem(amount);
+                    return true;
+                }
+            }
+        }
+
+        Debug.Log("指定されたアイテムが見つからないか、数が足りません");
+        return false;
+    }
+
 }
