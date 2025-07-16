@@ -12,8 +12,6 @@ using static UnityEditor.Progress;
 
 public class ItemManager : SystemObject<ItemManager> {
 
-    public static ItemManager instance = null;
-
     // ゲーム内に存在する全アイテムの一覧（Listで管理）
     private List<ItemBase> itemList = new List<ItemBase>();
     private List<WeaponBase> weaponList = new List<WeaponBase>();
@@ -21,7 +19,7 @@ public class ItemManager : SystemObject<ItemManager> {
 
     //  コンストラクタ：初期化時に全アイテムを登録
     public override void Initialize() {
-        instance = this;
+        Debug.Log("ItemManager　Initialize開始");
 
         // ここでアイテム5種を登録（ID）
         itemList.Add(new ItemBase("薬草", 4001, eItemType.Material));

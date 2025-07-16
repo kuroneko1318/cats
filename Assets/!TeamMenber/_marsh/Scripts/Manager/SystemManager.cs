@@ -1,20 +1,37 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class SystemManager : MonoBehaviour {
+    [Header("SystemObject プレハブ一覧")]
+    [SerializeField] private List<GameObject> systemObjectPrefabs;
+
+
     void Awake() {
-        // 各マネージャーのインスタンス化（アクセスするだけで生成される）
-        var gameManager = GameManager.Instance;
-        var playerManager = PlayerManager.Instance;
-        var resourceManager = ResourceManager.Instance;
-        var monsterManager = MonsterManager.Instance;
-        var inventoryManager = InventoryManager.Instance;
-        var craftingManager = CraftingManager.Instance;
-        var uiManager = UIManager.Instance;
-        var audioManager = AudioManager.Instance;
-        var environmentManager = EnvironmentManager.Instance;
-        var saveLoadManager = SaveLoadManager.Instance;
+        DontDestroyOnLoad(gameObject);
 
-        // 必要に応じて初期化処理を呼び出す(Initialize)
+        foreach (var prefab in systemObjectPrefabs) {
+            if (prefab == null) continue;
 
+            GameObject instance = Instantiate(prefab);
+            DontDestroyOnLoad(instance);
+
+            // すべての MonoBehaviour を取得して確認
+            var monoBehaviours = instance.GetComponents<MonoBehaviour>();
+            foreach (var mono in monoBehaviours) {
+                var type = mono.GetType();
+                var baseType = type.BaseType;
+
+                // SystemObject<> を継承しているか確認
+                while (baseType != null) {
+                    if (baseType.IsGenericType && baseType.GetGenericTypeDefinition() == typeof(SystemObject<>)) {
+                        var method = type.GetMethod("Initialize");
+                        method?.Invoke(mono, null);
+                        break;
+                    }
+                    baseType = baseType.BaseType;
+                }
+            }
+        }
     }
+
 }
