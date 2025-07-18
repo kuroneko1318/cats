@@ -65,15 +65,15 @@ public class PlayerController : CharacterBase {
 
     // プレイヤーの向きを移動方向に合わせる処理
     public void RotMove() {
-        diff.x = cam.transform.forward.x; // 前回位置との差分
-        //latestPos = transform.position;        // 最新位置を保存
+        diff = transform.position - latestPos; // 前回位置との差分
+        latestPos = transform.position;        // 最新位置を保存
 
         // 一定以上動いた場合のみ回転を更新
-        
-       // transform.rotation = Quaternion.LookRotation(diff);
-        
-    }
+        if (diff.magnitude > 0.01f) {
+            transform.rotation = Quaternion.LookRotation(diff);
 
+        }
+    }
     // プレイヤーの移動処理
     public void PlayerMove() {
         // 回避中は移動を無効化
