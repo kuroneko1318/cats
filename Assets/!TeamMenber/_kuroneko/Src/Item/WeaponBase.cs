@@ -11,6 +11,5 @@ public class WeaponBase : ItemBase
         : base(name, id, eItemType.Weapon, skill1, skill2) {
 
         weaponAttack = atk;
-        
     }
 }

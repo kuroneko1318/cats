@@ -29,6 +29,8 @@ public class ItemManager : SystemObject<ItemManager> {
         itemList.Add(new ItemBase("鉄", 4005, eItemType.Material));
         itemList.Add(new ItemBase("鉄", 4006, eItemType.Material));
         itemList.Add(new ItemBase("回復薬", 4007, eItemType.Heal));
+        weaponList.Add(new WeaponBase("武器A", 1001,10));
+        itemList.Add(new ArmorBase("防具A", 2001, 30));
     }
 
     //  IDからアイテムを取得する
@@ -36,9 +38,16 @@ public class ItemManager : SystemObject<ItemManager> {
         return itemList.Find(i => i.itemID == id);
     }
 
+    public WeaponBase GetWeaponByID(int id) {
+        return weaponList.Find(i => i.itemID == id);
+    }
+
     //  名前からアイテムを取得する
     public ItemBase GetItemByName(string name) {
         return itemList.Find(i => i.itemName == name);
+    }
+    public WeaponBase GetWeaponByName(string name) {
+        return weaponList.Find(i => i.itemName == name);
     }
 
     //  登録されているすべてのアイテムを取得（デバッグ・UI用など）
