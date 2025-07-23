@@ -19,7 +19,7 @@ public class OreGatheringPoint : GatheringPoint {
 
     private void Update() {
         if(bag == null) {
-            bag = GameObject.Find("inventory").GetComponent<Inventory>();
+            bag = GameObject.Find("inventory")?.GetComponent<Inventory>();
         }
     }
 }
