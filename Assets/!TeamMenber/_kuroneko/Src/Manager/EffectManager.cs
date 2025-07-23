@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EffectManager : MonoBehaviour
+public class EffectManager : SystemObject<EffectManager>
 {
 
     // シングルトンとして使えるようにインスタンスを公開
-    public static EffectManager Instance { get; private set; }
+    public static EffectManager instance { get; private set; }
 
     [Header("エフェクトプレハブの登録リスト")]
     [Tooltip("IDと紐づけるエフェクトプレハブの一覧")]
@@ -17,11 +17,11 @@ public class EffectManager : MonoBehaviour
 
     void Awake() {
         // シングルトンパターン（複数存在を防ぐ）
-        if (Instance != null && Instance != this) {
+        if (instance != null && instance != this) {
             Destroy(gameObject);
             return;
         }
-        Instance = this;
+        instance = this;
 
         // 辞書にエフェクトを登録（ID → プレハブ）
         foreach (var entry in effectEntries) {
