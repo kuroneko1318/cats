@@ -44,7 +44,7 @@ public class FrontSlashSkill : SkillBase
         Quaternion spawnRot = Quaternion.Euler(0f, -90f, 0f);
 
         // EffectManager を使ってエフェクトを生成
-        EffectManager.Instance.SpawnEffect("FrontSkill", spawnPos, spawnRot, 1f);
+        EffectManager.instance.SpawnEffect("FrontSkill", spawnPos, spawnRot, 1f);
 
         lastUseTime = Time.time;
 
