@@ -6,8 +6,8 @@ public class ParticleHitbox : MonoBehaviour {
 
     protected PlayerBase player = null;
 
-    private void OnTriggerEnter(Collider other) {
-        if(player == null) player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBase>();
+    private void OnParticleCollision(GameObject other) {
+        if(player == null) player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
         if (other.CompareTag("Enemy")) {
             var enemy = other.GetComponent<EnemyBase>(); // 敵のベースクラス

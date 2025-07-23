@@ -50,7 +50,7 @@ MonoBehaviour:
   riseSpeed: 1
   fadeSpeed: 2
   impactScale: 0.5
-  scaleDuration: 0.1
+  scaleDuration: 0
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   criticalColor: {r: 1, g: 0.8159878, b: 0, a: 1}
   colorFadeDuration: 1
