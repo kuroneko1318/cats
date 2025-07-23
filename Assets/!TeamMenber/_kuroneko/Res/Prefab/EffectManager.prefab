@@ -47,3 +47,5 @@ MonoBehaviour:
   effectEntries:
   - id: FrontSkill
     prefab: {fileID: 7342536114043475339, guid: e457581ef31372f459f523ce7830456c, type: 3}
+  - id: ChargeFrontSkill
+    prefab: {fileID: 5978609795072205221, guid: d5d60f65f15e7c046b3c1a16f189ab3a, type: 3}

@@ -28,6 +28,12 @@ public class FrontSlashSkill : SkillBase
             anim.SetTrigger("Skill"); // 攻撃アニメーション再生
         }
 
+        Transform userPos = user.transform;
+        Vector3 spawnPos = userPos.position + user.transform.up * 0.1f;
+
+        // EffectManager を使ってエフェクトを生成
+        EffectManager.instance.SpawnEffect("ChargeFrontSkill", spawnPos, Quaternion.identity, 2f);
+
         // 攻撃発生をタイミングに合わせて遅延実行
         user.GetComponent<MonoBehaviour>().StartCoroutine(DelayedAttack(user));
     }
@@ -40,7 +46,7 @@ public class FrontSlashSkill : SkillBase
 
         Transform userPos = user.transform;
 
-        Vector3 spawnPos = userPos.position + user.transform.forward * 0.5f;
+        Vector3 spawnPos = userPos.position + user.transform.forward * 0.5f + user.transform.up * 0.2f;
         Quaternion spawnRot = Quaternion.Euler(0f, -90f, 0f);
 
         // EffectManager を使ってエフェクトを生成
