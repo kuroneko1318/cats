@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : CharacterBase {
+public class PlayerController : PlayerBase {
 
     // プレイヤーの入力関連
     PlayerInput input;
@@ -68,15 +68,16 @@ public class PlayerController : CharacterBase {
 
     // プレイヤーの向きを移動方向に合わせる処理
     public void RotMove() {
-        
-        diff = transform.position - latestPos; // 前回位置との差分
-        latestPos = transform.position;        // 最新位置を保存
+
+        //diff = transform.position - latestPos; // 前回位置との差分
+        //latestPos = transform.position;        // 最新位置を保存
 
         // 一定以上動いた場合のみ回転を更新
-        if (diff.magnitude > 0.01f) {
-            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x,0,diff.z));
-
-        }
+        //if (diff.magnitude > 0.01f) {
+        //   transform.rotation = Quaternion.LookRotation(new Vector3(diff.x,0,diff.z));
+        //
+        // }
+        transform.rotation=cam.transform.rotation;
     }
     // プレイヤーの移動処理
     public void PlayerMove() {
@@ -86,7 +87,7 @@ public class PlayerController : CharacterBase {
         // 入力がある場合のみ移動
         if (moveAction.IsInProgress()) {
             anim.SetBool("Run",true);
-            Vector3 dir = moveAction.ReadValue<Vector3>() * moveSpeed;
+            Vector3 dir = transform.forward * moveSpeed;
             rb.velocity = new Vector3(dir.x, 0, dir.z);
             direction = dir;
         }
@@ -137,13 +138,17 @@ public class PlayerController : CharacterBase {
         }
     }
 
-    
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("")) {
+
+        }
+    }
 
 
-  
-    
 
-    
+
+
 
     // 回復処理（未実装）
     public override void HealHp() {
@@ -159,5 +164,9 @@ public class PlayerController : CharacterBase {
 
     public override void Move() {
         throw new System.NotImplementedException();
+    }
+
+    public override void TakeDamage(int _attack, int elementalValue = 0, float staggerValue = 0) {
+        _attack=attack;
     }
 }
