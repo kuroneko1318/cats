@@ -26,6 +26,9 @@ public class PlayerAttack : MonoBehaviour {
 
 
     private bool wasInIdle = false;
+
+    private SkillManager skillManager;
+    private FrontSlashSkill frontSlashSkill;
     void Start() {
         // PlayerInput から Attack アクションを取得
         input = GetComponent<PlayerInput>();
@@ -33,12 +36,19 @@ public class PlayerAttack : MonoBehaviour {
         if (attackAction == null) {
             Debug.LogError("Attack アクションが見つかりません");
         }
+        skillManager = new SkillManager();
+
+        frontSlashSkill = new FrontSlashSkill();
+        skillManager.RegisterSkill(frontSlashSkill);
     }
 
     void Update() {
         LowAttack();             // 攻撃処理
         HandleAttackCooldown();  // クールタイム処理
         CheckAttackAnimationEnd();
+        if (Keyboard.current.digit1Key.wasPressedThisFrame) {
+            skillManager.UseSkill(0, gameObject);
+        }
     }
 
     // 通常攻撃（3連コンボ）
