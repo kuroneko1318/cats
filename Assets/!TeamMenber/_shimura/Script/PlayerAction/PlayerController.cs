@@ -143,10 +143,7 @@ public class PlayerController : CharacterBase {
   
     
 
-    // ダメージ処理（未実装）
-    public override void TakeDamage() {
-        
-    }
+    
 
     // 回復処理（未実装）
     public override void HealHp() {
