@@ -15,7 +15,9 @@ public class Dummy : EnemyBase {
 
 
     public override void Attack() { }
-    public override void Dead() { }
+    public override void Dead() {
+        hp = maxHp;
+    }
     public override void HealHp() { }
     public override void Move() { }
 }

@@ -15,13 +15,7 @@ public class EffectManager : SystemObject<EffectManager>
     // 内部的に管理する辞書（IDからプレハブを引けるように）
     private Dictionary<string, GameObject> effectDictionary = new Dictionary<string, GameObject>();
 
-    void Awake() {
-        // シングルトンパターン（複数存在を防ぐ）
-        if (instance != null && instance != this) {
-            Destroy(gameObject);
-            return;
-        }
-        instance = this;
+    public override void Initialize() {
 
         // 辞書にエフェクトを登録（ID → プレハブ）
         foreach (var entry in effectEntries) {
