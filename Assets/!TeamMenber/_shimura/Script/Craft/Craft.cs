@@ -23,7 +23,7 @@ public class Craft : MonoBehaviour
 
     public void Update() {
 
-        if (Input.GetKeyDown(KeyCode.Tab)) {
+        if (Input.GetKeyDown(KeyCode.Q)) {
             Crafting();
             
 

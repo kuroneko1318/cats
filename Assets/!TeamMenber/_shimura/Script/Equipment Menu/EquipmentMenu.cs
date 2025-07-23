@@ -15,7 +15,7 @@ public class EquipmentMenu : MonoBehaviour
     public ItemManager itemManager;
     public ItemManager weaponManager;
     WeaponBase weapon;
-    Inventory inventory;
+    Inventory inventory = null;
     [SerializeField]RawImage swordImage;
     
     private bool equiping;
@@ -23,18 +23,19 @@ public class EquipmentMenu : MonoBehaviour
     void Start()
     {
         if (inventory == null) {
-            inventory = GameObject.FindGameObjectWithTag("Bag").GetComponent<Inventory>();
-            
+            inventory = GameObject.Find("inventory")?.GetComponent<Inventory>();
         }
-        itemManager.Initialize();
-        inventory.AddItem(ItemManager.Instance.GetWeaponByID(_WEAPON_ID));
-        equiping = true;
+        //inventory.AddItem(ItemManager.Instance.GetWeaponByID(_WEAPON_ID));
+        //equiping = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (inventory == null) {
+            inventory = GameObject.Find("inventory")?.GetComponent<Inventory>();
+        }
+
         if (Input.GetKeyDown(KeyCode.E)) {
             ScanString();
             if (equiping) {
@@ -50,10 +51,6 @@ public class EquipmentMenu : MonoBehaviour
 
 
     private void Equipment(string EquipmentName) {
-        if (inventory == null) {
-            inventory = GameObject.FindGameObjectWithTag("Bag").GetComponent<Inventory>();
-            
-        }
 
          weapon = weaponManager.GetWeaponByName(EquipmentName);
        if (weapon == null) return;
@@ -62,9 +59,6 @@ public class EquipmentMenu : MonoBehaviour
     }
 
     private void NotEquipment() {
-        if (inventory == null) {
-            inventory = GameObject.FindGameObjectWithTag("Bag").GetComponent<Inventory>();
-        }
         
 
         inventory.AddItem(ItemManager.Instance.GetItemByID(_WEAPON_ID));

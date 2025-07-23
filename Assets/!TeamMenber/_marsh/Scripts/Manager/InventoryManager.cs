@@ -22,7 +22,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.I)) {
+        if (Input.GetKeyDown(KeyCode.Tab)) {
             ToggleInventory();
         }
 

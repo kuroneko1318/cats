@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - GatheringPoint
+  - bag
   layers:
   - Default
   - TransparentFX

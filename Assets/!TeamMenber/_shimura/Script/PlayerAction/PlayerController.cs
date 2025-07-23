@@ -118,9 +118,11 @@ public class PlayerController : CharacterBase {
             rb.velocity = Vector3.zero;
         }
     }
-    private void OnCollisionStay(Collision collision) {
-        if (collision.gameObject.CompareTag("GatheringPoint")) {
-            collision.gameObject.GetComponent<GatheringPoint>().Interact();
+
+    private void OnTriggerStay(Collider other) {
+        if (other.gameObject.CompareTag("GatheringPoint") && Input.GetKeyDown(KeyCode.F)) {
+            var point = other.gameObject.GetComponent<GatheringPoint>();
+            point?.Interact();
         }
     }
 

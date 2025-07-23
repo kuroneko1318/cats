@@ -21,6 +21,9 @@ public abstract class GatheringPoint : MonoBehaviour {
 
     public virtual void Interact() {
         if (!isAvailable) return;
+        if (bag == null) {
+            bag = GameObject.FindGameObjectWithTag("bag")?.GetComponent<Inventory>();
+        }
 
         Debug.Log($"Ìæ: {pointType}");
         Gather();

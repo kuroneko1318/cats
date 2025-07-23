@@ -19,7 +19,7 @@ public class CraftingManager:SystemObject<CraftingManager> {
     public void CraftItem(string name1, string name2) {
 
         if (inventory == null) {
-            inventory = GameObject.FindGameObjectWithTag("Bag").GetComponent<Inventory>();
+            inventory = GameObject.FindGameObjectWithTag("bag").GetComponent<Inventory>();
         }
         ItemBase item1 = itemManager.GetItemByName(name1);
         ItemBase item2 = itemManager.GetItemByName(name2);

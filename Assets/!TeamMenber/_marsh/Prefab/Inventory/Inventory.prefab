@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2088805496112318309}
   m_Layer: 0
   m_Name: Inventory
-  m_TagString: Bag
+  m_TagString: bag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
