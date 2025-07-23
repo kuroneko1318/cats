@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 //新しい採取ポイントを追加する場合は、GatheringPoint を継承して Gather() をオーバーライドする

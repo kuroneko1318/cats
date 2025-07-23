@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.Progress;
+
 
 //    Weapon,     // •Ší(1000~1999)
 //    Armor,      // –h‹ï(2000~2999)
