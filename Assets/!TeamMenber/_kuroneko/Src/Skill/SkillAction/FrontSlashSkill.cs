@@ -47,7 +47,7 @@ public class FrontSlashSkill : SkillBase
         Transform userPos = user.transform;
 
         Vector3 spawnPos = userPos.position + user.transform.forward * 0.5f + user.transform.up * 0.2f;
-        Quaternion spawnRot = Quaternion.Euler(0f, -90f, 0f);
+        Quaternion spawnRot = user.transform.rotation * Quaternion.Euler(0f, -90f, 0f);
 
         // EffectManager を使ってエフェクトを生成
         EffectManager.Instance.SpawnEffect("FrontSkill", spawnPos, spawnRot, 1f);
