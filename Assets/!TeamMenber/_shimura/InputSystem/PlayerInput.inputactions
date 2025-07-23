@@ -55,7 +55,7 @@
                 {
                     "name": "WASD",
                     "id": "3a32f025-2d16-4ac5-ae1a-fddd51810b8a",
-                    "path": "3DVector",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -86,7 +86,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Forward",
+                    "name": "Up",
                     "id": "58ae132d-52d7-46e1-8601-7cc8cee01fed",
                     "path": "<Keyboard>/w",
                     "interactions": "",
@@ -97,7 +97,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Backward",
+                    "name": "Down",
                     "id": "79f3ee38-3900-4312-909a-571b362d9ff6",
                     "path": "<Keyboard>/s",
                     "interactions": "",

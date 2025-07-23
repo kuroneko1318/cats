@@ -122,6 +122,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &173363410
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 173363411}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &173363411
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173363410}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.376498, y: 0.8516643, z: 3.7814627}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &314289936
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,6 +458,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2115844836997347348, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
   m_PrefabInstance: {fileID: 1106336099}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &676808879 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2184610891598908203, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
+  m_PrefabInstance: {fileID: 1106336099}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &934403597
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -591,7 +627,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 736959054111200903, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
       propertyPath: m_Name
-      value: PlayerModel
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 879747490913826494, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
       propertyPath: m_TagString
@@ -661,6 +697,14 @@ PrefabInstance:
       propertyPath: stamina
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 2203553697699575889, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 676808879}
+    - target: {fileID: 2579443338632348065, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
+      propertyPath: attackCollider
+      value: 
+      objectReference: {fileID: 1451272236}
     - target: {fileID: 6232730547862427361, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -1019,3 +1063,4 @@ SceneRoots:
   - {fileID: 377584086}
   - {fileID: 1135523312}
   - {fileID: 1604247571}
+  - {fileID: 173363411}

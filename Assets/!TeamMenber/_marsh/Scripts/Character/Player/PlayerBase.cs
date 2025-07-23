@@ -12,6 +12,13 @@ public class PlayerBase : CharacterBase {
     //会心ダメージ倍率
     public float criticalMultiplier;
 
+    [SerializeField]
+    public Animator animator;
+
+    void Update() {
+
+    }
+
     public override void Attack() {
         throw new System.NotImplementedException();
     }
@@ -25,7 +32,7 @@ public class PlayerBase : CharacterBase {
     }
 
     public override void Move() {
-        throw new System.NotImplementedException();
+        animator.SetBool("Run", true);
     }
 
     
@@ -36,7 +43,10 @@ public class PlayerBase : CharacterBase {
         if(hp < 0) Dead();
     }
 
-    void Update() {
-
+    private void OnTriggerStay(Collider other) {
+        if (other.gameObject.CompareTag("GatheringPoint") && Input.GetKeyDown(KeyCode.F)) {
+            var point = other.gameObject.GetComponent<GatheringPoint>();
+            point?.Interact();
+        }
     }
 }

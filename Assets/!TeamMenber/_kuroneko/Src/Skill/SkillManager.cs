@@ -23,7 +23,7 @@ using UnityEngine;
 //  同じスキルインスタンスは重複登録されない
 
 
-public class SkillManager : MonoBehaviour
+public class SkillManager
 {
 
     // 登録されたスキルの一覧（List形式）
