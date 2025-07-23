@@ -25,7 +25,7 @@ public class Dummy : EnemyBase {
         int damageAmount = Random.Range(10, 30); // 仮のダメージ値
         isCritical = Random.value < 0.2f; // 20%でクリティカル
         animator.SetBool("Hit", true); // アニメーション切り替え
-        StartCoroutine(ResetHitFlagAfterDelay(0.3f)); // 0.3秒後に戻す
+        StartCoroutine(ResetHitFlagAfterDelay(0.1f)); // 0.3秒後に戻す
 
 
         // 既存のポップアップが存在し、まだフェードアウトしていない場合は加算

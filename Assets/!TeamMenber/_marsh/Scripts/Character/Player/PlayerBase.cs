@@ -5,6 +5,10 @@ using UnityEngine;
 //Update ‚ÉƒvƒŒƒCƒ„[‚Ì‘€ì‚Ô‚¿‚Ş
 
 public class PlayerBase : CharacterBase {
+
+    public float criticalChance;
+    public float criticalMultiplier;
+
     public override void Attack() {
         throw new System.NotImplementedException();
     }
@@ -21,7 +25,8 @@ public class PlayerBase : CharacterBase {
         throw new System.NotImplementedException();
     }
 
-    public override void TakeDamage() {
+    
+    public override void TakeDamage(float ) {
         throw new System.NotImplementedException();
     }
 
