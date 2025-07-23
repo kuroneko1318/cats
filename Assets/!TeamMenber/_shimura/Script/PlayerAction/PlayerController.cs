@@ -154,6 +154,7 @@ public class PlayerController : PlayerBase {
             rb.velocity = Vector3.zero;
         }
     }
+
     private void OnTriggerStay(Collider other) {
         if (other.gameObject.CompareTag("GatheringPoint") && Input.GetKeyDown(KeyCode.F)) {
             var point = other.gameObject.GetComponent<GatheringPoint>();
