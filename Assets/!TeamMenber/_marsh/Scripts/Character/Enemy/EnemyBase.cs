@@ -61,4 +61,11 @@ public class EnemyBase : CharacterBase {
         yield return new WaitForSeconds(delay);
         animator.SetBool("Hit", false);
     }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("weapon")) {
+            PlayerBase player = other.gameObject.GetComponentInParent<PlayerController>();
+            TakeDamage(player.attack, 1.0f, player.criticalChance, player.criticalMultiplier);
+        }
+    }
 }
