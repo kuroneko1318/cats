@@ -5,13 +5,13 @@ using UnityEngine.InputSystem;
 
 public class TestPlayerAction : MonoBehaviour {
     private SkillManager skillManager;
-    private DashSlashSkill dashSlashSkill;
+    private FrontSlashSkill frontSlashSkill;
 
     void Start() {
         skillManager = new SkillManager();
 
-        dashSlashSkill = new DashSlashSkill();
-        skillManager.RegisterSkill(dashSlashSkill);
+        frontSlashSkill = new FrontSlashSkill();
+        skillManager.RegisterSkill(frontSlashSkill);
     }
 
     void Update() {
@@ -20,7 +20,5 @@ public class TestPlayerAction : MonoBehaviour {
             skillManager.UseSkill(0, gameObject);
         }
 
-        // –ˆƒtƒŒ[ƒ€“Ëió‘Ô‚ÌŠÇ—‚ğŒÄ‚Ô
-        dashSlashSkill.UpdateDash(gameObject);
     }
 }
