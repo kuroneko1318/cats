@@ -30,9 +30,6 @@ public class PlayerController : CharacterBase {
     private float avoidanceCooldown = 1f;  // 回避のクールタイム（秒）
     private float cooldownTimer = 0f;        // クールタイムの残り時間
 
-
-
-
     void Start() {
         // PlayerInput コンポーネントの取得
         input = GetComponent<PlayerInput>();
@@ -60,7 +57,6 @@ public class PlayerController : CharacterBase {
         RotMove();      // 回転処理
         Avoidance();    // 回避処理
         Stop();         // 停止処理（慣性制御）
-        
     }
 
     // プレイヤーの向きを移動方向に合わせる処理
@@ -122,16 +118,10 @@ public class PlayerController : CharacterBase {
             rb.velocity = Vector3.zero;
         }
     }
-
-    
-
-
-  
-    
-
-    // ダメージ処理（未実装）
-    public override void TakeDamage() {
-        // isInvincible が true の場合はダメージ無効にするなどの処理を追加可能
+    private void OnCollisionStay(Collision collision) {
+        if (collision.gameObject.CompareTag("GatheringPoint")) {
+            collision.gameObject.GetComponent<GatheringPoint>().Interact();
+        }
     }
 
     // 回復処理（未実装）

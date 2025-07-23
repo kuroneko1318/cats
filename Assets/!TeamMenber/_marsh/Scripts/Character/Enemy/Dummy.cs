@@ -10,7 +10,7 @@ public class Dummy : EnemyBase {
 
     private void Update() {
         //デバッグでJキーでダメージ
-        if (Input.GetKeyDown(KeyCode.J)) TakeDamage();
+        if (Input.GetKeyDown(KeyCode.J)) TakeDamage(10, 1.1f, 0.3f, 2);
     }
 
     private IEnumerator ResetHitFlagAfterDelay(float delay) {
