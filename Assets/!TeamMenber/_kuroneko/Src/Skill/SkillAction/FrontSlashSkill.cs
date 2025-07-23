@@ -32,7 +32,7 @@ public class FrontSlashSkill : SkillBase
         Vector3 spawnPos = userPos.position + user.transform.up * 0.1f;
 
         // EffectManager を使ってエフェクトを生成
-        EffectManager.instance.SpawnEffect("ChargeFrontSkill", spawnPos, Quaternion.identity, 2f);
+        EffectManager.Instance.SpawnEffect("ChargeFrontSkill", spawnPos, Quaternion.identity, 2f);
 
         // 攻撃発生をタイミングに合わせて遅延実行
         user.GetComponent<MonoBehaviour>().StartCoroutine(DelayedAttack(user));
@@ -50,7 +50,7 @@ public class FrontSlashSkill : SkillBase
         Quaternion spawnRot = Quaternion.Euler(0f, -90f, 0f);
 
         // EffectManager を使ってエフェクトを生成
-        EffectManager.instance.SpawnEffect("FrontSkill", spawnPos, spawnRot, 1f);
+        EffectManager.Instance.SpawnEffect("FrontSkill", spawnPos, spawnRot, 1f);
 
         lastUseTime = Time.time;
 
