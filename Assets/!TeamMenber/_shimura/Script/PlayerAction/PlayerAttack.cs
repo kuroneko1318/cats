@@ -8,7 +8,8 @@ public class PlayerAttack : MonoBehaviour {
     // プレイヤーの入力管理
     PlayerInput input;
     InputAction attackAction;
-
+    [SerializeField]
+    Animator anim;
     // 攻撃判定用のコライダー（Trigger）
     public Collider attackCollider;
 
@@ -22,7 +23,10 @@ public class PlayerAttack : MonoBehaviour {
     private float attackCooldownDuration = 0.5f; // クールタイムの長さ
     private float attackCooldownTimer = 0f;    // クールタイム残り時間
 
-    void Start() {
+
+
+    private bool wasInIdle = false;
+    void Start() {
         // PlayerInput から Attack アクションを取得
         input = GetComponent<PlayerInput>();
         attackAction = input.actions["Attack"];
@@ -34,7 +38,8 @@ public class PlayerAttack : MonoBehaviour {
     void Update() {
         LowAttack();             // 攻撃処理
         HandleAttackCooldown();  // クールタイム処理
-    }
+        CheckAttackAnimationEnd();
+    }
 
     // 通常攻撃（3連コンボ）
     public void LowAttack() {
@@ -43,7 +48,14 @@ public class PlayerAttack : MonoBehaviour {
         // 攻撃ボタンが押された瞬間
         if (attackAction.WasPressedThisFrame()) {
             comboStep++; // コンボ段階を進める
-
+            if (comboStep == 1) {
+                anim.SetBool("Attack1",true);
+                
+            }
+            if (comboStep == 2) {
+                anim.SetBool("Attack2", true);
+               
+            }
             if (comboStep > 3) comboStep = 1; // 最大3段階まで
 
             comboTimer = comboResetTime; // コンボ猶予タイマーをリセット
@@ -57,6 +69,9 @@ public class PlayerAttack : MonoBehaviour {
             // 3段目まで出し切ったらクールタイム開始
             if (comboStep == 3) {
                 StartAttackCooldown();
+                anim.SetBool("Attack3", true);
+                
+
             }
         }
 
@@ -149,5 +164,35 @@ public class PlayerAttack : MonoBehaviour {
         attackCollider.enabled = false;              // 攻撃判定を無効化
     }
 
-    
+
+
+    void CheckAttackAnimationEnd() {
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+
+
+        if (stateInfo.IsName("Idle")) {
+            if (!wasInIdle) {
+                // Idle に入った瞬間
+                anim.SetBool("Attack1", false);
+                anim.SetBool("Attack2", false);
+                anim.SetBool("Attack3", false);
+                wasInIdle = true;
+            }
+        }
+        else {
+            wasInIdle = false;
+        }
+
+
+        if (stateInfo.IsName("Sword And Shield Slash") && stateInfo.normalizedTime >= 0.8f) {
+            anim.SetBool("Attack1", false);
+        }
+        if (stateInfo.IsName("Sword And Shield Slash (2)") && stateInfo.normalizedTime >= 0.8f) {
+            anim.SetBool("Attack2", false);
+        }
+        if (stateInfo.IsName("Sword And Shield Slash (1)") && stateInfo.normalizedTime >= 0.8f) {
+            anim.SetBool("Attack3", false);
+        }
+    }
+
 }
