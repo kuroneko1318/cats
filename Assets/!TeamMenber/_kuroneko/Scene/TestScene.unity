@@ -547,7 +547,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerModel
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 849777628155745733, guid: 209c4a4adfc2f5e49b87429963b00b50, type: 3}
+    - {fileID: 1014715534240522003, guid: 209c4a4adfc2f5e49b87429963b00b50, type: 3}
+    - {fileID: 6232701732076420801, guid: 209c4a4adfc2f5e49b87429963b00b50, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -572,6 +575,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: EffectManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3936170950618140277, guid: 24705220beb1cb446b7f5db45dde2fc2, type: 3}
+      propertyPath: effectEntries.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936170950618140277, guid: 24705220beb1cb446b7f5db45dde2fc2, type: 3}
+      propertyPath: effectEntries.Array.data[1].id
+      value: ChargeFrontSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936170950618140277, guid: 24705220beb1cb446b7f5db45dde2fc2, type: 3}
+      propertyPath: effectEntries.Array.data[1].prefab
+      value: 
+      objectReference: {fileID: 5978609795072205221, guid: d5d60f65f15e7c046b3c1a16f189ab3a, type: 3}
     - target: {fileID: 5635969800467396618, guid: 24705220beb1cb446b7f5db45dde2fc2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
