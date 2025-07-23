@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2199119272194566904}
   m_Layer: 0
   m_Name: Crystals
-  m_TagString: Untagged
+  m_TagString: weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34336,7 +34336,7 @@ GameObject:
   - component: {fileID: 6235268269222091258}
   m_Layer: 0
   m_Name: FrontSkillEffect
-  m_TagString: Untagged
+  m_TagString: weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

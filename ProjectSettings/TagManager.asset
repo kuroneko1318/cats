@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GatheringPoint
   - bag
+  - weapon
   layers:
   - Default
   - TransparentFX
