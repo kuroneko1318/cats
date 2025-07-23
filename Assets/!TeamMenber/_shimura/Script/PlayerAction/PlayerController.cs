@@ -12,6 +12,8 @@ public class PlayerController : CharacterBase {
     InputAction attackAction;
     InputAction avoidanceAction;
     GameObject cam;
+    [SerializeField]
+    Animator anim;
     // 物理挙動
     public Rigidbody rb;
 
@@ -34,6 +36,7 @@ public class PlayerController : CharacterBase {
 
 
     void Start() {
+        
         // PlayerInput コンポーネントの取得
         input = GetComponent<PlayerInput>();
         if (input == null) {
@@ -65,12 +68,13 @@ public class PlayerController : CharacterBase {
 
     // プレイヤーの向きを移動方向に合わせる処理
     public void RotMove() {
+        
         diff = transform.position - latestPos; // 前回位置との差分
         latestPos = transform.position;        // 最新位置を保存
 
         // 一定以上動いた場合のみ回転を更新
         if (diff.magnitude > 0.01f) {
-            transform.rotation = Quaternion.LookRotation(diff);
+            transform.rotation = Quaternion.LookRotation(new Vector3(diff.x,0,diff.z));
 
         }
     }
@@ -81,14 +85,19 @@ public class PlayerController : CharacterBase {
 
         // 入力がある場合のみ移動
         if (moveAction.IsInProgress()) {
+            anim.SetBool("Run",true);
             Vector3 dir = moveAction.ReadValue<Vector3>() * moveSpeed;
             rb.velocity = new Vector3(dir.x, 0, dir.z);
             direction = dir;
+        }
+        else {
+            anim.SetBool("Run", false);
         }
     }
 
     // 回避処理（高速移動＋無敵＋クールタイム）
     public void Avoidance() {
+        
         // クールタイム中は回避できない
         if (cooldownTimer > 0f) {
             cooldownTimer -= Time.deltaTime;
@@ -97,6 +106,8 @@ public class PlayerController : CharacterBase {
 
         // 回避開始（押した瞬間のみ）
         if (avoidanceAction.WasPressedThisFrame() && !isAvoiding) {
+            anim.SetBool("Avoidance", true);
+
             isAvoiding = true;
             isInvincible = true;
             avoidanceTimer = avoidanceDuration;
@@ -111,7 +122,9 @@ public class PlayerController : CharacterBase {
             avoidanceTimer -= Time.deltaTime;
             if (avoidanceTimer <= 0f) {
                 isAvoiding = false;
+                
                 isInvincible = false;
+                
             }
         }
     }
@@ -119,6 +132,7 @@ public class PlayerController : CharacterBase {
     // 停止処理（キー入力がないときに慣性を止める。ただし回避中は除外）
     public void Stop() {
         if (!isAvoiding && !moveAction.IsInProgress() && !avoidanceAction.IsInProgress()) {
+            anim.SetBool("Avoidance", false);
             rb.velocity = Vector3.zero;
         }
     }
@@ -131,7 +145,7 @@ public class PlayerController : CharacterBase {
 
     // ダメージ処理（未実装）
     public override void TakeDamage() {
-        // isInvincible が true の場合はダメージ無効にするなどの処理を追加可能
+        
     }
 
     // 回復処理（未実装）

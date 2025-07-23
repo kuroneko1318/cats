@@ -8,7 +8,8 @@ public class PlayerAttack : MonoBehaviour {
     // プレイヤーの入力管理
     PlayerInput input;
     InputAction attackAction;
-
+    [SerializeField]
+    Animator anim;
     // 攻撃判定用のコライダー（Trigger）
     public Collider attackCollider;
 
@@ -34,7 +35,8 @@ public class PlayerAttack : MonoBehaviour {
     void Update() {
         LowAttack();             // 攻撃処理
         HandleAttackCooldown();  // クールタイム処理
-    }
+        CheckAttackAnimationEnd();
+    }
 
     // 通常攻撃（3連コンボ）
     public void LowAttack() {
@@ -43,7 +45,14 @@ public class PlayerAttack : MonoBehaviour {
         // 攻撃ボタンが押された瞬間
         if (attackAction.WasPressedThisFrame()) {
             comboStep++; // コンボ段階を進める
-
+            if (comboStep == 1) {
+                anim.SetBool("Attack1",true);
+                
+            }
+            if (comboStep == 2) {
+                anim.SetBool("Attack2", true);
+               
+            }
             if (comboStep > 3) comboStep = 1; // 最大3段階まで
 
             comboTimer = comboResetTime; // コンボ猶予タイマーをリセット
@@ -57,6 +66,9 @@ public class PlayerAttack : MonoBehaviour {
             // 3段目まで出し切ったらクールタイム開始
             if (comboStep == 3) {
                 StartAttackCooldown();
+                anim.SetBool("Attack3", true);
+                
+
             }
         }
 
@@ -149,5 +161,20 @@ public class PlayerAttack : MonoBehaviour {
         attackCollider.enabled = false;              // 攻撃判定を無効化
     }
 
-    
+
+
+    void CheckAttackAnimationEnd() {
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+
+        if (stateInfo.IsName("Attack1") && stateInfo.normalizedTime >= 1.0f) {
+            anim.SetBool("Attack1", false);
+        }
+        if (stateInfo.IsName("Attack2") && stateInfo.normalizedTime >= 1.0f) {
+            anim.SetBool("Attack2", false);
+        }
+        if (stateInfo.IsName("Attack3") && stateInfo.normalizedTime >= 1.0f) {
+            anim.SetBool("Attack3", false);
+        }
+    }
+
 }
