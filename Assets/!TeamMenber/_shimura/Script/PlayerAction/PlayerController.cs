@@ -77,23 +77,40 @@ public class PlayerController : PlayerBase {
         //   transform.rotation = Quaternion.LookRotation(new Vector3(diff.x,0,diff.z));
         //
         // }
-        transform.rotation=cam.transform.rotation;
+        transform.rotation=new Quaternion(0, cam.transform.rotation.y,0, cam.transform.rotation.w);
     }
     // プレイヤーの移動処理
     public void PlayerMove() {
-        // 回避中は移動を無効化
+
         if (isAvoiding) return;
 
-        // 入力がある場合のみ移動
-        if (moveAction.IsInProgress()) {
-            anim.SetBool("Run",true);
-            Vector3 dir = transform.forward * moveSpeed;
-            rb.velocity = new Vector3(dir.x, 0, dir.z);
-            direction = dir;
+        Vector3 inputVector = moveAction.ReadValue<Vector3>();
+        if (inputVector != Vector3.zero) {
+            anim.SetBool("Run", true);
+
+            // カメラの向きを基準にした移動方向を計算
+            Vector3 camForward = cam.transform.forward;
+            Vector3 camRight = cam.transform.right;
+
+            // Y軸方向の影響を除去
+            camForward.y = 0;
+            camRight.y = 0;
+            camForward.Normalize();
+            camRight.Normalize();
+
+            // 入力に基づく移動方向
+            Vector3 moveDir = camForward * inputVector.y + camRight * inputVector.x;
+
+            rb.velocity = moveDir * moveSpeed;
+            direction = moveDir;
+
+            // プレイヤーの向きを移動方向に合わせる
+            transform.rotation = Quaternion.LookRotation(moveDir);
         }
         else {
             anim.SetBool("Run", false);
         }
+
     }
 
     // 回避処理（高速移動＋無敵＋クールタイム）
@@ -139,11 +156,7 @@ public class PlayerController : PlayerBase {
     }
 
 
-    private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.CompareTag("")) {
-
-        }
-    }
+   
 
 
 
