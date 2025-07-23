@@ -23,7 +23,10 @@ public class PlayerAttack : MonoBehaviour {
     private float attackCooldownDuration = 0.5f; // クールタイムの長さ
     private float attackCooldownTimer = 0f;    // クールタイム残り時間
 
-    void Start() {
+
+
+    private bool wasInIdle = false;
+    void Start() {
         // PlayerInput から Attack アクションを取得
         input = GetComponent<PlayerInput>();
         attackAction = input.actions["Attack"];
@@ -166,13 +169,28 @@ public class PlayerAttack : MonoBehaviour {
     void CheckAttackAnimationEnd() {
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 
-        if (stateInfo.IsName("Attack1") && stateInfo.normalizedTime >= 1.0f) {
+
+        if (stateInfo.IsName("Idle")) {
+            if (!wasInIdle) {
+                // Idle に入った瞬間
+                anim.SetBool("Attack1", false);
+                anim.SetBool("Attack2", false);
+                anim.SetBool("Attack3", false);
+                wasInIdle = true;
+            }
+        }
+        else {
+            wasInIdle = false;
+        }
+
+
+        if (stateInfo.IsName("Sword And Shield Slash") && stateInfo.normalizedTime >= 0.8f) {
             anim.SetBool("Attack1", false);
         }
-        if (stateInfo.IsName("Attack2") && stateInfo.normalizedTime >= 1.0f) {
+        if (stateInfo.IsName("Sword And Shield Slash (2)") && stateInfo.normalizedTime >= 0.8f) {
             anim.SetBool("Attack2", false);
         }
-        if (stateInfo.IsName("Attack3") && stateInfo.normalizedTime >= 1.0f) {
+        if (stateInfo.IsName("Sword And Shield Slash (1)") && stateInfo.normalizedTime >= 0.8f) {
             anim.SetBool("Attack3", false);
         }
     }

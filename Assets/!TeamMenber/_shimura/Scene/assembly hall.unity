@@ -2029,6 +2029,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 849777628155745733, guid: 209c4a4adfc2f5e49b87429963b00b50, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 824264383}
+    - target: {fileID: 849777628155745733, guid: 209c4a4adfc2f5e49b87429963b00b50, type: 3}
       propertyPath: attackCollider
       value: 
       objectReference: {fileID: 1423489432}
