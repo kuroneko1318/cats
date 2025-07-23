@@ -156,7 +156,11 @@ public class PlayerController : PlayerBase {
     }
 
 
-   
+    private void OnCollisionStay(Collision collision) {
+        if (collision.gameObject.CompareTag("GatheringPoint")) {
+            collision.gameObject.GetComponent<GatheringPoint>().Interact();
+        }
+    }
 
 
 
