@@ -22,13 +22,15 @@ public class ItemManager : SystemObject<ItemManager> {
         Debug.Log("ItemManager@InitializeŠJn");
 
         // ‚±‚±‚ÅƒAƒCƒeƒ€5í‚ğ“o˜^iIDj
+        itemList.Add(new ItemBase("‰ñ•œ–ò", 3000, eItemType.Heal));
+        itemList.Add(new ItemBase("–Ø‚ÌÀ", 3001, eItemType.Heal));
         itemList.Add(new ItemBase("–ò‘", 4001, eItemType.Material));
-        itemList.Add(new ItemBase("–_", 4002, eItemType.Material));
-        itemList.Add(new ItemBase("ÎA", 4003, eItemType.Material));
-        itemList.Add(new ItemBase("ÎB", 4004, eItemType.Material));
-        itemList.Add(new ItemBase("“S", 4005, eItemType.Material));
-        itemList.Add(new ItemBase("“S", 4006, eItemType.Material));
-        itemList.Add(new ItemBase("‰ñ•œ–ò", 4007, eItemType.Heal));
+        itemList.Add(new ItemBase("•R", 4002, eItemType.Material));
+        itemList.Add(new ItemBase("ÎA", 4020, eItemType.Material));
+        itemList.Add(new ItemBase("ÎB", 4021, eItemType.Material));
+        itemList.Add(new ItemBase("“S", 4030, eItemType.Material));
+        itemList.Add(new ItemBase("“º", 4031, eItemType.Material));
+        itemList.Add(new ItemBase("–_", 4100, eItemType.Material));
         weaponList.Add(new WeaponBase("•ŠíA", 1001,10));
         itemList.Add(new ArmorBase("–h‹ïA", 2001, 30));
     }

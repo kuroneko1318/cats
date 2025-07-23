@@ -16,6 +16,8 @@ public abstract class GatheringPoint : MonoBehaviour {
     public float respawnTime = 30f;
     protected bool isAvailable = true;
 
+    public Inventory bag;
+
     public virtual void Interact() {
         if (!isAvailable) return;
 
