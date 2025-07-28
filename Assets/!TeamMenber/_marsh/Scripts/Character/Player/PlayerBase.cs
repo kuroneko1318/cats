@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 //Update にプレイヤーの操作ぶち込む
@@ -11,6 +13,17 @@ public class PlayerBase : CharacterBase {
     public float criticalChance;
     //会心ダメージ倍率
     public float criticalMultiplier;
+
+    private const int _WEAPON_ID = 1001;
+
+    private string inputItemString;
+    [SerializeField]
+    private TMP_InputField EquipmentinputField;
+    public ItemManager itemManager;
+    public ItemManager weaponManager;
+    WeaponBase weapon;
+    Inventory inventory = null;
+    [SerializeField] RawImage swordImage;
 
     [SerializeField]
     public Animator animator;
