@@ -736,6 +736,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 879747490913826494, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 879747490913826494, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
       propertyPath: m_TagString
       value: weapon
       objectReference: {fileID: 0}
@@ -815,7 +819,8 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6232730547862427361, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -900,12 +905,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 0.44070137, y: 0.11437534, z: 1.0119973}
-  m_Center: {x: 0.14647585, y: 0.008142947, z: 0.3424563}
+  m_Size: {x: 0.33720365, y: 0.08895296, z: 0.78870726}
+  m_Center: {x: 0.055494893, y: -0.0045682485, z: 0.35394698}
 --- !u!1001 &1604247571
 PrefabInstance:
   m_ObjectHideFlags: 0
