@@ -67,15 +67,21 @@ public class PlayerController : PlayerBase {
     // プレイヤーの向きを移動方向に合わせる処理
     public void RotMove() {
 
-        //diff = transform.position - latestPos; // 前回位置との差分
-        //latestPos = transform.position;        // 最新位置を保存
 
-        // 一定以上動いた場合のみ回転を更新
-        //if (diff.magnitude > 0.01f) {
-        //   transform.rotation = Quaternion.LookRotation(new Vector3(diff.x,0,diff.z));
-        //
-        // }
-        transform.rotation = new Quaternion(0, cam.transform.rotation.y, 0, cam.transform.rotation.w);
+        Vector2 inputVector = moveAction.ReadValue<Vector2>();
+        if (inputVector != Vector2.zero) {
+            Vector3 camForward = cam.transform.forward;
+            Vector3 camRight = cam.transform.right;
+
+            camForward.y = 0;
+            camRight.y = 0;
+            camForward.Normalize();
+            camRight.Normalize();
+
+            Vector3 moveDir = camForward * inputVector.y + camRight * inputVector.x;
+
+            transform.rotation = Quaternion.LookRotation(moveDir);
+        }
     }
 
     // プレイヤーの移動処理
