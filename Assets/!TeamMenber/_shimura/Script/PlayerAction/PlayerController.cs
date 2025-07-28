@@ -124,7 +124,7 @@ public class PlayerController : PlayerBase {
 
         // 回避開始（押した瞬間のみ）
         if (avoidanceAction.WasPressedThisFrame() && !isAvoiding) {
-            animator.SetBool("Avoidance", true);
+            animator.SetTrigger("Avoidance");
 
             isAvoiding = true;
             isInvincible = true;
@@ -132,17 +132,18 @@ public class PlayerController : PlayerBase {
             cooldownTimer = avoidanceCooldown;
 
             // 前方に高速移動
-            rb.velocity = transform.forward * moveSpeed * 3f;
+            rb.velocity = transform.forward * moveSpeed * 2f;
         }
 
         // 回避中の時間管理
         if (isAvoiding) {
             avoidanceTimer -= Time.deltaTime;
             if (avoidanceTimer <= 0f) {
+                
                 isAvoiding = false;
 
                 isInvincible = false;
-
+               // animator.SetBool("Avoidance", false);
             }
         }
     }
@@ -150,7 +151,7 @@ public class PlayerController : PlayerBase {
     // 停止処理（キー入力がないときに慣性を止める。ただし回避中は除外）
     public void Stop() {
         if (!isAvoiding && !moveAction.IsInProgress() && !avoidanceAction.IsInProgress()) {
-            animator.SetBool("Avoidance", false);
+            //animator.SetBool("Avoidance", false);
             rb.velocity = Vector3.zero;
         }
     }
