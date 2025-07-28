@@ -66,7 +66,7 @@ public class PlayerAttack : MonoBehaviour {
                 anim.SetBool("Attack2", true);
                
             }
-            if (comboStep > 3) comboStep = 1; // 最大3段階まで
+            if (comboStep > 3) comboStep = 0; // 最大3段階まで
 
             comboTimer = comboResetTime; // コンボ猶予タイマーをリセット
 
@@ -74,7 +74,7 @@ public class PlayerAttack : MonoBehaviour {
             // animator.SetTrigger("Attack" + comboStep);
 
             // 攻撃判定をサイズに応じて有効化
-            StartCoroutine(EnableAttackCollider(comboStep));
+            //StartCoroutine(EnableAttackCollider(comboStep));
 
             // 3段目まで出し切ったらクールタイム開始
             if (comboStep == 3) {
