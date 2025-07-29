@@ -67,15 +67,21 @@ public class PlayerController : PlayerBase {
     // プレイヤーの向きを移動方向に合わせる処理
     public void RotMove() {
 
-        //diff = transform.position - latestPos; // 前回位置との差分
-        //latestPos = transform.position;        // 最新位置を保存
 
-        // 一定以上動いた場合のみ回転を更新
-        //if (diff.magnitude > 0.01f) {
-        //   transform.rotation = Quaternion.LookRotation(new Vector3(diff.x,0,diff.z));
-        //
-        // }
-        transform.rotation = new Quaternion(0, cam.transform.rotation.y, 0, cam.transform.rotation.w);
+        Vector2 inputVector = moveAction.ReadValue<Vector2>();
+        if (inputVector != Vector2.zero) {
+            Vector3 camForward = cam.transform.forward;
+            Vector3 camRight = cam.transform.right;
+
+            camForward.y = 0;
+            camRight.y = 0;
+            camForward.Normalize();
+            camRight.Normalize();
+
+            Vector3 moveDir = camForward * inputVector.y + camRight * inputVector.x;
+
+            transform.rotation = Quaternion.LookRotation(moveDir);
+        }
     }
 
     // プレイヤーの移動処理
@@ -118,7 +124,7 @@ public class PlayerController : PlayerBase {
 
         // 回避開始（押した瞬間のみ）
         if (avoidanceAction.WasPressedThisFrame() && !isAvoiding) {
-            animator.SetBool("Avoidance", true);
+            animator.SetTrigger("Avoidance");
 
             isAvoiding = true;
             isInvincible = true;
@@ -126,17 +132,18 @@ public class PlayerController : PlayerBase {
             cooldownTimer = avoidanceCooldown;
 
             // 前方に高速移動
-            rb.velocity = transform.forward * moveSpeed * 3f;
+            rb.velocity = transform.forward * moveSpeed * 2f;
         }
 
         // 回避中の時間管理
         if (isAvoiding) {
             avoidanceTimer -= Time.deltaTime;
             if (avoidanceTimer <= 0f) {
+                
                 isAvoiding = false;
 
                 isInvincible = false;
-
+               // animator.SetBool("Avoidance", false);
             }
         }
     }
@@ -144,7 +151,7 @@ public class PlayerController : PlayerBase {
     // 停止処理（キー入力がないときに慣性を止める。ただし回避中は除外）
     public void Stop() {
         if (!isAvoiding && !moveAction.IsInProgress() && !avoidanceAction.IsInProgress()) {
-            animator.SetBool("Avoidance", false);
+            //animator.SetBool("Avoidance", false);
             rb.velocity = Vector3.zero;
         }
     }

@@ -10,6 +10,8 @@ public class PlayerAttack : MonoBehaviour {
     InputAction attackAction;
     [SerializeField]
     Animator anim;
+
+
     // 攻撃判定用のコライダー（Trigger）
     public Collider attackCollider;
 
@@ -30,6 +32,7 @@ public class PlayerAttack : MonoBehaviour {
     private SkillManager skillManager;
     private FrontSlashSkill frontSlashSkill;
     void Start() {
+        attackCollider.enabled = false;
         // PlayerInput から Attack アクションを取得
         input = GetComponent<PlayerInput>();
         attackAction = input.actions["Attack"];
@@ -53,6 +56,12 @@ public class PlayerAttack : MonoBehaviour {
 
     // 通常攻撃（3連コンボ）
     public void LowAttack() {
+        if (comboStep > 0) {
+            attackCollider.enabled=true;
+        }
+        else {
+            attackCollider.enabled = false;
+        }
         if (isAttackCooldown) return; // クールタイム中は攻撃不可
 
         // 攻撃ボタンが押された瞬間
@@ -66,7 +75,7 @@ public class PlayerAttack : MonoBehaviour {
                 anim.SetBool("Attack2", true);
                
             }
-            if (comboStep > 3) comboStep = 1; // 最大3段階まで
+            if (comboStep > 3) comboStep = 0; // 最大3段階まで
 
             comboTimer = comboResetTime; // コンボ猶予タイマーをリセット
 
@@ -74,7 +83,7 @@ public class PlayerAttack : MonoBehaviour {
             // animator.SetTrigger("Attack" + comboStep);
 
             // 攻撃判定をサイズに応じて有効化
-            StartCoroutine(EnableAttackCollider(comboStep));
+            //StartCoroutine(EnableAttackCollider(comboStep));
 
             // 3段目まで出し切ったらクールタイム開始
             if (comboStep == 3) {
@@ -115,7 +124,7 @@ public class PlayerAttack : MonoBehaviour {
             // animator.SetTrigger("Attack" + comboStep);
 
             // 攻撃判定をサイズに応じて有効化
-            StartCoroutine(EnableAttackCollider(comboStep));
+            //StartCoroutine(EnableAttackCollider(comboStep));
 
             // 3段目まで出し切ったらクールタイム開始
             if (comboStep == 2) {
@@ -169,9 +178,9 @@ public class PlayerAttack : MonoBehaviour {
                 break;
         }
 
-        attackCollider.enabled = true;               // 攻撃判定を有効化
+        //attackCollider.enabled = true;               // 攻撃判定を有効化
         yield return new WaitForSeconds(0.2f);       // 判定持続時間
-        attackCollider.enabled = false;              // 攻撃判定を無効化
+        //attackCollider.enabled = false;              // 攻撃判定を無効化
     }
 
 
