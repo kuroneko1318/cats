@@ -156,4 +156,7 @@ public class PlayerController : PlayerBase {
         }
     }
 
+    public void AddAttack(int _weaponATK) {
+        attack += _weaponATK;
+    }
 }
