@@ -13,7 +13,7 @@ public class PlayerBase : CharacterBase {
     public float criticalChance;
     //会心ダメージ倍率
     public float criticalMultiplier;
-
+    protected bool getM = false;
     private const int _WEAPON_ID = 1001;
 
     private string inputItemString;
@@ -56,10 +56,5 @@ public class PlayerBase : CharacterBase {
         if(hp < 0) Dead();
     }
 
-    private void OnTriggerStay(Collider other) {
-        if (other.gameObject.CompareTag("GatheringPoint") && Input.GetKeyDown(KeyCode.F)) {
-            var point = other.gameObject.GetComponent<GatheringPoint>();
-            point?.Interact();
-        }
-    }
+    
 }
