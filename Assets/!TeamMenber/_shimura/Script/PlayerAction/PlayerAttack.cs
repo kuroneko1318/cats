@@ -17,7 +17,7 @@ public class PlayerAttack : MonoBehaviour {
 
     // コンボ管理
     public int comboStep = 0;                  // 現在のコンボ段階（1〜3）
-    private float comboResetTime = 1.0f;       // コンボ入力猶予時間
+    private float comboResetTime = 0.5f;       // コンボ入力猶予時間
     private float comboTimer = 0f;             // コンボ猶予タイマー
 
     // クールタイム管理
