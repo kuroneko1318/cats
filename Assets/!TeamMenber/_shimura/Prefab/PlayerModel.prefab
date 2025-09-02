@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 2115844836997347348}
   - component: {fileID: 2184610891598908203}
   - component: {fileID: 9005193623813135088}
-  - component: {fileID: 4385295385169059016}
+  - component: {fileID: 2171582792210723651}
   - component: {fileID: 2203553697699575889}
   - component: {fileID: 2579443338632348065}
   - component: {fileID: 8574958922462155316}
@@ -186,8 +186,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &4385295385169059016
-BoxCollider:
+--- !u!136 &2171582792210723651
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -204,9 +204,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.5, y: 1.75, z: 0.4}
-  m_Center: {x: 0, y: 0.9, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 1.7
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.85, z: 0}
 --- !u!114 &2203553697699575889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,12 +223,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 0
   maxHp: 0
+  defence: 0
   attack: 0
   stamina: 0
   moveSpeed: 10
-  coolTime: 0
   isInvincible: 0
-  anim: {fileID: 2184610891598908203}
+  criticalChance: 0
+  criticalMultiplier: 0
+  EquipmentinputField: {fileID: 0}
+  itemManager: {fileID: 0}
+  weaponManager: {fileID: 0}
+  swordImage: {fileID: 0}
+  animator: {fileID: 0}
   rb: {fileID: 9005193623813135088}
   latestPos: {x: 0, y: 0, z: 0}
   direction: {x: 0, y: 0, z: 0}
