@@ -494,7 +494,7 @@ MonoBehaviour:
   offset: {x: 0, y: 2.5, z: -4}
   mouseSensitivity: 0.1
   minYAngle: -35
-  maxYAngle: 60
+  maxYAngle: 50
 --- !u!1001 &559551161
 PrefabInstance:
   m_ObjectHideFlags: 0
