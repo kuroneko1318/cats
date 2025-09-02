@@ -33,6 +33,12 @@ public class DamagePopupController : MonoBehaviour {
     private bool isColorFading = false;
     private float colorFadeTimer = 0f;
 
+    private Camera mainCamera;
+
+    private void Start() {
+        mainCamera = Camera.main;
+    }
+
     //ダメージを受ける処理
     //damage = ダメージ, isCritical = 会心
     public void AddDamage(int damage, bool isCritical = false) {
@@ -61,10 +67,15 @@ public class DamagePopupController : MonoBehaviour {
         }
     }
 
-
-
-
     private void Update() {
+        // カメラの方向に向ける（Y軸は固定）
+        if (mainCamera != null) {
+            Vector3 lookDirection = transform.position - mainCamera.transform.position;
+            lookDirection.y = 0f; // Y軸の回転を固定（必要に応じて調整）
+            transform.rotation = Quaternion.LookRotation(lookDirection);
+        }
+
+        // 以下は既存の処理（フェード、スケール、色変更など）
         timer += Time.deltaTime;
 
         if (!isDisappearing && timer >= disappearDelay) {
@@ -72,7 +83,6 @@ public class DamagePopupController : MonoBehaviour {
             timer = 0f;
         }
 
-        //フェード処理
         if (isDisappearing) {
             transform.position += Vector3.up * riseSpeed * Time.deltaTime;
             Color c = textMesh.color;
@@ -84,7 +94,6 @@ public class DamagePopupController : MonoBehaviour {
             }
         }
 
-        //スケールを初期化
         if (isScaling) {
             scaleTimer += Time.deltaTime;
             float t = Mathf.Clamp01(scaleTimer / scaleDuration);
@@ -94,7 +103,6 @@ public class DamagePopupController : MonoBehaviour {
             }
         }
 
-        //色変更
         if (isColorFading) {
             colorFadeTimer += Time.deltaTime;
             float t = Mathf.Clamp01(colorFadeTimer / colorFadeDuration);
@@ -103,6 +111,5 @@ public class DamagePopupController : MonoBehaviour {
                 isColorFading = false;
             }
         }
-
     }
 }
