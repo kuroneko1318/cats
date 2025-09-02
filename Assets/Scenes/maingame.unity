@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 02aa47ab97ed5234aa8c40f9efbb2aac, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: fabecc0be847b6f4cbdb91e518f64aaf, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -828,7 +828,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2115844836997347348, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -15.16
       objectReference: {fileID: 0}
     - target: {fileID: 2115844836997347348, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -886,11 +886,16 @@ PrefabInstance:
       propertyPath: attackCollider
       value: 
       objectReference: {fileID: 1451272236}
+    - target: {fileID: 4385295385169059016, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
+      propertyPath: m_Size.x
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 6232730547862427361, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4385295385169059016, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -1248,7 +1253,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
