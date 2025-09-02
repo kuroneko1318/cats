@@ -23,7 +23,7 @@ public class PlayerController : PlayerBase {
 
     // 回避処理関連
     private bool isAvoiding = false;         // 回避中フラグ
-    
+    public static bool attackFlag = false;
     private float avoidanceTimer = 0;        // 回避時間の残り
     private float avoidanceDuration = 0.002f;  // 回避の持続時間
 
@@ -65,11 +65,13 @@ public class PlayerController : PlayerBase {
     }
 
     void Update() {
-        PlayerMove();   // 移動処理
-        RotMove();      // 回転処理
-        Avoidance();    // 回避処理
-        Stop();         // 停止処理（慣性制御）
-
+        if(attackFlag==false)
+        {
+            PlayerMove();   // 移動処理
+            RotMove();      // 回転処理
+            Avoidance();    // 回避処理
+            Stop();         // 停止処理（慣性制御）
+        }
     }
 
     // プレイヤーの向きを移動方向に合わせる処理

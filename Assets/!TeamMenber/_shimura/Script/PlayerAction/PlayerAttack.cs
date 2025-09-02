@@ -22,7 +22,7 @@ public class PlayerAttack : MonoBehaviour {
 
     // クールタイム管理
     private bool isAttackCooldown = false;     // クールタイム中かどうか
-    private float attackCooldownDuration = 0.5f; // クールタイムの長さ
+    [SerializeField]private float attackCooldownDuration = 1.5f; // クールタイムの長さ
     private float attackCooldownTimer = 0f;    // クールタイム残り時間
 
 
@@ -61,11 +61,13 @@ public class PlayerAttack : MonoBehaviour {
         }
         else {
             attackCollider.enabled = false;
+            
         }
         if (isAttackCooldown) return; // クールタイム中は攻撃不可
 
         // 攻撃ボタンが押された瞬間
         if (attackAction.WasPressedThisFrame()) {
+            PlayerController.attackFlag = true;
             comboStep++; // コンボ段階を進める
             if (comboStep == 1) {
                 anim.SetBool("Attack1",true);
@@ -103,6 +105,7 @@ public class PlayerAttack : MonoBehaviour {
         if (comboStep > 0) {
             comboTimer -= Time.deltaTime;
             if (comboTimer <= 0f) {
+                PlayerController.attackFlag = false;
                 comboStep = 0;           // コンボリセット
                 StartAttackCooldown();  // コンボ中断時もクールタイム開始
             }
@@ -128,6 +131,7 @@ public class PlayerAttack : MonoBehaviour {
 
             // 3段目まで出し切ったらクールタイム開始
             if (comboStep == 2) {
+                //PlayerController.attackFlag = false;
                 StartAttackCooldown();
             }
         }
@@ -141,6 +145,7 @@ public class PlayerAttack : MonoBehaviour {
         if (comboStep > 0) {
             comboTimer -= Time.deltaTime;
             if (comboTimer <= 0f) {
+                
                 comboStep = 0;           // コンボリセット
                 StartAttackCooldown();  // コンボ中断時もクールタイム開始
             }
@@ -149,6 +154,7 @@ public class PlayerAttack : MonoBehaviour {
 
     // クールタイム開始処理
     private void StartAttackCooldown() {
+        
         isAttackCooldown = true;
         attackCooldownTimer = attackCooldownDuration;
     }
