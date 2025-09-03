@@ -8,7 +8,7 @@ public class BushGatheringPoint : GatheringPoint {
         pointType = GatheringPointType.Bush;
     }
 
-    protected override void Gather() {
+    public override void Gather() {
         Debug.Log("茂みから薬草を採取しました！");
         // アイテム追加処理など
         bag.AddItem(ItemManager.Instance.GetItemByName("薬草"), Random.Range(1, 5));

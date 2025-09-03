@@ -11,7 +11,7 @@ public class PlayerController : PlayerBase {
     InputAction jumpAction;
     InputAction attackAction;
     InputAction avoidanceAction;
-    InputAction MateliargetAction;
+    InputAction GatherAction;
     GameObject cam;
     // 物理挙動
     public Rigidbody rb;
@@ -55,8 +55,8 @@ public class PlayerController : PlayerBase {
         }
 
 
-        MateliargetAction = input.actions["Mateliar"];
-        if (MateliargetAction == null) {
+        GatherAction = input.actions["Gather"];
+        if (GatherAction == null) {
             Debug.LogError("Mateliar アクションが見つかりません");
         }
 
@@ -158,13 +158,6 @@ public class PlayerController : PlayerBase {
         }
     }
 
-    public void MateGet() {
-        if (MateliargetAction.WasPressedThisFrame()) {
-            getM = true;
-        }
-       
-    }
-
 
     // 停止処理（キー入力がないときに慣性を止める。ただし回避中は除外）
     public void Stop() {
@@ -179,12 +172,10 @@ public class PlayerController : PlayerBase {
     }
 
     private void OnTriggerStay(Collider other) {
-       
 
-
-            if (other.gameObject.CompareTag("GatheringPoint")&&getM==true) {
+            if (other.gameObject.CompareTag("GatheringPoint")&& GatherAction.WasPressedThisFrame()) {
                 var point = other.gameObject.GetComponent<GatheringPoint>();
-                point?.Interact();
+                point?.Gather();
             }
         
     }

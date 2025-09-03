@@ -51,7 +51,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Mateliar",
+                    "name": "Gather",
                     "type": "Button",
                     "id": "df79aed9-2c48-4e39-9373-4a310e61612e",
                     "expectedControlType": "",
@@ -211,7 +211,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Mateliar",
+                    "action": "Gather",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "23085a8a-a40e-49ea-863c-1aff6e04f23f",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gather",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

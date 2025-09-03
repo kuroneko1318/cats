@@ -29,7 +29,7 @@ public abstract class GatheringPoint : MonoBehaviour {
         StartCoroutine(RespawnCoroutine());
     }
 
-    protected abstract void Gather();
+    public abstract void Gather();
 
     private IEnumerator RespawnCoroutine() {
         isAvailable = false;

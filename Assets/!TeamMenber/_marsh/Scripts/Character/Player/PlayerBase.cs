@@ -13,7 +13,6 @@ public class PlayerBase : CharacterBase {
     public float criticalChance;
     //会心ダメージ倍率
     public float criticalMultiplier;
-    protected bool getM = false;
     private const int _WEAPON_ID = 1001;
 
     private string inputItemString;
