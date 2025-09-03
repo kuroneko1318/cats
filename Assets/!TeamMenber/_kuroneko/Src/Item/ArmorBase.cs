@@ -8,7 +8,7 @@ public class ArmorBase : ItemBase
 
     // コンストラクタ：新しいアイテムを作成
     public ArmorBase(string name, int id, int hp, int skill1 = 0, int skill2 = 0) 
-        : base(name, id, eItemType.Armor, skill1, skill2){
+        : base(name, id, eItemType.Armor, Resources.Load<Sprite>("icon/armor"), skill1, skill2){
 
         armorHp = hp;
     }

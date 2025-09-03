@@ -20,11 +20,14 @@ public class ItemManager : SystemObject<ItemManager> {
     //  コンストラクタ：初期化時に全アイテムを登録
     public override void Initialize() {
         Debug.Log("ItemManager　Initialize開始");
+        Sprite potionIcon = Resources.Load<Sprite>("icon/potion");
+        Sprite herbIcon = Resources.Load<Sprite>("icon/herb");
+
 
         // ここでアイテム5種を登録（ID）
-        itemList.Add(new ItemBase("回復薬", 3000, eItemType.Heal));
+        itemList.Add(new ItemBase("回復薬", 3000, eItemType.Heal, potionIcon));
         itemList.Add(new ItemBase("木の実", 3001, eItemType.Heal));
-        itemList.Add(new ItemBase("薬草", 4001, eItemType.Material));
+        itemList.Add(new ItemBase("薬草", 4001, eItemType.Material, herbIcon));
         itemList.Add(new ItemBase("紐", 4002, eItemType.Material));
         itemList.Add(new ItemBase("石A", 4020, eItemType.Material));
         itemList.Add(new ItemBase("石B", 4021, eItemType.Material));
@@ -65,6 +68,10 @@ public class ItemManager : SystemObject<ItemManager> {
 
     public void AddArmor(string name, int id, int hp, int skill1, int skill2) {
         armorList.Append(new ArmorBase(name, id, hp, skill1, skill2));
+    }
+
+    private Sprite icon(string pass) {
+        return Resources.Load<Sprite>(pass);
     }
 
 }

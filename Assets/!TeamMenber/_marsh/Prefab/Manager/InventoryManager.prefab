@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 2088805496112318309, guid: 19a3bb257231b38419a9cc9f878f849a, type: 3}
   inventoryPanelPrefab: {fileID: 6422574181324898603, guid: 02314d86d5ef3fa4988cfb1651924dec, type: 3}
-  itemTextPrefab: {fileID: 6064373873094705054, guid: 6a8ebd7d29089294f966b2173b04ea50, type: 3}
+  inventorySlotUIPrefab: {fileID: 9095456995864241013, guid: 902e1197997e11748865188669a90d56, type: 3}
   contentParent: {fileID: 0}
