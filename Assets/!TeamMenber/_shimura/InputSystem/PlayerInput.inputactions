@@ -129,6 +129,17 @@
                 },
                 {
                     "name": "",
+                    "id": "fa3d285f-006c-4bd2-a9b1-5e6a5db4fb98",
+                    "path": "<NPad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "3799da6b-421e-4941-a13f-24c2a47c2e82",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -173,6 +184,17 @@
                 },
                 {
                     "name": "",
+                    "id": "34ae8b86-1c8c-47d6-aa17-0eef05673d5b",
+                    "path": "<NPad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Avoidance",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "b5d1c823-6f33-40e0-8f0b-8768c454ba6a",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -195,8 +217,30 @@
                 },
                 {
                     "name": "",
+                    "id": "8efbad8c-1869-46c8-ad93-4b7ad5ac3730",
+                    "path": "<NPad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "884a7899-3143-4883-8af7-45bc664af942",
                     "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c3a787d9-2948-4b0d-a8f0-2c274600de2d",
+                    "path": "<NPad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -219,6 +263,17 @@
                     "name": "",
                     "id": "23085a8a-a40e-49ea-863c-1aff6e04f23f",
                     "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gather",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "232bb734-67cf-474f-808e-c89925c3733c",
+                    "path": "<NPad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
