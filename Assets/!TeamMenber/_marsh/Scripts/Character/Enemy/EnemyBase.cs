@@ -2,11 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnemyState {
+    Idle,
+    Alert,
+    Chase,
+    Combat,
+    Dead
+}
 public class EnemyBase : CharacterBase {
     [SerializeField] private GameObject damagePopupPrefab;
     private DamagePopupController currentPopup;
     bool isCritical = false;
     public Animator animator;
+
+
+    // ステータス初期化関数（共通化）
+    public void InitializeStats(int hp, int attack, int defence, float moveSpeed) {
+        this.hp = hp;
+        this.maxHp = hp;
+        this.attack = attack;
+        this.defence = defence;
+        this.moveSpeed = moveSpeed;
+    }
 
     public override void Attack() {
         throw new System.NotImplementedException();
@@ -24,17 +41,22 @@ public class EnemyBase : CharacterBase {
         throw new System.NotImplementedException();
     }
 
+    public virtual int GetAttackPower() {
+        return attack; // 必要なら補正を加える
+    }
+
+
     public virtual void TakeDamage(int attack,float motionMultiplier, float criticalChance, float criticalMultiplier,
                                     int elementalValue = 0, float staggerValue = 0) {
         isCritical = Random.value < criticalChance; // 20%でクリティカル
         if (isCritical) {
             damage = Mathf.RoundToInt
-                ((Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.95f, 1.05f) * criticalMultiplier);
+                ((Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f) * criticalMultiplier);
             hp -= damage;
         }
         else {
             damage = Mathf.RoundToInt
-                ((Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.95f, 1.05f));
+                ((Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f));
             hp -= damage;
         }
         animator.SetBool("Hit", true); // アニメーション切り替え
@@ -54,7 +76,7 @@ public class EnemyBase : CharacterBase {
 
         }
 
-        if (hp < 0) Dead();
+        if (hp <= 0) Dead();
     }
 
     private IEnumerator ResetHitFlagAfterDelay(float delay) {

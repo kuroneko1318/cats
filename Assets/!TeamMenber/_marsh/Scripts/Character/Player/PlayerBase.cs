@@ -27,6 +27,8 @@ public class PlayerBase : CharacterBase {
     [SerializeField]
     public Animator animator;
 
+    bool isCritical = false;
+
     void Update() {
 
     }
@@ -47,13 +49,28 @@ public class PlayerBase : CharacterBase {
         animator.SetBool("Run", true);
     }
 
-    
-    public virtual void TakeDamage(int attack, int elementalValue = 0, float staggerValue = 0) {
-        damage = Mathf.RoundToInt
-            ((Mathf.Pow(attack, 2) / attack + defence) * Random.Range(0.95f, 1.05f));
-        hp -= damage;
-        if(hp < 0) Dead();
+
+    public virtual void TakeDamage(int attack, float motionMultiplier = 1, float criticalChance = 0, float criticalMultiplier = 2,
+                                   int elementalValue = 0, float staggerValue = 0) {
+        isCritical = Random.value < criticalChance; // 20%でクリティカル
+        if (isCritical) {
+            damage = Mathf.RoundToInt
+                ((Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f) * criticalMultiplier);
+            hp -= damage;
+        }
+        else {
+            damage = Mathf.RoundToInt
+                ((Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f));
+            hp -= damage;
+        }
+        animator.SetBool("Hit", true); // アニメーション切り替え
+        StartCoroutine(ResetHitFlagAfterDelay(0.1f)); // 0.3秒後に戻す
+
+        if (hp <= 0) Dead();
+    }
+    private IEnumerator ResetHitFlagAfterDelay(float delay) {
+        yield return new WaitForSeconds(delay);
+        animator.SetBool("Hit", false);
     }
 
-    
 }
