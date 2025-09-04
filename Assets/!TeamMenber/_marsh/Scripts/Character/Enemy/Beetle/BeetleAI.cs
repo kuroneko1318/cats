@@ -30,6 +30,7 @@ public class BeetleAI : EnemyBase {
             case EnemyState.Alert: HandleAlert(); break;
             case EnemyState.Chase: HandleChase(); break;
             case EnemyState.Combat: HandleCombat(); break;
+            case EnemyState.Observe: HandleObserve(); break;
             case EnemyState.Dead: Dead(); break;
         }
     }
@@ -67,32 +68,69 @@ public class BeetleAI : EnemyBase {
         if (Vector3.Distance(transform.position, player.position) <= combatRange) {
             currentState = EnemyState.Combat;
         }
+        if (Vector3.Distance(transform.position, player.position) <= combatRange + 1f) {
+            currentState = EnemyState.Observe;
+        }
+
     }
 
     private void HandleCombat() {
         transform.LookAt(player);
 
-        if (Random.value < 0.3f) {
-            animator.SetTrigger("Scratch");
-            Attack(); // ひっかき
-        }
-        else if (Random.value < 0.5f) {
-            animator.SetTrigger("Stab");
-            Attack(); // 突き
-        }
-        else if (Random.value < 0.7f) {
-            animator.SetTrigger("TripleScratch");
-            Attack(); // 三連ひっかき
-        }
-        else if (Random.value < 0.9f) {
-            animator.SetTrigger("DropKick");
-            Attack(); // ドロップキック
+        if (Vector3.Distance(transform.position, player.position) > combatRange) {
+            // 距離が遠い → 近づく
+            Vector3 direction = (player.position - transform.position).normalized;
+            transform.position += direction * moveSpeed * Time.deltaTime;
         }
         else {
+            float rand = Random.value;
+            if (rand < 0.3f) {
+                animator.SetTrigger("Scratch");
+                Attack();
+            }
+            else if (rand < 0.5f) {
+                animator.SetTrigger("Stab");
+                Attack();
+            }
+            else if (rand < 0.7f) {
+                animator.SetTrigger("TripleScratch");
+                Attack();
+            }
+            else if (rand < 0.9f) {
+                animator.SetTrigger("DropKick");
+                Attack();
+            }
+            else {
+                Vector3 sideStep = transform.right * (Random.value < 0.5f ? 1 : -1);
+                transform.position += sideStep * moveSpeed * Time.deltaTime;
+            }
+        }
+    }
+
+    private void HandleObserve() {
+        transform.LookAt(player);
+
+        float rand = Random.value;
+        if (rand < 0.3f) {
+            // 立ち止まる
+        }
+        else if (rand < 0.6f) {
+            // 左右に移動
             Vector3 sideStep = transform.right * (Random.value < 0.5f ? 1 : -1);
             transform.position += sideStep * moveSpeed * Time.deltaTime;
         }
+        else {
+            // 後退
+            Vector3 backStep = -transform.forward;
+            transform.position += backStep * moveSpeed * Time.deltaTime;
+        }
+
+        // 攻撃可能距離ならCombatへ
+        if (Vector3.Distance(transform.position, player.position) <= combatRange) {
+            currentState = EnemyState.Combat;
+        }
     }
+
 
     private bool CanSeePlayer() {
         Vector3 directionToPlayer = player.position - transform.position;
@@ -117,8 +155,8 @@ public class BeetleAI : EnemyBase {
         yield return new WaitForSeconds(attackDuration);
         attackHitbox.SetActive(false); // 攻撃判定OFF
 
-        animator.SetBool("Attack", false); // アニメーション終了
         isAttacking = false;
+        animator.SetBool("Attack", false); // アニメーション終了
     }
 
 

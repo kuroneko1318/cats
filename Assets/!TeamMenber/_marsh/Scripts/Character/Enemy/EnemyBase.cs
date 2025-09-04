@@ -7,6 +7,7 @@ public enum EnemyState {
     Alert,
     Chase,
     Combat,
+    Observe,
     Dead
 }
 public class EnemyBase : CharacterBase {
