@@ -526,6 +526,53 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!1 &522557909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 522557910}
+  - component: {fileID: 522557911}
+  m_Layer: 0
+  m_Name: StageManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &522557910
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522557909}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &522557911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522557909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf73acb9f029f7943b9e22af4c9441a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  area1SceneObject: {fileID: 559551162}
+  area2Prefab: {fileID: 8444830881619778750, guid: 17c5bcdecf2201f46a1f8e2e924f73bf, type: 3}
+  player: {fileID: 1216968800}
 --- !u!1001 &559551161
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -587,6 +634,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c9092224dbfab543b6f96819fd3b9e5, type: 3}
+--- !u!1 &559551162 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5822571628870702315, guid: 6c9092224dbfab543b6f96819fd3b9e5, type: 3}
+  m_PrefabInstance: {fileID: 559551161}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &608544926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -718,6 +770,73 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fa309ab5b98acc408da289f40ff2088, type: 3}
+--- !u!1 &1030536318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1030536319}
+  - component: {fileID: 1030536320}
+  - component: {fileID: 1030536321}
+  m_Layer: 0
+  m_Name: StageGate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1030536319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030536318}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -22.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1030536320
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030536318}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4, y: 5, z: 2}
+  m_Center: {x: 0, y: 2.5, z: 0.5}
+--- !u!114 &1030536321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030536318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98a1489373e071b4f82c59ab6dbcfa72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goToArea2: 1
 --- !u!1001 &1093046022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -932,6 +1051,11 @@ PrefabInstance:
 --- !u!4 &1216968799 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 489847140789933352, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
+  m_PrefabInstance: {fileID: 1216968798}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1216968800 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5056505217864931460, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
   m_PrefabInstance: {fileID: 1216968798}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1604247571
@@ -1379,3 +1503,5 @@ SceneRoots:
   - {fileID: 559551161}
   - {fileID: 1700949973}
   - {fileID: 1216968798}
+  - {fileID: 522557910}
+  - {fileID: 1030536319}
