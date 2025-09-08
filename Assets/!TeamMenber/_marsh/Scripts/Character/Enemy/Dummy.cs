@@ -8,16 +8,12 @@ public class Dummy : EnemyBase {
     }
 
 
-    private void Update() {
+    protected override void Update() {
         //デバッグでJキーでダメージ
         if (Input.GetKeyDown(KeyCode.J)) TakeDamage(100, 1.1f, 0.3f, 2);
     }
 
-
-    public override void Attack() { }
     public override void Dead() {
         hp = maxHp;
     }
-    public override void HealHp() { }
-    public override void Move() { }
 }

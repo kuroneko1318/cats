@@ -1,94 +1,147 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum EnemyState {
-    Idle,
-    Alert,
-    Chase,
-    Combat,
-    Observe,
+    Idle,       // 待機
+    Patrol,     // 巡回
+    LookAround, // 観察（Idleから遷移）
+    Chase,      // プレイヤー追跡
+    Combat,     // 戦闘
     Dead
 }
-public class EnemyBase : CharacterBase {
-    [SerializeField] private GameObject damagePopupPrefab;
-    private DamagePopupController currentPopup;
-    bool isCritical = false;
-    public Animator animator;
 
+public class EnemyBase : MonoBehaviour {
+    [Header("共通ステータス")]
+    public int hp;
+    public int maxHp;
+    public int attack;
+    public int defence;
+    public float moveSpeed = 3.5f;
+    public float detectionRange = 10f;
+    public float combatRange = 3f;
+    private bool isCritical = false;
 
-    // ステータス初期化関数（共通化）
-    public void InitializeStats(int hp, int attack, int defence, float moveSpeed) {
-        this.hp = hp;
-        this.maxHp = hp;
-        this.attack = attack;
-        this.defence = defence;
-        this.moveSpeed = moveSpeed;
+    [Header("参照")]
+    protected Animator animator;
+    protected NavMeshAgent agent;
+    protected AttackHitbox hitbox;
+    protected Transform player;
+
+    protected EnemyState state = EnemyState.Idle;
+
+    protected virtual void Start() {
+        animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        hitbox = GetComponentInChildren<AttackHitbox>(true);
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        if (agent != null) agent.speed = moveSpeed;
+        if (hitbox != null) hitbox.gameObject.SetActive(false);
     }
 
-    public override void Attack() {
-        throw new System.NotImplementedException();
+    protected virtual void Update() {
+        if (state == EnemyState.Dead) return;
+
+        float dist = player ? Vector3.Distance(transform.position, player.position) : Mathf.Infinity;
+
+        switch (state) {
+            case EnemyState.Idle:
+            case EnemyState.Patrol:
+            case EnemyState.LookAround:
+                if (dist < detectionRange) ChangeState(EnemyState.Chase);
+                break;
+
+            case EnemyState.Chase:
+                if (dist <= combatRange) ChangeState(EnemyState.Combat);
+                else if (dist > detectionRange * 1.5f) ChangeState(EnemyState.Patrol);
+                break;
+
+            case EnemyState.Combat:
+                if (dist > combatRange + 1f) ChangeState(EnemyState.Chase);
+                break;
+        }
     }
 
-    public override void Dead() {
-        throw new System.NotImplementedException();
+    protected void ChangeState(EnemyState newState) {
+        if (state == newState) return;
+        state = newState;
+        OnStateChanged(newState);
     }
 
-    public override void HealHp() {
-        throw new System.NotImplementedException();
+    protected virtual void OnStateChanged(EnemyState newState) {
+        switch (newState) {
+            case EnemyState.Idle:
+                agent.isStopped = true;
+                animator.SetBool("Walk", false);
+                animator.SetTrigger("Idle");
+                break;
+            case EnemyState.Patrol:
+                agent.isStopped = false;
+                animator.SetBool("Walk", true);
+                break;
+            case EnemyState.LookAround:
+                agent.isStopped = true;
+                animator.SetBool("Walk", false);
+                animator.SetTrigger("LookAround");
+                break;
+            case EnemyState.Chase:
+                agent.isStopped = false;
+                animator.SetBool("Walk", true);
+                break;
+            case EnemyState.Combat:
+                agent.isStopped = true;
+                animator.SetBool("Walk", false);
+                break;
+        }
     }
 
-    public override void Move() {
-        throw new System.NotImplementedException();
+    // 攻撃共通処理
+    protected void PerformAttack(string triggerName, int power, float preDelay, float activeTime) {
+        animator.SetTrigger(triggerName);
+        StartCoroutine(AttackCoroutine(power, preDelay, activeTime));
     }
 
-    public virtual int GetAttackPower() {
-        return attack; // 必要なら補正を加える
+    private IEnumerator AttackCoroutine(int power, float preDelay, float activeTime) {
+        yield return new WaitForSeconds(preDelay);
+        EnableHitbox(power);
+        yield return new WaitForSeconds(activeTime);
+        DisableHitbox();
     }
 
+    private void EnableHitbox(int power) {
+        if (hitbox != null) {
+            hitbox.SetDamage(power);
+            hitbox.gameObject.SetActive(true);
+        }
+    }
 
-    public virtual void TakeDamage(int attack,float motionMultiplier, float criticalChance, float criticalMultiplier,
-                                    int elementalValue = 0, float staggerValue = 0) {
+    private void DisableHitbox() {
+        if (hitbox != null) hitbox.gameObject.SetActive(false);
+    }
+
+    public virtual void TakeDamage(int attack, float motionMultiplier = 1, float criticalChance = 0, float criticalMultiplier = 2,
+                                   int elementalValue = 0, float staggerValue = 0) {
         isCritical = Random.value < criticalChance; // 20%でクリティカル
         if (isCritical) {
-            damage = Mathf.RoundToInt
+            int damage = Mathf.RoundToInt
                 ((Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f) * criticalMultiplier);
             hp -= damage;
         }
         else {
-            damage = Mathf.RoundToInt
+            int damage = Mathf.RoundToInt
                 ((Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f));
             hp -= damage;
         }
-        animator.SetBool("Hit", true); // アニメーション切り替え
-        StartCoroutine(ResetHitFlagAfterDelay(0.1f)); // 0.3秒後に戻す
-
-        // 既存のポップアップが存在し、まだフェードアウトしていない場合は加算
-        if (currentPopup != null && !currentPopup.IsFadingOut) {
-            currentPopup.AddDamage(damage, isCritical);
-        }
-        else {
-            // 新しいポップアップを生成
-            Vector3 popupPos = transform.position + Vector3.up * 2f;
-            GameObject popupObj = Instantiate(damagePopupPrefab, popupPos, Quaternion.identity);
-            currentPopup = popupObj.GetComponent<DamagePopupController>();
-
-            currentPopup.AddDamage(damage, isCritical);
-
-        }
+        animator.SetTrigger("Hit"); // アニメーション切り替え
 
         if (hp <= 0) Dead();
     }
 
-    private IEnumerator ResetHitFlagAfterDelay(float delay) {
-        yield return new WaitForSeconds(delay);
-        animator.SetBool("Hit", false);
-    }
-
-    private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.CompareTag("weapon")) {
-            PlayerBase player = other.gameObject.GetComponentInParent<PlayerController>();
-            TakeDamage(player.attack, 1.0f, player.criticalChance, player.criticalMultiplier);
-        }
+    public virtual void Dead() {
+        ChangeState(EnemyState.Dead);
+        animator.SetTrigger("Dead");
+        agent.isStopped = true;
+        this.enabled = false;
     }
 }
