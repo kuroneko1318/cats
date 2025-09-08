@@ -16,6 +16,8 @@ public class PlayerController : PlayerBase {
     // 物理挙動
     public Rigidbody rb;
 
+    public Collider damageCollider;
+
     // 移動・回転関連
     public Vector3 latestPos;
     public Vector3 direction;
@@ -71,6 +73,10 @@ public class PlayerController : PlayerBase {
             RotMove();      // 回転処理
             Avoidance();    // 回避処理
             Stop();         // 停止処理（慣性制御）
+        }
+        if (hp <= 0) {
+            animator.SetTrigger("Death");
+            // 必要に応じて死亡処理を追加
         }
     }
 
@@ -144,13 +150,7 @@ public class PlayerController : PlayerBase {
             // 前方に高速移動
             rb.velocity = transform.forward * moveSpeed * 2f;
         }
-        if (hp<=0) {
-            animator.SetTrigger("Death");
-
-
-
-
-        }
+        
         // 回避中の時間管理
         if (isAvoiding) {
             avoidanceTimer -= Time.deltaTime;
@@ -186,4 +186,9 @@ public class PlayerController : PlayerBase {
             }
         
     }
+
+
+   
+
+
 }

@@ -14,6 +14,7 @@ public class PlayerAttack : MonoBehaviour {
 
     // 攻撃判定用のコライダー（Trigger）
     public Collider attackCollider;
+    public Animator animator;
 
     // コンボ管理
     public int comboStep = 0;                  // 現在のコンボ段階（1〜3）
@@ -220,4 +221,21 @@ public class PlayerAttack : MonoBehaviour {
         }
     }
 
+
+
+    public void OnTriggerEnter(Collider other) {
+        // エネミーの攻撃に触れた場合
+        if (other.CompareTag("EnemyAttack")) {
+            StartAttackCooldown();
+            // ダメージ処理（例：HPを減らす）
+            //////////////////////////////////////hp -= other.GetComponent<EnemyAttack>().damage;
+
+            // ヒットリアクション
+            animator.SetTrigger("Hit");
+
+                // 死亡判定
+                
+            
+        }
+    }
 }
