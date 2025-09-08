@@ -81,18 +81,18 @@ public class BeetleAI : EnemyBase {
 
         float distance = Vector3.Distance(transform.position, player.position);
 
-        // ---- 距離調整 ----
-        if (distance > combatRange + 0.5f) {
-            // 離れすぎた → 前進
-            Vector3 direction = (player.position - transform.position).normalized;
-            transform.position += direction * moveSpeed * Time.deltaTime;
-        }
-        else if (distance < combatRange - 0.5f) {
-            // 近すぎた → 後退
-            Vector3 backStep = -transform.forward;
-            transform.position += backStep * (moveSpeed * 0.7f) * Time.deltaTime;
-        }
-        else {
+        //// ---- 距離調整 ----
+        //if (distance > combatRange + 0.5f) {
+        //    // 離れすぎた → 前進
+        //    Vector3 direction = (player.position - transform.position).normalized;
+        //    transform.position += direction * moveSpeed * Time.deltaTime;
+        //}
+        //else if (distance < combatRange - 0.5f) {
+        //    // 近すぎた → 後退
+        //    Vector3 backStep = -transform.forward;
+        //    transform.position += backStep * (moveSpeed * 0.7f) * Time.deltaTime;
+        //}
+        //else {
             // ---- 近距離に入ったら行動を選択 ----
             if (!isAttacking) {
                 float rand = Random.value;
@@ -112,7 +112,7 @@ public class BeetleAI : EnemyBase {
                     Attack();
                 }
             }
-        }
+        //}
     }
 
 
@@ -122,24 +122,23 @@ public class BeetleAI : EnemyBase {
         transform.LookAt(targetPos);
 
         float rand = Random.value;
-        if (rand < 0.3f) {
+        if (rand < 0.5f) {
             // 立ち止まる
             animator.SetBool("Walk", false);
         }
-        else if (rand < 0.6f) {
+        else {
             // 左右に移動
             Vector3 sideStep = transform.right * (Random.value < 0.5f ? 1 : -1);
             transform.position += sideStep * moveSpeed * Time.deltaTime;
-        }
-        else {
-            // 後退
-            Vector3 backStep = -transform.forward;
-            transform.position += backStep * moveSpeed * Time.deltaTime;
         }
 
         // 攻撃可能距離ならCombatへ
         if (Vector3.Distance(transform.position, player.position) <= combatRange) {
             currentState = EnemyState.Combat;
+        }
+        // 戦闘距離外れたら再びChase
+        else if (Vector3.Distance(transform.position, player.position) > combatRange + 1f) {
+            currentState = EnemyState.Chase;
         }
     }
 
@@ -158,7 +157,7 @@ public class BeetleAI : EnemyBase {
     private IEnumerator PerformAttack() {
         isAttacking = true;
 
-        yield return new WaitForSeconds(0.1f); // アニメーションに合わせて判定タイミング調整
+        yield return new WaitForSeconds(1.5f); // アニメーションに合わせて判定タイミング調整
 
         attackHitbox.SetActive(true); // 攻撃判定ON
         yield return new WaitForSeconds(attackDuration);
