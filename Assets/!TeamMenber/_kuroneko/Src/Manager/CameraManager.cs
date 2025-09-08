@@ -48,7 +48,7 @@ public class CameraManager : MonoBehaviour
     }
 
     void LateUpdate() {
-        if (target == null) return;
+        //if (target == null) return;
 
         // マウスでのカメラ移動
         lookInput = Mouse.current.delta.ReadValue();
