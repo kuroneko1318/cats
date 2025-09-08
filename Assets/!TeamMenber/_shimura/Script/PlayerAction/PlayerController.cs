@@ -144,7 +144,13 @@ public class PlayerController : PlayerBase {
             // 前方に高速移動
             rb.velocity = transform.forward * moveSpeed * 2f;
         }
+        if (hp<=0) {
+            animator.SetTrigger("Death");
 
+
+
+
+        }
         // 回避中の時間管理
         if (isAvoiding) {
             avoidanceTimer -= Time.deltaTime;
@@ -157,6 +163,7 @@ public class PlayerController : PlayerBase {
             }
         }
     }
+
 
 
     // 停止処理（キー入力がないときに慣性を止める。ただし回避中は除外）

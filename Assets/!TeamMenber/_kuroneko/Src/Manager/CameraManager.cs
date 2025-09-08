@@ -1,65 +1,70 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CameraManager : MonoBehaviour {
-    [Header("追従対象（プレイヤーなど）")]
     public Transform target;
-
-    [Header("カメラの相対位置（背後・上から）")]
     public Vector3 offset = new Vector3(0, 2.5f, -4f);
-
-    [Header("感度")]
     public float mouseSensitivity = 1.5f;
-
-    [Header("仰角の制限")]
     public float minYAngle = -35f;
     public float maxYAngle = 60f;
 
     private float rotX = 0f;
     private float rotY = 0f;
-
     private Vector2 lookInput = Vector2.zero;
 
-    // 入力アセット（.inputactions から生成されたクラス）
-    private PlayerInput inputAction;
-    private InputAction cameraMoveAction;
+    private PlayerInput input;
+    private InputAction camAction;
 
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        input = GetComponent<PlayerInput>();
+        if (input == null) {
+            Debug.LogError("PlayerInput が取得できませんでした");
+            return;
+        }
+
+        camAction = input.actions["CameraMove"];
+        if (camAction == null) {
+            Debug.LogError("CameraMove アクションが見つかりません");
+            return;
+        }
+
+        camAction.Enable();
     }
 
     void LateUpdate() {
-        // 🔹 プレイヤーを探す処理（まだ target が設定されていなければ探す）
         if (target == null) {
-            GameObject playerObj = GameObject.FindWithTag("Player"); // タグ"Player"で探す
+            GameObject playerObj = GameObject.FindWithTag("Player");
             if (playerObj != null) {
                 target = playerObj.transform;
             }
             else {
-                return; // 見つからないならカメラ処理を行わない
+                return;
             }
         }
 
-        // マウスでのカメラ移動
+        // 🔹 InputAction からの入力
+        Vector2 actionInput = camAction.ReadValue<Vector2>();
+
+        // 🔹 マウスの Raw Input（優先度を調整したい場合はここで調整可能）
+        Vector2 mouseInput = Vector2.zero;
         if (Mouse.current != null) {
-            lookInput = Mouse.current.delta.ReadValue();
+            mouseInput = Mouse.current.delta.ReadValue();
         }
 
-        // 視点入力を元にカメラ角度を更新
+        // 両方を合算（必要に応じてウェイトを調整）
+        lookInput = actionInput + mouseInput;
+
         rotY += lookInput.x * mouseSensitivity;
         rotX -= lookInput.y * mouseSensitivity;
-
-        // 垂直角度の制限
         rotX = Mathf.Clamp(rotX, minYAngle, maxYAngle);
 
-        // 回転計算
         Quaternion rotation = Quaternion.Euler(rotX, rotY, 0);
         Vector3 targetPosition = target.position + rotation * offset;
 
-        // カメラ移動と注視
         transform.position = targetPosition;
         transform.LookAt(target.position + Vector3.up * 1.5f);
     }
