@@ -72,11 +72,11 @@ public class PlayerAttack : MonoBehaviour {
             comboStep++; // コンボ段階を進める
             if (comboStep == 1) {
                 anim.SetBool("Attack1",true);
-                
+                AudioManager.Instance.PlaySE("FA");
             }
             if (comboStep == 2) {
                 anim.SetBool("Attack2", true);
-               
+                AudioManager.Instance.PlaySE("SA");
             }
             if (comboStep > 3) comboStep = 0; // 最大3段階まで
 
@@ -92,7 +92,7 @@ public class PlayerAttack : MonoBehaviour {
             if (comboStep == 3) {
                 StartAttackCooldown();
                 anim.SetBool("Attack3", true);
-                
+                AudioManager.Instance.PlaySE("EA");
 
             }
         }
@@ -176,15 +176,15 @@ public class PlayerAttack : MonoBehaviour {
         switch (step) {
             case 1:
                 attackCollider.transform.localScale = Vector3.one * 1.0f;
-                AudioManager.Instance.PlaySE("first Attack");
+               
                 break;
             case 2:
                 attackCollider.transform.localScale = Vector3.one * 1.5f;
-                AudioManager.Instance.PlaySE("second Attack");
+                
                 break;
             case 3:
                 attackCollider.transform.localScale = Vector3.one * 2.0f;
-                AudioManager.Instance.PlaySE("end Attack");
+                
                 break;
         }
 
