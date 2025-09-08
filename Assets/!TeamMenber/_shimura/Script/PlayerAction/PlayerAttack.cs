@@ -176,12 +176,15 @@ public class PlayerAttack : MonoBehaviour {
         switch (step) {
             case 1:
                 attackCollider.transform.localScale = Vector3.one * 1.0f;
+                AudioManager.Instance.PlaySE("first Attack");
                 break;
             case 2:
                 attackCollider.transform.localScale = Vector3.one * 1.5f;
+                AudioManager.Instance.PlaySE("second Attack");
                 break;
             case 3:
                 attackCollider.transform.localScale = Vector3.one * 2.0f;
+                AudioManager.Instance.PlaySE("end Attack");
                 break;
         }
 
