@@ -63,56 +63,68 @@ public class BeetleAI : EnemyBase {
     private void HandleChase() {
         Vector3 direction = (player.position - transform.position).normalized;
         transform.position += direction * moveSpeed * Time.deltaTime;
-        transform.LookAt(player);
+        Vector3 targetPos = new Vector3(player.position.x, transform.position.y, player.position.z);
+        transform.LookAt(targetPos);
 
         if (Vector3.Distance(transform.position, player.position) <= combatRange) {
             currentState = EnemyState.Combat;
         }
-        if (Vector3.Distance(transform.position, player.position) <= combatRange + 1f) {
+        else if (Vector3.Distance(transform.position, player.position) <= combatRange + 1f) {
             currentState = EnemyState.Observe;
         }
 
     }
 
     private void HandleCombat() {
-        transform.LookAt(player);
+        Vector3 targetPos = new Vector3(player.position.x, transform.position.y, player.position.z);
+        transform.LookAt(targetPos);
 
-        if (Vector3.Distance(transform.position, player.position) > combatRange) {
-            // 距離が遠い → 近づく
+        float distance = Vector3.Distance(transform.position, player.position);
+
+        // ---- 距離調整 ----
+        if (distance > combatRange + 0.5f) {
+            // 離れすぎた → 前進
             Vector3 direction = (player.position - transform.position).normalized;
             transform.position += direction * moveSpeed * Time.deltaTime;
         }
+        else if (distance < combatRange - 0.5f) {
+            // 近すぎた → 後退
+            Vector3 backStep = -transform.forward;
+            transform.position += backStep * (moveSpeed * 0.7f) * Time.deltaTime;
+        }
         else {
-            float rand = Random.value;
-            if (rand < 0.3f) {
-                animator.SetTrigger("Scratch");
-                Attack();
-            }
-            else if (rand < 0.5f) {
-                animator.SetTrigger("Stab");
-                Attack();
-            }
-            else if (rand < 0.7f) {
-                animator.SetTrigger("TripleScratch");
-                Attack();
-            }
-            else if (rand < 0.9f) {
-                animator.SetTrigger("DropKick");
-                Attack();
-            }
-            else {
-                Vector3 sideStep = transform.right * (Random.value < 0.5f ? 1 : -1);
-                transform.position += sideStep * moveSpeed * Time.deltaTime;
+            // ---- 近距離に入ったら行動を選択 ----
+            if (!isAttacking) {
+                float rand = Random.value;
+                if (rand < 0.3f) {
+                    // 攻撃
+                    animator.SetTrigger("Scratch");
+                    Attack();
+                }
+                else if (rand < 0.6f) {
+                    // 横移動（ステップ）
+                    Vector3 sideStep = transform.right * (Random.value < 0.5f ? 1 : -1);
+                    transform.position += sideStep * moveSpeed * Time.deltaTime;
+                }
+                else {
+                    // 他の攻撃
+                    animator.SetTrigger("Stab");
+                    Attack();
+                }
             }
         }
     }
 
+
     private void HandleObserve() {
-        transform.LookAt(player);
+        animator.SetBool("Walk", true);
+        Vector3 targetPos = new Vector3(player.position.x, transform.position.y, player.position.z);
+        transform.LookAt(targetPos);
 
         float rand = Random.value;
         if (rand < 0.3f) {
             // 立ち止まる
+            animator.SetBool("Walk", false);
         }
         else if (rand < 0.6f) {
             // 左右に移動
@@ -146,9 +158,6 @@ public class BeetleAI : EnemyBase {
     private IEnumerator PerformAttack() {
         isAttacking = true;
 
-        // 攻撃アニメーション開始（SetBool）
-        animator.SetBool("Attack", true);
-
         yield return new WaitForSeconds(0.1f); // アニメーションに合わせて判定タイミング調整
 
         attackHitbox.SetActive(true); // 攻撃判定ON
@@ -156,7 +165,6 @@ public class BeetleAI : EnemyBase {
         attackHitbox.SetActive(false); // 攻撃判定OFF
 
         isAttacking = false;
-        animator.SetBool("Attack", false); // アニメーション終了
     }
 
 
