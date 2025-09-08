@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
-public class CameraManager : MonoBehaviour
-{
+public class CameraManager : MonoBehaviour {
     [Header("追従対象（プレイヤーなど）")]
     public Transform target;
 
@@ -28,30 +26,27 @@ public class CameraManager : MonoBehaviour
     private PlayerInput inputAction;
     private InputAction cameraMoveAction;
 
-    void Awake() {
-        // 入力アセットを初期化
-        //inputAction = GetComponent<PlayerInput>();
-        //if (inputAction == null) {
-        //    Debug.LogError("PlayerInput が取得できませんでした");
-        //    return;
-        //}
-        //cameraMoveAction = inputAction.actions["CameraMove"];
-        //if (cameraMoveAction == null) {
-        //    Debug.LogError("CameraMove が取得できませんでした");
-        //    return;
-        //}
-    }
-
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     void LateUpdate() {
-        //if (target == null) return;
+        // 🔹 プレイヤーを探す処理（まだ target が設定されていなければ探す）
+        if (target == null) {
+            GameObject playerObj = GameObject.FindWithTag("Player"); // タグ"Player"で探す
+            if (playerObj != null) {
+                target = playerObj.transform;
+            }
+            else {
+                return; // 見つからないならカメラ処理を行わない
+            }
+        }
 
         // マウスでのカメラ移動
-        lookInput = Mouse.current.delta.ReadValue();
+        if (Mouse.current != null) {
+            lookInput = Mouse.current.delta.ReadValue();
+        }
 
         // 視点入力を元にカメラ角度を更新
         rotY += lookInput.x * mouseSensitivity;
@@ -67,6 +62,5 @@ public class CameraManager : MonoBehaviour
         // カメラ移動と注視
         transform.position = targetPosition;
         transform.LookAt(target.position + Vector3.up * 1.5f);
-
     }
 }
