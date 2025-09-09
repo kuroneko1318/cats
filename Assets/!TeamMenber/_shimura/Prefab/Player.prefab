@@ -1275,6 +1275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8569611311342088463}
   - component: {fileID: 4676912480286820461}
+  - component: {fileID: 2547388112161209638}
   m_Layer: 0
   m_Name: AttackCollider
   m_TagString: weapon
@@ -1318,6 +1319,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8203939, y: 1.2941525, z: 0.9033891}
   m_Center: {x: -0.089803025, y: 0.14707625, z: 0.61435705}
+--- !u!114 &2547388112161209638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4057856831055313725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fccf53ea5f59e744cb71f982dfb12556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4079090041874959117
 GameObject:
   m_ObjectHideFlags: 0

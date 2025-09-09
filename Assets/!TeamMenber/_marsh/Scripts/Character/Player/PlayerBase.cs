@@ -117,14 +117,7 @@ public class PlayerBase : CharacterBase {
         damage = power;
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Enemy")) {
-            EnemyBase player = other.GetComponent<EnemyBase>();
-            if (player != null) {
-                player.TakeDamage(damage, 1.0f, 0.1f, 1.5f);
-            }
-        }
-    }
+    
     // ダメージ処理
     public virtual void TakeDamage(int attack, float motionMultiplier = 1, float criticalChance = 0, float criticalMultiplier = 2,
                                    int elementalValue = 0, float staggerValue = 0) {
