@@ -169,6 +169,6 @@ public class EnemyBase : MonoBehaviour {
     }
     private IEnumerator DeadRoutine() {
         yield return new WaitForSeconds(deadTime);
-        Destroy(gameObject); // 待った後にオブジェクト削除
+        gameObject.SetActive(false);
     }
 }
