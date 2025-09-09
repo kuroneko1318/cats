@@ -93,6 +93,7 @@ public class BeeteAI : EnemyBase {
             idleTimer += Time.deltaTime;
             if (idleTimer >= idleTime) {
                 hasPatrolDestination = false; // ŽŸ‚Ì–Ú“I’n‚Ö
+                ChangeState(EnemyState.LookAround);
             }
         }
     }

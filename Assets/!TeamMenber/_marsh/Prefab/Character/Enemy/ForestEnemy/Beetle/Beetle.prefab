@@ -729,7 +729,7 @@ MonoBehaviour:
   detectionRange: 20
   combatRange: 1
   attackMultiplier: 1
-  damagePopupController: {fileID: 8963277261925044757, guid: 2b52a3a79f3cc4041804f3e366c0b9a4, type: 3}
+  damagePopupPrefab: {fileID: 6179850667043835373, guid: 2b52a3a79f3cc4041804f3e366c0b9a4, type: 3}
   stabPower: 5
   kickPower: 8
   scratchPower: 6

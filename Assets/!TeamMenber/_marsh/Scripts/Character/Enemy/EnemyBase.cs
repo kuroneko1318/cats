@@ -1,18 +1,18 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 public enum EnemyState {
-    Idle,       // ‘Ò‹@
-    Patrol,     // „‰ñ
-    LookAround, // ŠÏ@iIdle‚©‚ç‘JˆÚj
-    Chase,      // ƒvƒŒƒCƒ„[’ÇÕ
-    Combat,     // í“¬
+    Idle,       // å¾…æ©Ÿ
+    Patrol,     // å·¡å›
+    LookAround, // è¦³å¯Ÿï¼ˆIdleã‹ã‚‰é·ç§»ï¼‰
+    Chase,      // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼è¿½è·¡
+    Combat,     // æˆ¦é—˜
     Dead
 }
 
 public class EnemyBase : MonoBehaviour {
-    [Header("‹¤’ÊƒXƒe[ƒ^ƒX")]
+    [Header("å…±é€šã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹")]
     public int hp;
     public int maxHp;
     public int attack;
@@ -21,16 +21,17 @@ public class EnemyBase : MonoBehaviour {
     public float detectionRange = 10f;
     public float combatRange = 3f;
     private bool isCritical = false;
-    public float attackMultiplier = 1f; // “G‚²‚Æ‚Éİ’è
+    public float attackMultiplier = 1f; // æ•µã”ã¨ã«è¨­å®š
 
     private int damage;
 
-    [Header("QÆ")]
+    [Header("å‚ç…§")]
     protected Animator animator;
     protected NavMeshAgent agent;
     protected AttackHitbox hitbox;
     protected Transform player;
-    [SerializeField]protected DamagePopupController damagePopupController;
+    [SerializeField]protected GameObject damagePopupPrefab;
+    private DamagePopupController currentPopup;
 
     protected EnemyState state = EnemyState.Idle;
 
@@ -103,7 +104,7 @@ public class EnemyBase : MonoBehaviour {
         }
     }
 
-    // UŒ‚‹¤’Êˆ—
+    // æ”»æ’ƒå…±é€šå‡¦ç†
     protected void PerformAttack(string triggerName, float preDelay, float activeTime) {
         animator.SetTrigger(triggerName);
         StartCoroutine(AttackCoroutine(preDelay, activeTime));
@@ -128,7 +129,7 @@ public class EnemyBase : MonoBehaviour {
 
     public virtual void TakeDamage(int attack, float motionMultiplier = 1, float criticalChance = 0, float criticalMultiplier = 2,
                                    int elementalValue = 0, float staggerValue = 0) {
-        isCritical = Random.value < criticalChance; // 20%‚ÅƒNƒŠƒeƒBƒJƒ‹
+        isCritical = Random.value < criticalChance; // 20%ã§ã‚¯ãƒªãƒ†ã‚£ã‚«ãƒ«
         if (isCritical) {
             damage = Mathf.RoundToInt
                 ((Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f) * criticalMultiplier);
@@ -139,8 +140,18 @@ public class EnemyBase : MonoBehaviour {
                 ((Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f));
             hp -= damage;
         }
-        damagePopupController.AddDamage(damage);
-        animator.SetTrigger("Hit"); // ƒAƒjƒ[ƒVƒ‡ƒ“Ø‚è‘Ö‚¦
+        if (currentPopup != null && !currentPopup.IsFadingOut) {
+            currentPopup.AddDamage(damage, isCritical);
+        }
+        else {
+            Vector3 popupPos = transform.position + Vector3.up * 2f;
+            GameObject popupObj = Instantiate(damagePopupPrefab, popupPos, Quaternion.identity);
+            currentPopup = popupObj.GetComponent<DamagePopupController>();
+
+            currentPopup.AddDamage(damage, isCritical);
+
+        }
+        animator.SetTrigger("Hit"); // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆ‡ã‚Šæ›¿ãˆ
 
         if (hp <= 0) Dead();
     }

@@ -2337,7 +2337,7 @@ MonoBehaviour:
   detectionRange: 10
   combatRange: 3
   attackMultiplier: 1
-  damagePopupController: {fileID: 8963277261925044757, guid: 2b52a3a79f3cc4041804f3e366c0b9a4, type: 3}
+  damagePopupPrefab: {fileID: 6179850667043835373, guid: 2b52a3a79f3cc4041804f3e366c0b9a4, type: 3}
 --- !u!136 &3726143288860903752
 CapsuleCollider:
   m_ObjectHideFlags: 0

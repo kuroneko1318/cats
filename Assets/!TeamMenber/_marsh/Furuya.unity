@@ -198,6 +198,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4001551903239096319, guid: 01bcac4a955d06340820dd0ca8504dbf, type: 3}
+      propertyPath: damagePopupPrefab
+      value: 
+      objectReference: {fileID: 6179850667043835373, guid: 2b52a3a79f3cc4041804f3e366c0b9a4, type: 3}
+    - target: {fileID: 4001551903239096319, guid: 01bcac4a955d06340820dd0ca8504dbf, type: 3}
+      propertyPath: damagePopupController
+      value: 
+      objectReference: {fileID: 6179850667043835373, guid: 2b52a3a79f3cc4041804f3e366c0b9a4, type: 3}
     - target: {fileID: 6369651387210107931, guid: 01bcac4a955d06340820dd0ca8504dbf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 22.6
