@@ -99,6 +99,7 @@ public class PlayerBase : CharacterBase {
     public override void Dead() {
         if (hp <= 0) {
             animator.SetTrigger("Death");
+            OnDeathAnimationEnd();
         }
     }
 
@@ -268,7 +269,7 @@ public class PlayerBase : CharacterBase {
         return anim.GetCurrentAnimatorClipInfo(0)[0].clip.name;
     }
 
-    void CheckAttackAnimationEnd() {
+    public void CheckAttackAnimationEnd() {
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 
         if (stateInfo.IsName("Idle")) {
@@ -304,50 +305,55 @@ public class PlayerBase : CharacterBase {
         }
     }
 
-    public void LowAttack() {
-        attackCollider.enabled = comboStep > 0;
 
+    public void LowAttack() {
         if (isAttackCooldown) return;
 
-        // 攻撃ボタンが押された瞬間
         if (attackAction.WasPressedThisFrame()) {
             PlayerController.attackFlag = true;
 
             if (comboStep == 0) {
-                // 最初の攻撃
                 comboStep = 1;
                 anim.SetBool("Attack1", true);
                 comboTimer = comboResetTime;
-                AudioManager.Instance.PlaySE("FA"); // 攻撃1のSE
+                AudioManager.Instance.PlaySE("FA");
+                StartCoroutine(EnableColliderTemporarily(0.3f)); // 攻撃1の判定時間
             }
             else if (comboTimer > 0f) {
-                // コンボ猶予時間内に再度攻撃された場合のみ次のステップへ
                 comboStep++;
                 if (comboStep == 2) {
                     anim.SetBool("Attack2", true);
                     comboTimer = comboResetTime;
-                    AudioManager.Instance.PlaySE("SA"); // 攻撃2のSE
+                    AudioManager.Instance.PlaySE("SA");
+                    StartCoroutine(EnableColliderTemporarily(0.3f)); // 攻撃2の判定時間
                 }
                 else if (comboStep == 3) {
                     anim.SetBool("Attack3", true);
                     comboTimer = comboResetTime;
-                    AudioManager.Instance.PlaySE("EA"); // 攻撃3のSE
-                    StartAttackCooldown(); // 最終段でクールタイム開始
+                    AudioManager.Instance.PlaySE("EA");
+                    StartCoroutine(EnableColliderTemporarily(0.3f)); // 攻撃3の判定時間
+                    StartAttackCooldown();
                 }
             }
         }
 
-        // コンボ猶予時間の管理
         if (comboStep > 0) {
             comboTimer -= Time.deltaTime;
             if (comboTimer <= 0f) {
                 PlayerController.attackFlag = false;
                 comboStep = 0;
-                StartAttackCooldown(); // コンボ中断時もクールタイム開始
+                StartAttackCooldown();
             }
         }
     }
 
+
+
+    private IEnumerator EnableColliderTemporarily(float duration) {
+        attackCollider.enabled = true;
+        yield return new WaitForSeconds(duration);
+        attackCollider.enabled = false;
+    }
 
 
     public void StrongAttack() {
@@ -432,39 +438,7 @@ public class PlayerBase : CharacterBase {
 
 
 
-    public void CheckAttackAnimationEndr() {
-        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-
-
-        if (stateInfo.IsName("Idle")) {
-            if (!wasInIdle) {
-                // Idle に入った瞬間
-                anim.SetBool("Attack1", false);
-                anim.SetBool("Attack2", false);
-                anim.SetBool("Attack3", false);
-                wasInIdle = true;
-            }
-        }
-        else {
-            wasInIdle = false;
-        }
-
-
-        if (stateInfo.IsName("Sword And Shield Slash") && stateInfo.normalizedTime >= 0.8f) {
-            anim.SetBool("Attack1", false);
-
-            //AudioManager.Instance.PlaySE("FA");
-
-        }
-        if (stateInfo.IsName("Sword And Shield Slash (2)") && stateInfo.normalizedTime >= 0.8f) {
-            anim.SetBool("Attack2", false);
-            //AudioManager.Instance.PlaySE("SA");
-        }
-        if (stateInfo.IsName("Sword And Shield Slash (1)") && stateInfo.normalizedTime >= 0.8f) {
-            anim.SetBool("Attack3", false);
-            //AudioManager.Instance.PlaySE("EA");
-        }
-    }
+    
 
 
 

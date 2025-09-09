@@ -49,7 +49,7 @@ public class PlayerController : PlayerBase {
         PlayAttackSEOnAnimationStart();
         LowAttack();             // 攻撃処理
         HandleAttackCooldown();  // クールタイム処理
-        CheckAttackAnimationEndr();
+        CheckAttackAnimationEnd();
         if (Keyboard.current.digit1Key.wasPressedThisFrame) {
             skillManager.UseSkill(0, gameObject);
         }
