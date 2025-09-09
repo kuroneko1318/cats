@@ -1965,7 +1965,6 @@ GameObject:
   - component: {fileID: 3092851650673814352}
   - component: {fileID: 7273499622961653570}
   - component: {fileID: 2204077043543466701}
-  - component: {fileID: 6294790973564977556}
   - component: {fileID: 2825272029271714256}
   m_Layer: 0
   m_Name: Player
@@ -2085,6 +2084,65 @@ MonoBehaviour:
   stamina: 100
   moveSpeed: 10
   isInvincible: 0
+  attackAction:
+    m_Name: Attack
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 1abc6e3c-d178-4d6f-9967-4b9a54c6420a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  anim: {fileID: 3533934605395549137}
+  attackCollider: {fileID: 4676912480286820461}
+  count: 0
+  comboStep: 0
+  attackCooldownDuration: 0.5
+  input: {fileID: 2825272029271714256}
+  moveAction:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 18d81c49-cd06-4c7a-af3b-78a1c2e506f2
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  jumpAction:
+    m_Name: Jump
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 3bfcff76-3a20-47be-933d-413ea5798f3e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  avoidanceAction:
+    m_Name: Avoidance
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 070823a5-e322-407e-9648-cdae11021a0d
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  GatherAction:
+    m_Name: Gather
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ea24caeb-a170-4834-a6ca-cc08749ecc20
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  cam: {fileID: 0}
+  rb: {fileID: 3092851650673814352}
+  latestPos: {x: 0, y: 0, z: 0}
+  direction: {x: 0, y: 0, z: 0}
+  diff: {x: 0, y: 0, z: 0}
+  intial: {x: 0, y: -9.8, z: 0}
+  isAvoiding: 0
+  initialPosition: {x: 0, y: 0, z: 0}
   criticalChance: 0
   criticalMultiplier: 0
   EquipmentinputField: {fileID: 0}
@@ -2092,29 +2150,6 @@ MonoBehaviour:
   weaponManager: {fileID: 3019352227452138381, guid: a74a486262b46b04ab13c73652513b9a, type: 3}
   swordImage: {fileID: 0}
   animator: {fileID: 3533934605395549137}
-  rb: {fileID: 3092851650673814352}
-  damageCollider: {fileID: 0}
-  latestPos: {x: 0, y: 0, z: 0}
-  direction: {x: 0, y: 0, z: 0}
-  diff: {x: 0, y: 0, z: 0}
---- !u!114 &6294790973564977556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5056505217864931460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1ca46b33bfdfaa4e83535061259f333, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 3533934605395549137}
-  attackCollider: {fileID: 0}
-  animator: {fileID: 0}
-  count: 0
-  comboStep: 0
-  attackCooldownDuration: 1
 --- !u!114 &2825272029271714256
 MonoBehaviour:
   m_ObjectHideFlags: 0
