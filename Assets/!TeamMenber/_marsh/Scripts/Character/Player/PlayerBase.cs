@@ -292,35 +292,44 @@ public class PlayerBase : CharacterBase {
         }
 
 
-        if (stateInfo.IsName("Sword And Shield Slash") && stateInfo.normalizedTime >= 0.3f && !playedAttack1SE) {
+        if (stateInfo.IsName("Sword And Shield Slash") && stateInfo.normalizedTime >= 0.8f && !playedAttack1SE) {
             AudioManager.Instance.PlaySE("FA");
-            StartCoroutine(EnableColliderTemporarily(0.1f)); // 攻撃1の判定時間
+           //StartCoroutine(EnableColliderTemporarily(0.1f)); // 攻撃1の判定時間
             playedAttack1SE = true;
         }
 
         if (stateInfo.IsName("Sword And Shield Slash") && stateInfo.normalizedTime >= 0.8f) {
  anim.SetBool("Attack1", false);
-            
         }
 
-        if (stateInfo.IsName("Sword And Shield Slash (2)") && stateInfo.normalizedTime >= 0.3f && !playedAttack2SE) {
+        if (stateInfo.IsName("Sword And Shield Slash (2)") && stateInfo.normalizedTime >= 0.8f && !playedAttack2SE) {
             AudioManager.Instance.PlaySE("SA");
-            StartCoroutine(EnableColliderTemporarily(0.1f)); // 攻撃2の判定時間
+           // StartCoroutine(EnableColliderTemporarily(0.1f)); // 攻撃2の判定時間
         
         playedAttack2SE = true;
         }
-        if (stateInfo.IsName("Sword And Shield Slash (2)") && stateInfo.normalizedTime >= 0.8f) {
+        if (stateInfo.IsName("Sword And Shield Slash (2)") && stateInfo.normalizedTime >= 0.5f) {
+            //StartCoroutine(EnableColliderTemporarily(0.3f));
             anim.SetBool("Attack2", false);
         }
 
-        if (stateInfo.IsName("Sword And Shield Slash (1)") && stateInfo.normalizedTime >= 0.3f && !playedAttack3SE) {
+        if (stateInfo.IsName("Sword And Shield Slash (1)") && stateInfo.normalizedTime >= 0.8f && !playedAttack3SE) {
             AudioManager.Instance.PlaySE("EA");
-            StartCoroutine(EnableColliderTemporarily(0.1f)); // 攻撃3の判定時間
+           // StartCoroutine(EnableColliderTemporarily(0.1f)); // 攻撃3の判定時間
             playedAttack3SE = true;
         }
-        if (stateInfo.IsName("Sword And Shield Slash (1)") && stateInfo.normalizedTime >= 0.8f) {
+        if (stateInfo.IsName("Sword And Shield Slash (1)") && stateInfo.normalizedTime >= 0.4f) {
+            //StartCoroutine(EnableColliderTemporarily(0.5f));
             anim.SetBool("Attack3", false);
         }
+    }
+
+    public void AttackStart() {
+        attackCollider.enabled=true;
+    }
+
+    public void AttackEnd() {
+        attackCollider.enabled=false;
     }
 
 
@@ -335,6 +344,7 @@ public class PlayerBase : CharacterBase {
                 anim.SetBool("Attack1", true);
                 comboTimer = comboResetTime;
                 //AudioManager.Instance.PlaySE("FA");
+                //StartCoroutine(EnableColliderTemporarily(0.4f)); // 攻撃1の判定時間
             }
             else if (comboTimer > 0f) {
                 comboStep++;
@@ -342,12 +352,16 @@ public class PlayerBase : CharacterBase {
                     anim.SetBool("Attack2", true);
                     comboTimer = comboResetTime;
                     //AudioManager.Instance.PlaySE("SA");
+                   // 攻撃1の判定時間
                 }
-                else if (comboStep == 3) {
+                if (comboStep == 3) {
+                    
                     anim.SetBool("Attack3", true);
                     comboTimer = comboResetTime;
                     //AudioManager.Instance.PlaySE("EA");
+                    // 攻撃1の判定時間
                     StartAttackCooldown();
+                    //StartCoroutine(EnableColliderTemporarily(0.3f));
                 }
             }
         }
@@ -371,7 +385,45 @@ public class PlayerBase : CharacterBase {
     }
 
 
-    
+    public void StrongAttack() {
+        if (isAttackCooldown) return; // クールタイム中は攻撃不可
+
+        // 攻撃ボタンが押された瞬間
+        if (attackAction.WasPressedThisFrame()) {
+            comboStep++; // コンボ段階を進める
+
+            if (comboStep > 2) comboStep = 1; // 最大3段階まで
+
+            comboTimer = comboResetTime; // コンボ猶予タイマーをリセット
+
+            // アニメーション再生（例：Attack1, Attack2, Attack3）
+            // animator.SetTrigger("Attack" + comboStep);
+
+            // 攻撃判定をサイズに応じて有効化
+            //StartCoroutine(EnableAttackCollider(comboStep));
+
+            // 3段目まで出し切ったらクールタイム開始
+            if (comboStep == 2) {
+                //PlayerController.attackFlag = false;
+                StartAttackCooldown();
+            }
+        }
+
+
+
+
+
+
+        // コンボ猶予時間の管理
+        if (comboStep > 0) {
+            comboTimer -= Time.deltaTime;
+            if (comboTimer <= 0f) {
+
+                comboStep = 0;           // コンボリセット
+                StartAttackCooldown();  // コンボ中断時もクールタイム開始
+            }
+        }
+    }
 
     // クールタイム開始処理
     private void StartAttackCooldown() {
