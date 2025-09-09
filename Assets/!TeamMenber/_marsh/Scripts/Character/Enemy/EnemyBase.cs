@@ -23,11 +23,14 @@ public class EnemyBase : MonoBehaviour {
     private bool isCritical = false;
     public float attackMultiplier = 1f; // 敵ごとに設定
 
+    private int damage;
+
     [Header("参照")]
     protected Animator animator;
     protected NavMeshAgent agent;
     protected AttackHitbox hitbox;
     protected Transform player;
+    [SerializeField]protected DamagePopupController damagePopupController;
 
     protected EnemyState state = EnemyState.Idle;
 
@@ -124,15 +127,16 @@ public class EnemyBase : MonoBehaviour {
                                    int elementalValue = 0, float staggerValue = 0) {
         isCritical = Random.value < criticalChance; // 20%でクリティカル
         if (isCritical) {
-            int damage = Mathf.RoundToInt
+            damage = Mathf.RoundToInt
                 ((Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f) * criticalMultiplier);
             hp -= damage;
         }
         else {
-            int damage = Mathf.RoundToInt
+            damage = Mathf.RoundToInt
                 ((Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f));
             hp -= damage;
         }
+        damagePopupController.AddDamage(damage);
         animator.SetTrigger("Hit"); // アニメーション切り替え
 
         if (hp <= 0) Dead();
