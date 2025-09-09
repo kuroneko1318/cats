@@ -45,11 +45,11 @@ public class PlayerController : PlayerBase {
             Avoidance();
             Stop();
         }
-
+        SetDamage(attack);
         PlayAttackSEOnAnimationStart();
         LowAttack();             // 攻撃処理
         HandleAttackCooldown();  // クールタイム処理
-        CheckAttackAnimationEndr();
+        CheckAttackAnimationEnd();
         if (Keyboard.current.digit1Key.wasPressedThisFrame) {
             skillManager.UseSkill(0, gameObject);
         }
