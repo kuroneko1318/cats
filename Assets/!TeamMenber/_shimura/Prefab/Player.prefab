@@ -1021,7 +1021,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6180350198701609867}
-  - component: {fileID: 3791508542889057533}
   m_Layer: 7
   m_Name: mixamorig:Sword_joint
   m_TagString: weapon
@@ -1044,27 +1043,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5947032807010059419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3791508542889057533
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2578969778379488099}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.33720365, y: 0.08895296, z: 0.78870726}
-  m_Center: {x: 0.055494893, y: -0.0045682485, z: 0.35394698}
 --- !u!1 &2728049500359341540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1287,6 +1265,59 @@ Transform:
   - {fileID: 8430002257260945655}
   m_Father: {fileID: 3800283243163133972}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4057856831055313725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8569611311342088463}
+  - component: {fileID: 4676912480286820461}
+  m_Layer: 0
+  m_Name: AttackCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8569611311342088463
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4057856831055313725}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.85000014, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 489847140789933352}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4676912480286820461
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4057856831055313725}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.8203939, y: 1.2941525, z: 0.9033891}
+  m_Center: {x: -0.089803025, y: 0.14707625, z: 0.61435705}
 --- !u!1 &4079090041874959117
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,6 +1992,7 @@ Transform:
   - {fileID: 8344875730151911923}
   - {fileID: 7829158336669730758}
   - {fileID: 4204811295593162016}
+  - {fileID: 8569611311342088463}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3533934605395549137
@@ -2061,6 +2093,7 @@ MonoBehaviour:
   swordImage: {fileID: 0}
   animator: {fileID: 3533934605395549137}
   rb: {fileID: 3092851650673814352}
+  damageCollider: {fileID: 0}
   latestPos: {x: 0, y: 0, z: 0}
   direction: {x: 0, y: 0, z: 0}
   diff: {x: 0, y: 0, z: 0}
@@ -2077,7 +2110,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 3533934605395549137}
-  attackCollider: {fileID: 3791508542889057533}
+  attackCollider: {fileID: 0}
+  animator: {fileID: 0}
+  count: 0
   comboStep: 0
   attackCooldownDuration: 1
 --- !u!114 &2825272029271714256
