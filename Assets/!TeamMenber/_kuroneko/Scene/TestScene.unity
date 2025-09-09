@@ -405,6 +405,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Beetle
       objectReference: {fileID: 0}
+    - target: {fileID: 7594968722123703657, guid: 193b549128c924f4486c36c51547b1f8, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 41644e70efb9eb74b936a01e71a4f0e8, type: 2}
     - target: {fileID: 8618788910594115080, guid: 193b549128c924f4486c36c51547b1f8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.2580557

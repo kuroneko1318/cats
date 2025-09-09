@@ -11,7 +11,7 @@ public class AttackHitbox : MonoBehaviour {
         if (other.CompareTag("Player")) {
             PlayerBase player = other.GetComponent<PlayerBase>();
             if (player != null) {
-                player.TakeDamage(damage, 1.0f, 0.1f, 1.5f);
+                player.TakeDamage(damage, 1.0f, 0.01f, 100f);
             }
         }
     }

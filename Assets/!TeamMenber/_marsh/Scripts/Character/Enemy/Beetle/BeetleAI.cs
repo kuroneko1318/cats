@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,6 +8,7 @@ public class BeeteAI : EnemyBase {
     public int kickPower = 8;
     public int scratchPower = 6;
     public int triplePower = 12;
+    private bool isAttacking = false;
 
     [Header("巡回関連")]
     public float patrolRadius = 5f;
@@ -40,31 +42,29 @@ public class BeeteAI : EnemyBase {
             case EnemyState.Combat:
                 if (player != null) {
                     transform.LookAt(player);
-                    if (!IsInvoking(nameof(StartAttack)))
-                        Invoke(nameof(StartAttack), Random.Range(1f, 2f));
+
+                    if (!isAttacking)
+                        StartCoroutine(AttackRoutine());
                 }
                 break;
         }
     }
 
-    private void StartAttack() {
-        if (state != EnemyState.Combat) return;
+    private IEnumerator AttackRoutine() {
+        isAttacking = true;
 
         int rand = Random.Range(0, 4);
         switch (rand) {
-            case 0:
-                PerformAttack("Stab", 0.2f, 1.5f);
-                break;
-            case 1:
-                PerformAttack("Kick", 0.3f, 1.5f);
-                break;
-            case 2:
-                PerformAttack("Scratch", 0.25f, 1.5f);
-                break;
-            case 3:
-                PerformAttack("Triple", 0.4f, 2.5f);
-                break;
+            case 0: PerformAttack("Stab", 0.2f, 1.5f); break;
+            case 1: PerformAttack("Kick", 0.3f, 1.5f); break;
+            case 2: PerformAttack("Scratch", 0.25f, 1.5f); break;
+            case 3: PerformAttack("Triple", 0.4f, 2.5f); break;
         }
+
+        // 攻撃モーション分待つ（AnimationEvent で処理する場合はモーション長に合わせる）
+        yield return new WaitForSeconds(2.7f); // 最大攻撃時間に合わせる
+
+        isAttacking = false;
     }
 
     // ランダムなNavMesh上の位置を返す
@@ -93,6 +93,7 @@ public class BeeteAI : EnemyBase {
             idleTimer += Time.deltaTime;
             if (idleTimer >= idleTime) {
                 hasPatrolDestination = false; // 次の目的地へ
+                ChangeState(EnemyState.LookAround);
             }
         }
     }
