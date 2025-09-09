@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : PlayerBase {
 
-    
+    public static int attacker;
 
     void Start() {
         input = GetComponent<PlayerInput>();
@@ -46,6 +46,7 @@ public class PlayerController : PlayerBase {
             Stop();
         }
         SetDamage(attack);
+        attacker = attack;
         PlayAttackSEOnAnimationStart();
         LowAttack();             // 攻撃処理
         HandleAttackCooldown();  // クールタイム処理
