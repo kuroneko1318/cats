@@ -77,25 +77,28 @@ public class EnemyBase : MonoBehaviour {
         switch (newState) {
             case EnemyState.Idle:
                 agent.isStopped = true;
+                animator.SetBool("Idle", true);
                 animator.SetBool("Walk", false);
-                animator.SetTrigger("Idle");
                 break;
             case EnemyState.Patrol:
                 agent.isStopped = false;
                 animator.SetBool("Walk", true);
+                animator.SetBool("Idle", false);
                 break;
             case EnemyState.LookAround:
                 agent.isStopped = true;
-                animator.SetBool("Walk", false);
                 animator.SetTrigger("LookAround");
                 break;
             case EnemyState.Chase:
                 agent.isStopped = false;
-                animator.SetBool("Walk", true);
+                animator.SetBool("Run", true);
+                animator.SetBool("Walk", false);
                 break;
             case EnemyState.Combat:
                 agent.isStopped = true;
+                animator.SetBool("Idle", true);
                 animator.SetBool("Walk", false);
+                animator.SetBool("Run", false);
                 break;
         }
     }
