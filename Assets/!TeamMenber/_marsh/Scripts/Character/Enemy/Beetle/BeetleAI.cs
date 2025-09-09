@@ -82,7 +82,6 @@ public class BeeteAI : EnemyBase {
             patrolDestination = RandomNavSphere(transform.position, patrolRadius);
             agent.SetDestination(patrolDestination);
             hasPatrolDestination = true;
-            idleTimer = 0; // リセット
         }
 
         // 経路計算中は待機
@@ -90,11 +89,8 @@ public class BeeteAI : EnemyBase {
 
         // 到着判定（stoppingDistance を考慮）
         if (agent.remainingDistance <= agent.stoppingDistance) {
-            idleTimer += Time.deltaTime;
-            if (idleTimer >= idleTime) {
-                hasPatrolDestination = false; // 次の目的地へ
-                ChangeState(EnemyState.LookAround);
-            }
+            hasPatrolDestination = false;  // 次の目的地用フラグリセット
+            ChangeState(EnemyState.LookAround); // 到着した瞬間に状態変更
         }
     }
 

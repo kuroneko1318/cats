@@ -22,6 +22,7 @@ public class EnemyBase : MonoBehaviour {
     public float combatRange = 3f;
     private bool isCritical = false;
     public float attackMultiplier = 1f; // 敵ごとに設定
+    public float deadTime = 3f; // 死亡後に待つ時間（Inspectorで調整可能）
 
     private int damage;
 
@@ -78,17 +79,19 @@ public class EnemyBase : MonoBehaviour {
         switch (newState) {
             case EnemyState.Idle:
                 agent.isStopped = true;
-                animator.SetBool("Idle", true);
                 animator.SetBool("Walk", false);
+                animator.SetBool("Run", false);
                 break;
             case EnemyState.Patrol:
                 agent.isStopped = false;
                 animator.SetBool("Walk", true);
-                animator.SetBool("Idle", false);
+                animator.SetBool("Run", false);
                 break;
             case EnemyState.LookAround:
                 agent.isStopped = true;
                 animator.SetTrigger("LookAround");
+                animator.SetBool("Walk", false);
+                animator.SetBool("Run", false);
                 break;
             case EnemyState.Chase:
                 agent.isStopped = false;
@@ -97,7 +100,6 @@ public class EnemyBase : MonoBehaviour {
                 break;
             case EnemyState.Combat:
                 agent.isStopped = true;
-                animator.SetBool("Idle", true);
                 animator.SetBool("Walk", false);
                 animator.SetBool("Run", false);
                 break;
@@ -157,9 +159,16 @@ public class EnemyBase : MonoBehaviour {
     }
 
     public virtual void Dead() {
+        if (state == EnemyState.Dead) return; // 二重呼び出し防止
         ChangeState(EnemyState.Dead);
         animator.SetTrigger("Dead");
         agent.isStopped = true;
         this.enabled = false;
+
+        StartCoroutine(DeadRoutine());
+    }
+    private IEnumerator DeadRoutine() {
+        yield return new WaitForSeconds(deadTime);
+        Destroy(gameObject); // 待った後にオブジェクト削除
     }
 }
