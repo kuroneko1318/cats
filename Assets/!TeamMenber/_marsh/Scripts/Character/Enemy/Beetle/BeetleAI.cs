@@ -1,194 +1,108 @@
-using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
+public class BeeteAI : EnemyBase {
+    [Header("攻撃ステータス")]
+    public int stabPower = 5;
+    public int kickPower = 8;
+    public int scratchPower = 6;
+    public int triplePower = 12;
 
-public class BeetleAI : EnemyBase {
-
-    [SerializeField] private GameObject attackHitbox;
-    [SerializeField] private float attackDuration = 0.2f;
-    private bool isAttacking = false;
-
-    public EnemyState currentState = EnemyState.Idle;
-
-    [Header("AI Settings")]
-    public Transform player;
-    public float viewRange = 10f;
-    public float viewAngle = 60f;
-    public float combatRange = 2f;
-
+    [Header("巡回関連")]
+    public float patrolRadius = 5f;
+    public float idleTime = 2f;
     private float idleTimer;
-    private Vector3 randomDirection;
+    private Vector3 patrolDestination;
+    private bool hasPatrolDestination = false;
 
-    private void Start() {
-        InitializeStats(80, 15, 5, 2.5f);
-        idleTimer = Random.Range(2f, 4f);
+    protected override void Start() {
+        base.Start();
+        ChangeState(EnemyState.Patrol);
     }
 
-    private void Update() {
-        switch (currentState) {
-            case EnemyState.Idle: HandleIdle(); break;
-            case EnemyState.Alert: HandleAlert(); break;
-            case EnemyState.Chase: HandleChase(); break;
-            case EnemyState.Combat: HandleCombat(); break;
-            case EnemyState.Observe: HandleObserve(); break;
-            case EnemyState.Dead: Dead(); break;
-        }
-    }
+    protected override void Update() {
+        base.Update();
 
-    private void HandleIdle() {
-        idleTimer -= Time.deltaTime;
-        if (idleTimer <= 0f) {
-            if (Random.value < 0.3f) {
-                animator.SetTrigger("LookAround");
-                idleTimer = Random.Range(2f, 4f);
-            }
-            else {
-                randomDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
-                idleTimer = Random.Range(3f, 6f);
-            }
-        }
+        switch (state) {
+            case EnemyState.Patrol:
+                PatrolUpdate();
+                break;
 
-        transform.position += randomDirection * moveSpeed * Time.deltaTime;
+            case EnemyState.LookAround:
+                LookAroundUpdate();
+                break;
 
-        if (CanSeePlayer()) {
-            currentState = EnemyState.Alert;
-        }
-    }
+            case EnemyState.Chase:
+                if (player != null)
+                    agent.SetDestination(player.position);
+                break;
 
-    private void HandleAlert() {
-        animator.SetTrigger("Alert");
-        currentState = EnemyState.Chase;
-    }
-
-    private void HandleChase() {
-        Vector3 direction = (player.position - transform.position).normalized;
-        transform.position += direction * moveSpeed * Time.deltaTime;
-        Vector3 targetPos = new Vector3(player.position.x, transform.position.y, player.position.z);
-        transform.LookAt(targetPos);
-
-        if (Vector3.Distance(transform.position, player.position) <= combatRange) {
-            currentState = EnemyState.Combat;
-        }
-        else if (Vector3.Distance(transform.position, player.position) <= combatRange + 1f) {
-            currentState = EnemyState.Observe;
-        }
-
-    }
-
-    private void HandleCombat() {
-        Vector3 targetPos = new Vector3(player.position.x, transform.position.y, player.position.z);
-        transform.LookAt(targetPos);
-
-        float distance = Vector3.Distance(transform.position, player.position);
-
-        // ---- 距離調整 ----
-        if (distance > combatRange + 0.5f) {
-            // 離れすぎた → 前進
-            Vector3 direction = (player.position - transform.position).normalized;
-            transform.position += direction * moveSpeed * Time.deltaTime;
-        }
-        else if (distance < combatRange - 0.5f) {
-            // 近すぎた → 後退
-            Vector3 backStep = -transform.forward;
-            transform.position += backStep * (moveSpeed * 0.7f) * Time.deltaTime;
-        }
-        else {
-            // ---- 近距離に入ったら行動を選択 ----
-            if (!isAttacking) {
-                float rand = Random.value;
-                if (rand < 0.3f) {
-                    // 攻撃
-                    animator.SetTrigger("Scratch");
-                    Attack();
+            case EnemyState.Combat:
+                if (player != null) {
+                    transform.LookAt(player);
+                    if (!IsInvoking(nameof(StartAttack)))
+                        Invoke(nameof(StartAttack), Random.Range(1f, 2f));
                 }
-                else if (rand < 0.6f) {
-                    // 横移動（ステップ）
-                    Vector3 sideStep = transform.right * (Random.value < 0.5f ? 1 : -1);
-                    transform.position += sideStep * moveSpeed * Time.deltaTime;
-                }
-                else {
-                    // 他の攻撃
-                    animator.SetTrigger("Stab");
-                    Attack();
-                }
+                break;
+        }
+    }
+
+    private void StartAttack() {
+        if (state != EnemyState.Combat) return;
+
+        int rand = Random.Range(0, 4);
+        switch (rand) {
+            case 0:
+                PerformAttack("Stab", 0.2f, 1.5f);
+                break;
+            case 1:
+                PerformAttack("Kick", 0.3f, 1.5f);
+                break;
+            case 2:
+                PerformAttack("Scratch", 0.25f, 1.5f);
+                break;
+            case 3:
+                PerformAttack("Triple", 0.4f, 2.5f);
+                break;
+        }
+    }
+
+    // ランダムなNavMesh上の位置を返す
+    private Vector3 RandomNavSphere(Vector3 origin, float dist) {
+        Vector3 randDir = Random.insideUnitSphere * dist;
+        randDir += origin;
+        NavMeshHit navHit;
+        NavMesh.SamplePosition(randDir, out navHit, dist, NavMesh.AllAreas);
+        return navHit.position;
+    }
+
+    private void PatrolUpdate() {
+        // 目的地が無ければ新しく作る
+        if (!hasPatrolDestination) {
+            patrolDestination = RandomNavSphere(transform.position, patrolRadius);
+            agent.SetDestination(patrolDestination);
+            hasPatrolDestination = true;
+            idleTimer = 0; // リセット
+        }
+
+        // 経路計算中は待機
+        if (agent.pathPending) return;
+
+        // 到着判定（stoppingDistance を考慮）
+        if (agent.remainingDistance <= agent.stoppingDistance) {
+            idleTimer += Time.deltaTime;
+            if (idleTimer >= idleTime) {
+                hasPatrolDestination = false; // 次の目的地へ
             }
         }
     }
 
 
-    private void HandleObserve() {
-        animator.SetBool("Walk", true);
-        Vector3 targetPos = new Vector3(player.position.x, transform.position.y, player.position.z);
-        transform.LookAt(targetPos);
-
-        float rand = Random.value;
-        if (rand < 0.3f) {
-            // 立ち止まる
-            animator.SetBool("Walk", false);
-        }
-        else if (rand < 0.6f) {
-            // 左右に移動
-            Vector3 sideStep = transform.right * (Random.value < 0.5f ? 1 : -1);
-            transform.position += sideStep * moveSpeed * Time.deltaTime;
-        }
-        else {
-            // 後退
-            Vector3 backStep = -transform.forward;
-            transform.position += backStep * moveSpeed * Time.deltaTime;
-        }
-
-        // 攻撃可能距離ならCombatへ
-        if (Vector3.Distance(transform.position, player.position) <= combatRange) {
-            currentState = EnemyState.Combat;
+    private void LookAroundUpdate() {
+        idleTimer += Time.deltaTime;
+        if (idleTimer >= idleTime) {
+            idleTimer = 0;
+            ChangeState(EnemyState.Patrol);
         }
     }
-
-
-    private bool CanSeePlayer() {
-        Vector3 directionToPlayer = player.position - transform.position;
-        float angle = Vector3.Angle(transform.forward, directionToPlayer);
-        return directionToPlayer.magnitude <= viewRange && angle <= viewAngle;
-    }
-
-    public override void Attack() {
-        if (isAttacking) return; // 攻撃中は無視
-        StartCoroutine(PerformAttack());
-    }
-
-    private IEnumerator PerformAttack() {
-        isAttacking = true;
-
-        yield return new WaitForSeconds(0.1f); // アニメーションに合わせて判定タイミング調整
-
-        attackHitbox.SetActive(true); // 攻撃判定ON
-        yield return new WaitForSeconds(attackDuration);
-        attackHitbox.SetActive(false); // 攻撃判定OFF
-
-        isAttacking = false;
-    }
-
-
-    public override void Dead() {
-        animator.SetTrigger("Dead");
-        Destroy(gameObject, 1f);
-    }
-
-    public override void HealHp() {
-        hp = Mathf.Min(hp + 10, maxHp);
-    }
-
-    public override void Move() {
-        // 状態によって自動制御されるので空でもOK
-    }
-
-    //攻撃判定のON、OFF
-    public void EnableHitbox() {
-        attackHitbox.SetActive(true);
-        Invoke(nameof(DisableHitbox), attackDuration);
-    }
-
-    private void DisableHitbox() {
-        attackHitbox.SetActive(false);
-    }
-
 }
