@@ -121,7 +121,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 86e41dbdfddca1342971ed8ab4cb487d, type: 2}
 --- !u!1001 &454980531
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -178,6 +178,46 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 1766436246}
+    - target: {fileID: 2203553697699575889, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
+      propertyPath: jumpAction.m_Name
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 2203553697699575889, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
+      propertyPath: moveAction.m_Name
+      value: Move
+      objectReference: {fileID: 0}
+    - target: {fileID: 2203553697699575889, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
+      propertyPath: GatherAction.m_Name
+      value: Gather
+      objectReference: {fileID: 0}
+    - target: {fileID: 2203553697699575889, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
+      propertyPath: attackAction.m_Name
+      value: Attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 2203553697699575889, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
+      propertyPath: avoidanceAction.m_Name
+      value: Avoidance
+      objectReference: {fileID: 0}
+    - target: {fileID: 2579443338632348065, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
+      propertyPath: jumpAction.m_Name
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 2579443338632348065, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
+      propertyPath: moveAction.m_Name
+      value: Move
+      objectReference: {fileID: 0}
+    - target: {fileID: 2579443338632348065, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
+      propertyPath: GatherAction.m_Name
+      value: Gather
+      objectReference: {fileID: 0}
+    - target: {fileID: 2579443338632348065, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
+      propertyPath: attackAction.m_Name
+      value: Attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 2579443338632348065, guid: c259ac679a03a3a4d8bd70b3484d8c0a, type: 3}
+      propertyPath: avoidanceAction.m_Name
+      value: Avoidance
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
