@@ -52,7 +52,10 @@ public class PlayerController : PlayerBase {
         HandleAttackCooldown();  // クールタイム処理
         CheckAttackAnimationEnd();
         if (Keyboard.current.digit1Key.wasPressedThisFrame) {
+            
             skillManager.UseSkill(0, gameObject);
+           
+            
         }
     }
 
