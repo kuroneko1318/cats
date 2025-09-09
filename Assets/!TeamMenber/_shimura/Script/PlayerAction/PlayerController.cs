@@ -45,7 +45,7 @@ public class PlayerController : PlayerBase {
             Avoidance();
             Stop();
         }
-
+        SetDamage(attack);
         PlayAttackSEOnAnimationStart();
         LowAttack();             // 攻撃処理
         HandleAttackCooldown();  // クールタイム処理
