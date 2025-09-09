@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : PlayerBase {
 
-    public static int attacker;
+    
 
     void Start() {
         input = GetComponent<PlayerInput>();

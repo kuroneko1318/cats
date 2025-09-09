@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 //Update にプレイヤーの操作ぶち込む
 
 public class PlayerBase : CharacterBase {
-
+    public static int attacker;
     // プレイヤーの入力管理
     public InputAction attackAction; // 攻撃入力
     [SerializeField] public Animator anim; // アニメーター参照
@@ -294,7 +294,7 @@ public class PlayerBase : CharacterBase {
 
         if (stateInfo.IsName("Sword And Shield Slash") && stateInfo.normalizedTime >= 0.8f && !playedAttack1SE) {
             AudioManager.Instance.PlaySE("FA");
-           
+           //StartCoroutine(EnableColliderTemporarily(0.1f)); // 攻撃1の判定時間
             playedAttack1SE = true;
         }
 
@@ -304,19 +304,32 @@ public class PlayerBase : CharacterBase {
 
         if (stateInfo.IsName("Sword And Shield Slash (2)") && stateInfo.normalizedTime >= 0.8f && !playedAttack2SE) {
             AudioManager.Instance.PlaySE("SA");
-            playedAttack2SE = true;
+           // StartCoroutine(EnableColliderTemporarily(0.1f)); // 攻撃2の判定時間
+        
+        playedAttack2SE = true;
         }
-        if (stateInfo.IsName("Sword And Shield Slash (2)") && stateInfo.normalizedTime >= 0.8f) {
+        if (stateInfo.IsName("Sword And Shield Slash (2)") && stateInfo.normalizedTime >= 0.5f) {
+            //StartCoroutine(EnableColliderTemporarily(0.3f));
             anim.SetBool("Attack2", false);
         }
 
         if (stateInfo.IsName("Sword And Shield Slash (1)") && stateInfo.normalizedTime >= 0.8f && !playedAttack3SE) {
             AudioManager.Instance.PlaySE("EA");
+           // StartCoroutine(EnableColliderTemporarily(0.1f)); // 攻撃3の判定時間
             playedAttack3SE = true;
         }
-        if (stateInfo.IsName("Sword And Shield Slash (1)") && stateInfo.normalizedTime >= 0.8f) {
+        if (stateInfo.IsName("Sword And Shield Slash (1)") && stateInfo.normalizedTime >= 0.4f) {
+            //StartCoroutine(EnableColliderTemporarily(0.5f));
             anim.SetBool("Attack3", false);
         }
+    }
+
+    public void AttackStart() {
+        attackCollider.enabled=true;
+    }
+
+    public void AttackEnd() {
+        attackCollider.enabled=false;
     }
 
 
@@ -330,23 +343,25 @@ public class PlayerBase : CharacterBase {
                 comboStep = 1;
                 anim.SetBool("Attack1", true);
                 comboTimer = comboResetTime;
-                AudioManager.Instance.PlaySE("FA");
-                StartCoroutine(EnableColliderTemporarily(0.01f)); // 攻撃1の判定時間
+                //AudioManager.Instance.PlaySE("FA");
+                //StartCoroutine(EnableColliderTemporarily(0.4f)); // 攻撃1の判定時間
             }
             else if (comboTimer > 0f) {
                 comboStep++;
                 if (comboStep == 2) {
                     anim.SetBool("Attack2", true);
                     comboTimer = comboResetTime;
-                    AudioManager.Instance.PlaySE("SA");
-                    StartCoroutine(EnableColliderTemporarily(0.01f)); // 攻撃2の判定時間
+                    //AudioManager.Instance.PlaySE("SA");
+                   // 攻撃1の判定時間
                 }
-                else if (comboStep == 3) {
+                if (comboStep == 3) {
+                    
                     anim.SetBool("Attack3", true);
                     comboTimer = comboResetTime;
-                    AudioManager.Instance.PlaySE("EA");
-                    StartCoroutine(EnableColliderTemporarily(0.01f)); // 攻撃3の判定時間
+                    //AudioManager.Instance.PlaySE("EA");
+                    // 攻撃1の判定時間
                     StartAttackCooldown();
+                    //StartCoroutine(EnableColliderTemporarily(0.3f));
                 }
             }
         }
@@ -412,7 +427,9 @@ public class PlayerBase : CharacterBase {
 
     // クールタイム開始処理
     private void StartAttackCooldown() {
-
+        playedAttack1SE= false;
+        playedAttack2SE= false;
+        playedAttack3SE= false;
         isAttackCooldown = true;
         attackCooldownTimer = attackCooldownDuration;
     }
