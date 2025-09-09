@@ -9,153 +9,147 @@ using Random = UnityEngine.Random;
 //Update にプレイヤーの操作ぶち込む
 
 public class PlayerBase : CharacterBase {
+
     // プレイヤーの入力管理
-   
-    public InputAction attackAction;
-    [SerializeField]
-    public Animator anim;
+    public InputAction attackAction; // 攻撃入力
+    [SerializeField] public Animator anim; // アニメーター参照
 
+    // 攻撃判定用のコライダー（Trigger）
+    public Collider attackCollider;
 
-    // 攻撃判定用のコライダー（Trigger）
-    public Collider attackCollider;
-    //public Animator animator;
+    public int count; // 汎用カウンター（用途不明）
 
-    public int count;
+    // コンボ管理
+    public int comboStep = 0; // 現在のコンボ段階（1〜3）
+    private float comboResetTime = 1f; // コンボ入力猶予時間
+    private float comboTimer = 0f; // コンボ猶予タイマー
 
+    // クールタイム管理
+    private bool isAttackCooldown = false; // クールタイム中かどうか
+    [SerializeField] private float attackCooldownDuration = 0.5f; // クールタイムの長さ
+    private float attackCooldownTimer = 0f; // クールタイム残り時間
 
-    // コンボ管理
-    public int comboStep = 0;                  // 現在のコンボ段階（1〜3）
-    private float comboResetTime = 1f;       // コンボ入力猶予時間
-    private float comboTimer = 0f;             // コンボ猶予タイマー
+    private bool wasInIdle = false; // 前回の状態がIdleかどうか
 
-    // クールタイム管理
-    private bool isAttackCooldown = false;     // クールタイム中かどうか
-    [SerializeField] private float attackCooldownDuration = 0.5f; // クールタイムの長さ
-    private float attackCooldownTimer = 0f;    // クールタイム残り時間
+    public SkillManager skillManager; // スキル管理クラス
+    public FrontSlashSkill frontSlashSkill; // 特定スキル（前方斬り）
 
-
-
-    private bool wasInIdle = false;
-
-    public SkillManager skillManager;
-    public FrontSlashSkill frontSlashSkill;
-
-
-
+    // 攻撃SE再生フラグ
     private bool playedAttack1SE = false;
     private bool playedAttack2SE = false;
     private bool playedAttack3SE = false;
 
-
-    private string lastStateName = "";
-    private bool hasPlayedSE = false;
-
-
-
+    private string lastStateName = ""; // 最後のアニメーションステート名
+    private bool hasPlayedSE = false; // SE再生済みフラグ
+                                      // プレイヤー入力アクション
     public PlayerInput input;
     public InputAction moveAction;
     public InputAction jumpAction;
-    //public InputAction attackAction;
     public InputAction avoidanceAction;
     public InputAction GatherAction;
-    public GameObject cam;
 
-    public Rigidbody rb;
-    public Collider damageCollider;
+    public GameObject cam; // カメラ参照
+    public Rigidbody rb; // プレイヤーのRigidbody
+    //public Collider damageCollider; // ダメージ判定用コライダー
 
-    public Vector3 latestPos;
-    public Vector3 direction;
-    public Vector3 diff;
+    public Vector3 latestPos; // 最新位置
+    public Vector3 direction; // 移動方向
+    public Vector3 diff; // 位置差分
 
-    public bool isAvoiding = false;
-    public static bool attackFlag = false;
-    private float avoidanceTimer = 0;
-    private float avoidanceDuration = 0.002f;
+    public Vector3 intial=new Vector3(0,-9.8f,0);
 
-    private float avoidanceCooldown = 1f;
-    private float cooldownTimer = 0f;
+    public bool isAvoiding = false; // 回避中かどうか
+    public static bool attackFlag = false; // 攻撃中フラグ
+    private float avoidanceTimer = 0; // 回避時間
+    private float avoidanceDuration = 0.002f; // 回避持続時間
 
-    public Vector3 initialPosition;
+    private float avoidanceCooldown = 1f; // 回避クールタイム
+    private float cooldownTimer = 0f; // クールタイム残り時間
 
-    //会心率　最大値は1.00f
+    public Vector3 initialPosition; // 初期位置
+
+    // 会心率（最大値は1.00f）
     public float criticalChance;
-    //会心ダメージ倍率
+    // 会心ダメージ倍率
     public float criticalMultiplier;
-    private const int _WEAPON_ID = 1001;
 
-    private string inputItemString;
-    [SerializeField]
-    private TMP_InputField EquipmentinputField;
-    public ItemManager itemManager;
-    public ItemManager weaponManager;
-    WeaponBase weapon;
-    Inventory inventory = null;
-    [SerializeField] RawImage swordImage;
+    private const int _WEAPON_ID = 1001; // 武器ID（固定）
 
-    [SerializeField]
-    public Animator animator;
+    private string inputItemString; // 装備入力文字列
+    [SerializeField] private TMP_InputField EquipmentinputField; // 装備入力フィールド
+    public ItemManager itemManager; // アイテム管理
+    public ItemManager weaponManager; // 武器管理
+    WeaponBase weapon; // 装備中の武器
+    Inventory inventory = null; // インベントリ参照
+    [SerializeField] RawImage swordImage; // 武器画像表示
 
-    bool isCritical = false;
+    [SerializeField] public Animator animator; // アニメーター参照（重複あり）
+
+    bool isCritical = false; // クリティカル判定
 
     void Update() {
-
+        // 毎フレームの更新処理（未実装）
     }
 
+    // 抽象メソッドのオーバーライド（未実装）
     public override void Attack() {
         throw new System.NotImplementedException();
     }
 
     public override void Dead() {
-        throw new System.NotImplementedException();
+        if (hp <= 0) {
+            animator.SetTrigger("Death");
+        }
     }
 
     public override void HealHp() {
         throw new System.NotImplementedException();
     }
 
+    // 移動処理（アニメーションのみ）
     public override void Move() {
         animator.SetBool("Run", true);
     }
 
-
+    // ダメージ処理
     public virtual void TakeDamage(int attack, float motionMultiplier = 1, float criticalChance = 0, float criticalMultiplier = 2,
                                    int elementalValue = 0, float staggerValue = 0) {
-        isCritical = Random.value < criticalChance; // 20%でクリティカル
+        isCritical = Random.value < criticalChance; // クリティカル判定
         if (isCritical) {
-            damage = Mathf.RoundToInt
-                ((Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f) * criticalMultiplier);
+            damage = Mathf.RoundToInt(
+                (Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f) * criticalMultiplier);
             hp -= damage;
         }
         else {
-            damage = Mathf.RoundToInt
-                ((Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f));
+            damage = Mathf.RoundToInt(
+                (Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f));
             hp -= damage;
         }
-        animator.SetBool("Hit", true); // アニメーション切り替え
-        StartCoroutine(ResetHitFlagAfterDelay(0.1f)); // 0.3秒後に戻す
 
-        if (hp <= 0) Dead();
+        animator.SetBool("Hit", true); // 被ダメージアニメーション
+        StartCoroutine(ResetHitFlagAfterDelay(0.1f)); // 一定時間後にHitフラグを戻す
+
+        if (hp <= 0) Dead(); // HPが0以下なら死亡処理
     }
+
+    // Hitフラグを戻すコルーチン
     private IEnumerator ResetHitFlagAfterDelay(float delay) {
         yield return new WaitForSeconds(delay);
         animator.SetBool("Hit", false);
     }
 
+    // 死亡アニメーション処理
+    
 
-
-    public void Death() {
-        if (hp <= 0) {
-            animator.SetTrigger("Death");
-        }
-    }
-
+    // プレイヤー移動処理
     public void PlayerMove() {
-        if (isAvoiding) return;
+        if (isAvoiding) return; // 回避中は移動不可
 
         Vector2 inputVector = moveAction.ReadValue<Vector2>();
         if (inputVector != Vector2.zero) {
             animator.SetBool("Run", true);
 
+            // カメラ方向に基づく移動
             Vector3 camForward = cam.transform.forward;
             Vector3 camRight = cam.transform.right;
 
@@ -169,14 +163,14 @@ public class PlayerBase : CharacterBase {
             rb.velocity = moveDir * moveSpeed;
             direction = moveDir;
 
-            transform.rotation = Quaternion.LookRotation(moveDir);
+            transform.rotation = Quaternion.LookRotation(moveDir); // 移動方向に回転
         }
         else {
             animator.SetBool("Run", false);
         }
     }
 
-
+    // プレイヤーの回転のみ処理
     public void RotMove() {
         Vector2 inputVector = moveAction.ReadValue<Vector2>();
         if (inputVector != Vector2.zero) {
@@ -193,6 +187,7 @@ public class PlayerBase : CharacterBase {
         }
     }
 
+    // 回避処理
     public void Avoidance() {
         if (cooldownTimer > 0f) {
             cooldownTimer -= Time.deltaTime;
@@ -207,7 +202,7 @@ public class PlayerBase : CharacterBase {
             avoidanceTimer = avoidanceDuration;
             cooldownTimer = avoidanceCooldown;
 
-            rb.velocity = transform.forward * moveSpeed * 2f;
+            rb.velocity = transform.forward * moveSpeed * 2f; // 前方に高速移動
         }
 
         if (isAvoiding) {
@@ -219,9 +214,10 @@ public class PlayerBase : CharacterBase {
         }
     }
 
+
     public void Stop() {
         if (!isAvoiding && !moveAction.IsInProgress() && !avoidanceAction.IsInProgress()) {
-            rb.velocity = Vector3.zero;
+            rb.velocity = intial;
         }
     }
 
