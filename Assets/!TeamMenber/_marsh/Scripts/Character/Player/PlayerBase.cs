@@ -293,7 +293,7 @@ public class PlayerBase : CharacterBase {
 
 
         if (stateInfo.IsName("Sword And Shield Slash") && stateInfo.normalizedTime >= 0.8f && !playedAttack1SE) {
-            AudioManager.Instance.PlaySE("FA");
+            //AudioManager.Instance.PlaySE("FA");
            //StartCoroutine(EnableColliderTemporarily(0.1f)); // 攻撃1の判定時間
             playedAttack1SE = true;
         }
@@ -303,7 +303,7 @@ public class PlayerBase : CharacterBase {
         }
 
         if (stateInfo.IsName("Sword And Shield Slash (2)") && stateInfo.normalizedTime >= 0.8f && !playedAttack2SE) {
-            AudioManager.Instance.PlaySE("SA");
+            //AudioManager.Instance.PlaySE("SA");
            // StartCoroutine(EnableColliderTemporarily(0.1f)); // 攻撃2の判定時間
         
         playedAttack2SE = true;
@@ -314,7 +314,7 @@ public class PlayerBase : CharacterBase {
         }
 
         if (stateInfo.IsName("Sword And Shield Slash (1)") && stateInfo.normalizedTime >= 0.8f && !playedAttack3SE) {
-            AudioManager.Instance.PlaySE("EA");
+            //AudioManager.Instance.PlaySE("EA");
            // StartCoroutine(EnableColliderTemporarily(0.1f)); // 攻撃3の判定時間
             playedAttack3SE = true;
         }
@@ -326,6 +326,7 @@ public class PlayerBase : CharacterBase {
 
     public void AttackStart() {
         attackCollider.enabled=true;
+        AudioManager.Instance.PlaySE("FA");
     }
 
     public void AttackEnd() {
@@ -337,7 +338,7 @@ public class PlayerBase : CharacterBase {
         if (isAttackCooldown) return;
 
         if (attackAction.WasPressedThisFrame()) {
-            PlayerController.attackFlag = true;
+            attackFlag = true;
 
             if (comboStep == 0) {
                 comboStep = 1;
