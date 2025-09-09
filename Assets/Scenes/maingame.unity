@@ -679,6 +679,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8710112520884255103, guid: 6c9092224dbfab543b6f96819fd3b9e5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1178,6 +1182,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 405803070}
     - target: {fileID: 2204077043543466701, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1216968805}
+    - target: {fileID: 2204077043543466701, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
+      propertyPath: input
+      value: 
+      objectReference: {fileID: 1216968800}
+    - target: {fileID: 2204077043543466701, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
+      propertyPath: attackCollider
+      value: 
+      objectReference: {fileID: 2131643894}
+    - target: {fileID: 2204077043543466701, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
       propertyPath: jumpAction.m_Name
       value: Jump
       objectReference: {fileID: 0}
@@ -1292,6 +1308,10 @@ PrefabInstance:
     - target: {fileID: 3931006243871431130, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 8.172858
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057856831055313725, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
+      propertyPath: m_TagString
+      value: weapon
       objectReference: {fileID: 0}
     - target: {fileID: 4528966541519952120, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1425,6 +1445,26 @@ PrefabInstance:
       propertyPath: attackCollider
       value: 
       objectReference: {fileID: 2131643894}
+    - target: {fileID: 6294790973564977556, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
+      propertyPath: jumpAction.m_Name
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 6294790973564977556, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
+      propertyPath: moveAction.m_Name
+      value: Move
+      objectReference: {fileID: 0}
+    - target: {fileID: 6294790973564977556, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
+      propertyPath: GatherAction.m_Name
+      value: Gather
+      objectReference: {fileID: 0}
+    - target: {fileID: 6294790973564977556, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
+      propertyPath: attackAction.m_Name
+      value: Attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 6294790973564977556, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
+      propertyPath: avoidanceAction.m_Name
+      value: Avoidance
+      objectReference: {fileID: 0}
     - target: {fileID: 6334258232325252753, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 78.2857
@@ -1685,6 +1725,22 @@ PrefabInstance:
 --- !u!4 &1216968799 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 489847140789933352, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
+  m_PrefabInstance: {fileID: 1216968798}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1216968800 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2825272029271714256, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
+  m_PrefabInstance: {fileID: 1216968798}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &1216968805 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3533934605395549137, guid: 2a31bebb53fc956488c0e15c49772880, type: 3}
   m_PrefabInstance: {fileID: 1216968798}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1604247571
