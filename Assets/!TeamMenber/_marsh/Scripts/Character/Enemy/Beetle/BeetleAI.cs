@@ -53,16 +53,16 @@ public class BeeteAI : EnemyBase {
         int rand = Random.Range(0, 4);
         switch (rand) {
             case 0:
-                PerformAttack("Stab", stabPower, 0.2f, 0.4f);
+                PerformAttack("Stab", 0.2f, 1.5f);
                 break;
             case 1:
-                PerformAttack("Kick", kickPower, 0.3f, 0.5f);
+                PerformAttack("Kick", 0.3f, 1.5f);
                 break;
             case 2:
-                PerformAttack("Scratch", scratchPower, 0.25f, 0.35f);
+                PerformAttack("Scratch", 0.25f, 1.5f);
                 break;
             case 3:
-                PerformAttack("Triple", triplePower, 0.4f, 0.7f);
+                PerformAttack("Triple", 0.4f, 2.5f);
                 break;
         }
     }
@@ -77,22 +77,26 @@ public class BeeteAI : EnemyBase {
     }
 
     private void PatrolUpdate() {
-        if (!hasPatrolDestination || agent.remainingDistance < 0.5f) {
-            // 新しい目的地を作る
+        // 目的地が無ければ新しく作る
+        if (!hasPatrolDestination) {
             patrolDestination = RandomNavSphere(transform.position, patrolRadius);
             agent.SetDestination(patrolDestination);
             hasPatrolDestination = true;
+            idleTimer = 0; // リセット
         }
 
-        // 到達したら少し待ってから次の目的地に
-        if (!agent.pathPending && agent.remainingDistance < 0.5f) {
+        // 経路計算中は待機
+        if (agent.pathPending) return;
+
+        // 到着判定（stoppingDistance を考慮）
+        if (agent.remainingDistance <= agent.stoppingDistance) {
             idleTimer += Time.deltaTime;
             if (idleTimer >= idleTime) {
-                idleTimer = 0;
-                hasPatrolDestination = false; // 次の目的地を作る
+                hasPatrolDestination = false; // 次の目的地へ
             }
         }
     }
+
 
     private void LookAroundUpdate() {
         idleTimer += Time.deltaTime;

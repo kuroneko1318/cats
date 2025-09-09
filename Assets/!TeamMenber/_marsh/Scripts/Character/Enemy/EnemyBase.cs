@@ -21,6 +21,7 @@ public class EnemyBase : MonoBehaviour {
     public float detectionRange = 10f;
     public float combatRange = 3f;
     private bool isCritical = false;
+    public float attackMultiplier = 1f; // ìGÇ≤Ç∆Ç…ê›íË
 
     [Header("éQè∆")]
     protected Animator animator;
@@ -97,27 +98,26 @@ public class EnemyBase : MonoBehaviour {
     }
 
     // çUåÇã§í èàóù
-    protected void PerformAttack(string triggerName, int power, float preDelay, float activeTime) {
+    protected void PerformAttack(string triggerName, float preDelay, float activeTime) {
         animator.SetTrigger(triggerName);
-        StartCoroutine(AttackCoroutine(power, preDelay, activeTime));
+        StartCoroutine(AttackCoroutine(preDelay, activeTime));
     }
 
-    private IEnumerator AttackCoroutine(int power, float preDelay, float activeTime) {
+    private IEnumerator AttackCoroutine(float preDelay, float activeTime) {
         yield return new WaitForSeconds(preDelay);
-        EnableHitbox(power);
+        //EnableHitbox(power);
         yield return new WaitForSeconds(activeTime);
-        DisableHitbox();
+        //DisableHitbox();
     }
 
     private void EnableHitbox(int power) {
-        if (hitbox != null) {
-            hitbox.SetDamage(power);
-            hitbox.gameObject.SetActive(true);
-        }
+        int finalPower = Mathf.RoundToInt(power * attackMultiplier);
+        hitbox.damage = finalPower;
+        hitbox.gameObject.SetActive(true);
     }
 
     private void DisableHitbox() {
-        if (hitbox != null) hitbox.gameObject.SetActive(false);
+        hitbox.gameObject.SetActive(false);
     }
 
     public virtual void TakeDamage(int attack, float motionMultiplier = 1, float criticalChance = 0, float criticalMultiplier = 2,
