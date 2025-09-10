@@ -42,7 +42,7 @@ public class PlayerBase : CharacterBase {
 
     private bool isAttackCooldown = false; // クールタイム中かどうか
 
-    [SerializeField] private float attackCooldownDuration = 0.5f; // クールタイムの長さ
+    [SerializeField] private float attackCooldownDuration = 0f; // クールタイムの長さ
 
     private float attackCooldownTimer = 0f; // クールタイム残り時間
 
@@ -258,7 +258,15 @@ public class PlayerBase : CharacterBase {
 
             Vector3 moveDir = camForward * inputVector.y + camRight * inputVector.x;
 
-            rb.velocity = moveDir * moveSpeed;
+            // 🔹 Y成分（重力やジャンプ）は保持
+
+            Vector3 currentVelocity = rb.velocity;
+
+            Vector3 newVelocity = moveDir * moveSpeed;
+
+            newVelocity.y = currentVelocity.y;
+
+            rb.velocity = newVelocity;
 
             direction = moveDir;
 
@@ -270,9 +278,17 @@ public class PlayerBase : CharacterBase {
 
             animator.SetBool("Run", false);
 
+            // 停止時も重力は維持
+
+            Vector3 currentVelocity = rb.velocity;
+
+            rb.velocity = new Vector3(0, currentVelocity.y, 0);
+
         }
 
     }
+
+
 
     // プレイヤーの回転のみ処理
 
@@ -326,7 +342,15 @@ public class PlayerBase : CharacterBase {
 
             cooldownTimer = avoidanceCooldown;
 
-            rb.velocity = transform.forward * moveSpeed * 2f; // 前方に高速移動
+            // 🔹 Y成分（落下やジャンプ）は維持したまま回避移動
+
+            Vector3 currentVelocity = rb.velocity;
+
+            Vector3 dashVelocity = transform.forward * moveSpeed * 2f;
+
+            dashVelocity.y = currentVelocity.y;
+
+            rb.velocity = dashVelocity;
 
         }
 
@@ -345,6 +369,8 @@ public class PlayerBase : CharacterBase {
         }
 
     }
+
+
 
 
     public void Stop() {
@@ -575,7 +601,7 @@ public class PlayerBase : CharacterBase {
                     //AudioManager.Instance.PlaySE("EA");
 
                     // 攻撃1の判定時間
-
+                    
                     StartAttackCooldown();
 
                     //StartCoroutine(EnableColliderTemporarily(0.3f));
@@ -595,7 +621,7 @@ public class PlayerBase : CharacterBase {
                 PlayerController.attackFlag = false;
 
                 comboStep = 0;
-                anim.SetBool("Attack1", false);
+                
                 StartAttackCooldown();
 
             }
@@ -676,6 +702,8 @@ public class PlayerBase : CharacterBase {
 
     private void StartAttackCooldown() {
 
+        anim.SetBool("Attack1", false);
+        
         playedAttack1SE = false;
 
         playedAttack2SE = false;
@@ -685,7 +713,7 @@ public class PlayerBase : CharacterBase {
         isAttackCooldown = true;
 
         attackCooldownTimer = attackCooldownDuration;
-
+        comboStep = 0;
     }
 
     // クールタイムの時間管理
@@ -699,7 +727,7 @@ public class PlayerBase : CharacterBase {
             if (attackCooldownTimer <= 0f) {
 
                 isAttackCooldown = false;
-
+                comboStep = 0;
             }
 
         }
