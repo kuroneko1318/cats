@@ -132,7 +132,7 @@ public class EnemyBase : MonoBehaviour {
     }
 
     private void EnableHitbox(int power) {
-        int finalPower = Mathf.RoundToInt((power + damage) * attackMultiplier);
+        int finalPower = Mathf.RoundToInt((power + attack) * attackMultiplier);
         hitbox.SetDamage(finalPower);
         hitbox.gameObject.SetActive(true);
     }
