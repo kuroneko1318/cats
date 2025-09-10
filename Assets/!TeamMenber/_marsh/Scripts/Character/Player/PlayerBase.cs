@@ -555,7 +555,7 @@ public class PlayerBase : CharacterBase {
 
 
     public void LowAttack() {
-
+        
         if (isAttackCooldown) return;
 
         if (attackAction.WasPressedThisFrame()) {
@@ -567,7 +567,8 @@ public class PlayerBase : CharacterBase {
                 comboStep = 1;
 
                 anim.SetBool("Attack1", true);
-
+                anim.SetBool("Attack2", false);
+                anim.SetBool("Attack3", false);
                 comboTimer = comboResetTime;
 
                 //AudioManager.Instance.PlaySE("FA");
@@ -577,13 +578,16 @@ public class PlayerBase : CharacterBase {
             }
 
             else if (comboTimer > 0f) {
+                if (cooldownTimer <= 0) {
 
-                comboStep++;
 
+                    comboStep++;
+                }
                 if (comboStep == 2) {
 
                     anim.SetBool("Attack2", true);
-
+                    anim.SetBool("Attack1", false);
+                    anim.SetBool("Attack3", false);
                     comboTimer = comboResetTime;
 
                     //AudioManager.Instance.PlaySE("SA");
@@ -595,7 +599,8 @@ public class PlayerBase : CharacterBase {
                 if (comboStep == 3) {
 
                     anim.SetBool("Attack3", true);
-
+                    anim.SetBool("Attack2", false);
+                    anim.SetBool("Attack1", false);
                     comboTimer = comboResetTime;
 
                     //AudioManager.Instance.PlaySE("EA");
