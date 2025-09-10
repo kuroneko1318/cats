@@ -698,7 +698,7 @@ Animator:
   m_GameObject: {fileID: 2408106276333008901}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: f9455375104136849befafdcd2efe2ee, type: 3}
-  m_Controller: {fileID: 9100000, guid: 41644e70efb9eb74b936a01e71a4f0e8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 38029b6d4cb462d448e836835978b66e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -721,11 +721,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65284a4814348c41b1d7554ff13c352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 600
-  maxHp: 600
-  attack: 20
+  hp: 700
+  maxHp: 700
+  attack: 15
   defence: 50
-  moveSpeed: 5
+  moveSpeed: 4
   detectionRange: 20
   combatRange: 1.5
   attackMultiplier: 1

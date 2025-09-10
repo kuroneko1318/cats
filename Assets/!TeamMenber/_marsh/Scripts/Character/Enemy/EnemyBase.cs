@@ -21,7 +21,7 @@ public class EnemyBase : MonoBehaviour {
     public float detectionRange = 10f;
     public float combatRange = 3f;
     private bool isCritical = false;
-    public float attackMultiplier = 1f; // 敵ごとに設定
+    public float attackMultiplier = 1f; // 敵ごとに設定 現状は不要。上位など追加する場合は使う
     public float deadTime = 3f; // 死亡後に待つ時間（Inspectorで調整可能）
 
     private int damage;
@@ -31,10 +31,13 @@ public class EnemyBase : MonoBehaviour {
     protected NavMeshAgent agent;
     protected AttackHitbox hitbox;
     protected Transform player;
-    [SerializeField]protected GameObject damagePopupPrefab;
+    [SerializeField] protected GameObject damagePopupPrefab;
     private DamagePopupController currentPopup;
 
     protected EnemyState state = EnemyState.Idle;
+
+    //死亡時用のアクション
+    public System.Action<EnemyBase> OnEnemyDead;
 
     protected virtual void Start() {
         animator = GetComponent<Animator>();
@@ -44,6 +47,15 @@ public class EnemyBase : MonoBehaviour {
 
         if (agent != null) agent.speed = moveSpeed;
         if (hitbox != null) hitbox.gameObject.SetActive(false);
+
+        hp = maxHp;
+    }
+
+    protected virtual void OnEnable() {
+        if (animator == null) animator = GetComponent<Animator>();
+        if (agent == null) agent = GetComponent<NavMeshAgent>();
+        if (hitbox == null) hitbox = GetComponentInChildren<AttackHitbox>(true);
+        if (player == null) player = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
 
     protected virtual void Update() {
@@ -120,8 +132,8 @@ public class EnemyBase : MonoBehaviour {
     }
 
     private void EnableHitbox(int power) {
-        int finalPower = Mathf.RoundToInt(power * attackMultiplier);
-        hitbox.damage = finalPower;
+        int finalPower = Mathf.RoundToInt((power + damage) * attackMultiplier);
+        hitbox.SetDamage(finalPower);
         hitbox.gameObject.SetActive(true);
     }
 
@@ -153,9 +165,9 @@ public class EnemyBase : MonoBehaviour {
             currentPopup.AddDamage(damage, isCritical);
 
         }
-        animator.SetTrigger("Hit"); // アニメーション切り替え
-
         if (hp <= 0) Dead();
+
+        animator.SetTrigger("Hit"); // アニメーション切り替え
     }
 
     public virtual void Dead() {
@@ -163,12 +175,53 @@ public class EnemyBase : MonoBehaviour {
         ChangeState(EnemyState.Dead);
         animator.SetTrigger("Dead");
         agent.isStopped = true;
-        this.enabled = false;
 
         StartCoroutine(DeadRoutine());
     }
+
     private IEnumerator DeadRoutine() {
         yield return new WaitForSeconds(deadTime);
+
+        // Spawnerへ通知
+        OnEnemyDead?.Invoke(this);
+
         gameObject.SetActive(false);
+    }
+
+    // --- これを呼べばプールから再表示したときに完全に初期化される ---
+    public virtual void OnSpawned() {
+        StopAllCoroutines();
+
+        this.enabled = true;
+
+        // ステータス初期化
+        hp = maxHp;
+        isCritical = false;
+        currentPopup = null;
+
+        // State を Patrol に
+        state = EnemyState.Patrol;
+
+        // Animator 初期化
+        if (animator != null) {
+            animator.Rebind();
+            animator.Update(0f);
+            animator.ResetTrigger("Dead");
+            animator.ResetTrigger("Hit");
+            animator.SetBool("Walk", true);  // Patrol 動作に合わせる
+            animator.SetBool("Run", false);
+            animator.Play("Idle"); // Animator で待機状態に戻す場合
+        }
+
+        // NavMeshAgent 初期化
+        if (agent != null) {
+            agent.enabled = true;
+            agent.ResetPath();
+            agent.isStopped = false;
+            agent.speed = moveSpeed;
+        }
+
+        // ヒットボックスOFF
+        if (hitbox != null) hitbox.gameObject.SetActive(false);
     }
 }
