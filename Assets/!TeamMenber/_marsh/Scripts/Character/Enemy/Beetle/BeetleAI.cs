@@ -2,12 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BeeteAI : EnemyBase {
-    [Header("攻撃ステータス")]
-    public int stabPower = 5;
-    public int kickPower = 8;
-    public int scratchPower = 6;
-    public int triplePower = 12;
+public class BeetleAI : EnemyBase {
     private bool isAttacking = false;
 
     [Header("巡回関連")]

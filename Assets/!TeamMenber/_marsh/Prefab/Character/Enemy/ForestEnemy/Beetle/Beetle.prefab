@@ -698,7 +698,7 @@ Animator:
   m_GameObject: {fileID: 2408106276333008901}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: f9455375104136849befafdcd2efe2ee, type: 3}
-  m_Controller: {fileID: 9100000, guid: 38029b6d4cb462d448e836835978b66e, type: 2}
+  m_Controller: {fileID: 9100000, guid: b69aefd3619ae444da4a4760f747ab5d, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -731,10 +731,6 @@ MonoBehaviour:
   attackMultiplier: 1
   deadTime: 3
   damagePopupPrefab: {fileID: 6179850667043835373, guid: 2b52a3a79f3cc4041804f3e366c0b9a4, type: 3}
-  stabPower: 5
-  kickPower: 8
-  scratchPower: 6
-  triplePower: 12
   patrolRadius: 20
   idleTime: 3
 --- !u!136 &3886461004649168659
@@ -806,7 +802,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: -0.25
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1 &2431280934763652448
