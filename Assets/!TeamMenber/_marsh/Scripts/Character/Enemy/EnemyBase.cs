@@ -10,8 +10,17 @@ public enum EnemyState {
     Combat,     // 戦闘
     Dead
 }
+public enum EnemyType {
+    Beetle,
+    StagBeetle,
+    Nasty,
+    // 必要に応じて追加
+}
 
 public class EnemyBase : MonoBehaviour {
+    [Header("敵の種類設定")]
+    public EnemyType enemyType;
+
     [Header("共通ステータス")]
     public int hp;
     public int maxHp;
@@ -175,6 +184,8 @@ public class EnemyBase : MonoBehaviour {
         ChangeState(EnemyState.Dead);
         animator.SetTrigger("Dead");
         agent.isStopped = true;
+        // クエストへ報告
+        QuestManager.Instance.EnemyDefeated(enemyType);
 
         StartCoroutine(DeadRoutine());
     }

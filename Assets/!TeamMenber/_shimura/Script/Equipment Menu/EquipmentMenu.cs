@@ -38,7 +38,7 @@ public class EquipmentMenu : MonoBehaviour
             inventory = GameObject.Find("inventory")?.GetComponent<Inventory>();
         }
 
-        if (Input.GetKeyDown(KeyCode.E)) {
+        if (Input.GetKeyDown(KeyCode.U)) {
             ScanString();
             if (equiping) {
                 Equipment(inputItemString);
