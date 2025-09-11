@@ -58,16 +58,16 @@ ModelImporter:
       curves: []
       events:
       - time: 0.32963172
-        functionName: AttackStart
+        functionName: AttackStartEvent
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: c7d90e26a0b0c3d41b502ed20897b119, type: 3}
+        objectReferenceParameter: {fileID: 11500000, guid: f49d187467a58414180460a3ad42aa96, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.48810333
-        functionName: AttackEnd
+      - time: 0.7117875
+        functionName: AttackEndEvent
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: c7d90e26a0b0c3d41b502ed20897b119, type: 3}
+        objectReferenceParameter: {fileID: 11500000, guid: f49d187467a58414180460a3ad42aa96, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
