@@ -14,7 +14,7 @@ using Random = UnityEngine.Random;
 
 //Update にプレイヤーの操作ぶち込む
 
-public class PlayerBase : CharacterBase {
+public class UnusePlayerBase : CharacterBase {
 
     public static int attacker;
 

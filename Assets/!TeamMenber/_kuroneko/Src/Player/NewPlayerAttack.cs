@@ -1,52 +1,98 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+ï»¿using UnityEngine;
 
-public class NewPlayerAttack
-{
+public class NewPlayerAttack {
     private Animator anim;
-    private int comboStep = 0;        // ¡‚ÌƒRƒ“ƒ{’iŠK
-    private bool comboQueued = false; // ŸUŒ‚—\–ñƒtƒ‰ƒO
+    private int attackIndex = 0;
+    private bool isAttacking = false;
+    private bool queuedNextAttack = false;
 
-    public NewPlayerAttack(Animator animator) {
+    private float comboInputStart = 0.3f;
+    private float comboInputEnd = 0.75f;
+
+    private GameObject attackCollider1;
+    private GameObject attackCollider2;
+    private GameObject attackCollider3;
+
+    public NewPlayerAttack(Animator animator, GameObject col1, GameObject col2, GameObject col3) {
         anim = animator;
+        attackCollider1 = col1;
+        attackCollider2 = col2;
+        attackCollider3 = col3;
+
+        attackCollider1.SetActive(false);
+        attackCollider2.SetActive(false);
+        attackCollider3.SetActive(false);
     }
 
-    // UŒ‚“ü—Í‚ğó‚¯•t‚¯‚é
-    public void OnAttackInput() {
-        if (comboStep > 0) {
-            comboQueued = true; // UŒ‚’†‚È‚çŸ—\–ñ
-            return;
+    public bool IsAttacking() => isAttacking;
+
+    public void Attack() {
+        if (!isAttacking) {
+            StartAttack();
         }
-
-        StartCombo(1); // Å‰‚ÌUŒ‚ŠJn
-    }
-
-    // ƒRƒ“ƒ{ŠJn
-    private void StartCombo(int step) {
-        ResetAllAttackBools();
-        comboStep = step;
-        anim.SetBool("Attack" + step, true); // Attack1 / Attack2 / Attack3 ‚ğON
-    }
-
-    // ƒAƒjƒ[ƒVƒ‡ƒ“I—¹‚ÉŒÄ‚ÔiAnimationEvent„§j
-    public void OnAttackAnimationEnd() {
-        anim.SetBool("Attack" + comboStep, false); // ¡‚Ì’iŠK‚ğI—¹
-
-        if (comboQueued && comboStep < 3) {
-            comboQueued = false;
-            StartCombo(comboStep + 1); // Ÿ’i‚Ö
-        }
-        else {
-            comboStep = 0; // I—¹
-            comboQueued = false;
+        else if (!queuedNextAttack && attackIndex < 3) {
+            queuedNextAttack = true;
         }
     }
 
-    // ‘S‚Ä‚ÌUŒ‚ƒtƒ‰ƒO‚ğOFF
-    private void ResetAllAttackBools() {
-        anim.SetBool("Attack1", false);
-        anim.SetBool("Attack2", false);
-        anim.SetBool("Attack3", false);
+    private void StartAttack() {
+        isAttacking = true;
+        attackIndex = Mathf.Clamp(attackIndex + 1, 1, 3);
+
+        anim.SetInteger("AttackIndex", attackIndex);
+        anim.SetBool("Attack", true);
+
+        queuedNextAttack = false;
+        // Collider ã¯ã‚¤ãƒ™ãƒ³ãƒˆã§åˆ¶å¾¡
     }
+
+    public void Update() {
+        if (!isAttacking) return;
+
+        AnimatorStateInfo state = anim.GetCurrentAnimatorStateInfo(0);
+
+        // æ¬¡æ®µäºˆç´„ãŒã‚ã‚Œã°æ¡ä»¶å†…ã§é–‹å§‹
+        if (queuedNextAttack && state.normalizedTime >= comboInputStart && state.normalizedTime <= comboInputEnd) {
+            queuedNextAttack = false;
+            StartAttack();
+        }
+
+        // æ”»æ’ƒçµ‚äº†åˆ¤å®šï¼ˆã‚¢ãƒ‹ãƒ¡çµ‚äº†ç¢ºèªã®ã¿ã€Collider ã¯ã‚¤ãƒ™ãƒ³ãƒˆã§åˆ¶å¾¡ï¼‰
+        if (state.IsTag("Attack") && state.normalizedTime >= 0.95f) {
+            anim.SetBool("Attack", false);
+            isAttacking = false;
+            attackIndex = 0;
+            queuedNextAttack = false;
+        }
+    }
+
+    // =========================================
+    // Animatorã‚¤ãƒ™ãƒ³ãƒˆç”¨
+    // =========================================
+    public void AttackStart() {
+        // ç¾åœ¨ã®æ”»æ’ƒæ®µã®Colliderã®ã¿ON
+        attackCollider1.SetActive(attackIndex == 1);
+        attackCollider2.SetActive(attackIndex == 2);
+        attackCollider3.SetActive(attackIndex == 3);
+    }
+
+    public void AttackEnd() {
+        // æ”»æ’ƒçµ‚äº†ã§å…¨ã¦OFF
+        attackCollider1.SetActive(false);
+        attackCollider2.SetActive(false);
+        attackCollider3.SetActive(false);
+
+        //anim.SetBool("Attack", false);
+        //isAttacking = false;
+        //queuedNextAttack = false;
+        //attackIndex = 0;
+    }
+
+    public void ResetAttack() {
+        anim.SetBool("Attack", false);
+        isAttacking = false;
+        attackIndex = 0;
+        queuedNextAttack = false;
+    }
+
 }

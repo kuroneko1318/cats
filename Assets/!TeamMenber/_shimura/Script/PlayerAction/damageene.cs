@@ -14,7 +14,7 @@ public class damageene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        damage = PlayerController.attacker;
+        //damage = PlayerController.attacker;
     }
 
     public void SetDamage(int power) {

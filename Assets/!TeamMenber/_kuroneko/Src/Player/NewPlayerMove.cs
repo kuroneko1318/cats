@@ -1,57 +1,83 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class NewPlayerMove
 {
-    private CharacterController controller; // 移動制御用
-    private Animator anim;                  // アニメーター参照
-    private float speed = 5f;               // 通常移動速度
-    private float dashSpeed = 10f;          // 回避(ダッシュ)速度
-    private bool isDashing = false;         // 回避中フラグ
-    private float dashTime = 0.3f;          // 回避持続時間
-    private float dashTimer = 0f;
-    private Vector3 dashDirection;          // 回避方向
+    private Transform playerTransform;         // プレイヤーのTransform
+    private Animator anim;                     // アニメーション管理
+    private float moveSpeed = 5f;              // 移動速度
+    private float avoidanceForce = 8f;         // 回避時の力
+    private bool isAvoiding = false;           // 回避中フラグ
+    private Vector3 avoidanceDir;              // 回避方向
+    private float avoidanceTime = 0.3f;        // 回避の持続時間
+    private float avoidanceTimer = 0f;
 
-    public NewPlayerMove(CharacterController ctrl, Animator animator) {
-        controller = ctrl;
+    public NewPlayerMove(Transform transform, Animator animator) {
+        playerTransform = transform;
         anim = animator;
     }
 
-    // 通常移動処理
-    public void Move(Vector2 input) {
-        if (isDashing) return; // 回避中は通常移動しない
-
-        Vector3 move = new Vector3(input.x, 0, input.y);
-        controller.Move(move * speed * Time.deltaTime);
-
-        // Animatorに移動中かどうかをBoolで渡す
-        bool isMoving = move.magnitude > 0.1f;
-        anim.SetBool("Run", isMoving);
-    }
-
-    // 回避開始（Triggerでアニメーションを再生）
-    public void Dash(Vector2 input) {
-        if (isDashing) return;
-
-        isDashing = true;
-        dashTimer = dashTime;
-
-        dashDirection = new Vector3(input.x, 0, input.y).normalized;
-        if (dashDirection == Vector3.zero) dashDirection = Vector3.forward; // 入力がない場合は前方向
-
-        anim.SetTrigger("Avoidance"); // Trigger で回避アニメを再生
-    }
-
-    // 毎フレーム更新
-    public void Update() {
-        if (isDashing) {
-            controller.Move(dashDirection * dashSpeed * Time.deltaTime);
-
-            dashTimer -= Time.deltaTime;
-            if (dashTimer <= 0f) {
-                isDashing = false;
+    // 移動処理（カメラ基準）
+    public void Move(Vector2 input, Transform cameraTransform) {
+        if (isAvoiding) {
+            // 回避中は回避方向に進む
+            playerTransform.position += avoidanceDir * avoidanceForce * Time.deltaTime;
+            avoidanceTimer -= Time.deltaTime;
+            if (avoidanceTimer <= 0) {
+                isAvoiding = false;
             }
+            return;
         }
+
+        // カメラ基準の入力ベクトルを作成
+        Vector3 camForward = cameraTransform.forward;
+        Vector3 camRight = cameraTransform.right;
+        camForward.y = 0;
+        camRight.y = 0;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        Vector3 move = camForward * input.y + camRight * input.x;
+
+        if (move.sqrMagnitude > 0.01f) {
+            // プレイヤーを移動
+            playerTransform.position += move.normalized * moveSpeed * Time.deltaTime;
+
+            // 向きを移動方向へ
+            playerTransform.rotation = Quaternion.Slerp(
+                playerTransform.rotation,
+                Quaternion.LookRotation(move),
+                0.2f
+            );
+
+            anim.SetBool("Run", true); // 移動アニメON
+        }
+        else {
+            anim.SetBool("Run", false); // 移動アニメOFF
+        }
+    }
+
+    // 回避処理
+    public void Avoid(Vector2 input, Transform cameraTransform) {
+        if (isAvoiding) return; // 連続回避防止
+
+        // カメラ基準で方向を決定
+        Vector3 camForward = cameraTransform.forward;
+        Vector3 camRight = cameraTransform.right;
+        camForward.y = 0;
+        camRight.y = 0;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        avoidanceDir = (camForward * input.y + camRight * input.x).normalized;
+        if (avoidanceDir == Vector3.zero) {
+            avoidanceDir = playerTransform.forward; // 入力なしなら前方向に回避
+        }
+
+        isAvoiding = true;
+        avoidanceTimer = avoidanceTime;
+        anim.SetTrigger("Avoidance"); // トリガー
     }
 }
