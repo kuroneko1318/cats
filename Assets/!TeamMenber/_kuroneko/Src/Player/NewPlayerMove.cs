@@ -7,7 +7,7 @@ public class NewPlayerMove
 {
     private Transform playerTransform;         // プレイヤーのTransform
     private Animator anim;                     // アニメーション管理
-    private float moveSpeed = 5f;              // 移動速度
+    private float moveSpeed = 10f;              // 移動速度
     private float avoidanceForce = 8f;         // 回避時の力
     private bool isAvoiding = false;           // 回避中フラグ
     private Vector3 avoidanceDir;              // 回避方向

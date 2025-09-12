@@ -270,7 +270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 907670624242963745}
   - component: {fileID: 7108833208530851680}
-  - component: {fileID: 6351791303479765169}
+  - component: {fileID: 6728084164409273118}
   m_Layer: 0
   m_Name: AttackCollider2
   m_TagString: weapon
@@ -312,9 +312,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.8203939, y: 1.2941525, z: 0.875686}
-  m_Center: {x: -0.08980304, y: 0.14707625, z: 0.37035528}
---- !u!114 &6351791303479765169
+  m_Size: {x: 1.4382558, y: 1.2941525, z: 1.2123702}
+  m_Center: {x: 0.01954317, y: 0.14707625, z: 0.5386975}
+--- !u!114 &6728084164409273118
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -323,7 +323,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 781487942760229589}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fccf53ea5f59e744cb71f982dfb12556, type: 3}
+  m_Script: {fileID: 11500000, guid: fcf68274e392a05488a84ee1dd161300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &918557241659920450
@@ -742,7 +742,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4514528667296634258}
   - component: {fileID: 4021162058877413157}
-  - component: {fileID: 8042155546702075320}
+  - component: {fileID: 5263590529772121585}
   m_Layer: 0
   m_Name: AttackCollider1
   m_TagString: weapon
@@ -784,9 +784,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.8203939, y: 1.2941525, z: 0.8457391}
-  m_Center: {x: -0.08980304, y: 0.14707625, z: 0.4401666}
---- !u!114 &8042155546702075320
+  m_Size: {x: 1.1442331, y: 1.2941525, z: 1.2368392}
+  m_Center: {x: -0.06972331, y: 0.14707625, z: 0.6357166}
+--- !u!114 &5263590529772121585
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -795,7 +795,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2101377630977014854}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fccf53ea5f59e744cb71f982dfb12556, type: 3}
+  m_Script: {fileID: 11500000, guid: fcf68274e392a05488a84ee1dd161300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2119630742214833720
@@ -2201,7 +2201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8618550247038846379}
   - component: {fileID: 7028773763473624736}
-  - component: {fileID: 6680316340617261105}
+  - component: {fileID: 2851654781313789708}
   m_Layer: 0
   m_Name: AttackCollider3
   m_TagString: weapon
@@ -2243,9 +2243,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1895651, y: 1.2941525, z: 1.2220274}
-  m_Center: {x: -0.013676822, y: 0.14707625, z: 0.47823793}
---- !u!114 &6680316340617261105
+  m_Size: {x: 1.4168545, y: 1.2941525, z: 1.5248818}
+  m_Center: {x: -0.00893265, y: 0.14707625, z: 0.62966514}
+--- !u!114 &2851654781313789708
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2254,7 +2254,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6060315978935405810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fccf53ea5f59e744cb71f982dfb12556, type: 3}
+  m_Script: {fileID: 11500000, guid: fcf68274e392a05488a84ee1dd161300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6199481685469408999
@@ -2930,10 +2930,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f49d187467a58414180460a3ad42aa96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
-  maxHp: 0
-  defence: 0
-  attack: 0
+  hp: 300
+  maxHp: 300
+  defence: 30
+  attack: 50
   stamina: 0
   criticalChance: 0
   criticalMultiplier: 0
