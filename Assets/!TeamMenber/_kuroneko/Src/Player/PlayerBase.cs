@@ -37,6 +37,8 @@ public class PlayerBase : MonoBehaviour {
     [SerializeField] private GameObject startPos;
 
     private bool isDead = false;
+    public InputAction GatherAction;
+    public InputAction OpenInventoryAction;
 
 
     void Start() {
@@ -44,6 +46,8 @@ public class PlayerBase : MonoBehaviour {
         anim = GetComponent<Animator>();
         mainCamera = Camera.main.transform;
 
+        GatherAction = input.actions["Gather"];
+        OpenInventoryAction = input.actions["Menu"];
         pMove = new NewPlayerMove(transform, anim);
         pAttack = new NewPlayerAttack(anim, attackCollider1, attackCollider2, attackCollider3);
 
@@ -72,7 +76,12 @@ public class PlayerBase : MonoBehaviour {
 
         pAttack.Update();
 
-        
+        if (OpenInventoryAction.WasPressedThisFrame()) {
+
+            InventoryManager.Instance.ToggleInventory();
+
+        }
+
     }
 
     // ダメージ処理
@@ -124,6 +133,18 @@ public class PlayerBase : MonoBehaviour {
         transform.position = startPos.transform.position;
 
         hp = maxHp;
+    }
+
+    private void OnTriggerStay(Collider other) {
+
+        if (other.gameObject.CompareTag("GatheringPoint") && GatherAction.WasPressedThisFrame()) {
+
+            var point = other.gameObject.GetComponent<GatheringPoint>();
+
+            point?.Gather();
+
+        }
+
     }
 
     // Animatorイベント用ラッパー
