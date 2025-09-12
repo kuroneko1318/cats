@@ -113,6 +113,7 @@ public class PlayerBase : MonoBehaviour {
             hp -= damage;
 
         }
+        pAttack.AttackEnd();
         if (hp <= 0) Dead(); // HPが0以下なら死亡処理
         else anim.SetTrigger("Hit"); // 被ダメージアニメーション
        
