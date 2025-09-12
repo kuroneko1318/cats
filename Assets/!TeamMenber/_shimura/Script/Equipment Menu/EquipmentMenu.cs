@@ -14,7 +14,7 @@ public class EquipmentMenu : MonoBehaviour
     private TMP_InputField EquipmentinputField;
     public ItemManager itemManager;
     public ItemManager weaponManager;
-    public PlayerController plc;
+    //public PlayerController plc;
     WeaponBase weapon;
     Inventory inventory = null;
     [SerializeField]RawImage swordImage;
@@ -70,7 +70,7 @@ public class EquipmentMenu : MonoBehaviour
         playerEcuipmentattack = ItemManager.Instance.GetWeaponByID(_WEAPON_ID).weaponAttack;
         
 
-        plc.AddAttack(playerEcuipmentattack);
+        //plc.AddAttack(playerEcuipmentattack);
         equiping = true;
     }
 

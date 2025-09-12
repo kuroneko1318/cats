@@ -623,7 +623,7 @@ public class UnusePlayerBase : CharacterBase {
 
             if (comboTimer <= 0f) {
 
-                PlayerController.attackFlag = false;
+                //PlayerController.attackFlag = false;
 
                 comboStep = 0;
                 
