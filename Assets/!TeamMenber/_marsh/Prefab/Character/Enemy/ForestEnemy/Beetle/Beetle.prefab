@@ -721,6 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65284a4814348c41b1d7554ff13c352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   hp: 700
   maxHp: 700
   attack: 15
@@ -802,7 +803,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: -0.25
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1 &2431280934763652448
