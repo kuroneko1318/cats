@@ -192,17 +192,6 @@
                 },
                 {
                     "name": "",
-                    "id": "fa3d285f-006c-4bd2-a9b1-5e6a5db4fb98",
-                    "path": "<NPad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "3799da6b-421e-4941-a13f-24c2a47c2e82",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -225,17 +214,6 @@
                 },
                 {
                     "name": "",
-                    "id": "655e0353-be23-4517-a7d1-a4a15e4852c8",
-                    "path": "<NPad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c1f655cf-5778-4c4d-838c-fec1c4264147",
                     "path": "<Keyboard>/ctrl",
                     "interactions": "",
@@ -248,18 +226,7 @@
                 {
                     "name": "",
                     "id": "f32a843a-b11e-4af4-9c64-1f5ee9011508",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Avoidance",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "34ae8b86-1c8c-47d6-aa17-0eef05673d5b",
-                    "path": "<NPad>/buttonEast",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -291,19 +258,8 @@
                 },
                 {
                     "name": "",
-                    "id": "8efbad8c-1869-46c8-ad93-4b7ad5ac3730",
-                    "path": "<NPad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4d5de496-2ccc-4b59-9b00-736bd74e7ff4",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -315,17 +271,6 @@
                     "name": "",
                     "id": "9284a22b-b03d-421c-8d18-0ca8889d4cae",
                     "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Skill",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "dc9e27ce-2091-4ba8-84f1-6eabb0fc1c91",
-                    "path": "<NPad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -412,17 +357,6 @@
                 },
                 {
                     "name": "",
-                    "id": "232bb734-67cf-474f-808e-c89925c3733c",
-                    "path": "<NPad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Gather",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "bb9fc964-faaa-46d4-8ac7-6e7a7e03d8ac",
                     "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
@@ -436,17 +370,6 @@
                     "name": "",
                     "id": "ba85f91e-25ec-429c-a8cc-25902daf9a6b",
                     "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PowerAttack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6baa246a-b1f5-442e-8495-bcace2b69f51",
-                    "path": "<NPad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
