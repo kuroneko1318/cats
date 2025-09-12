@@ -57,7 +57,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 1
+      - time: 0.92105263
         functionName: DeathAnimationEnd
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: f49d187467a58414180460a3ad42aa96, type: 3}
