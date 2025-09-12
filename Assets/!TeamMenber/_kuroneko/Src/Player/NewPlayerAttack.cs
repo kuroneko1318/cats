@@ -13,6 +13,9 @@ public class NewPlayerAttack {
     private GameObject attackCollider2;
     private GameObject attackCollider3;
 
+    //　敵に与えるダメージ格納用変数
+    public int damage;
+
     public NewPlayerAttack(Animator animator, GameObject col1, GameObject col2, GameObject col3) {
         anim = animator;
         attackCollider1 = col1;
@@ -71,9 +74,22 @@ public class NewPlayerAttack {
     // =========================================
     public void AttackStart() {
         // 現在の攻撃段のColliderのみON
-        attackCollider1.SetActive(attackIndex == 1);
-        attackCollider2.SetActive(attackIndex == 2);
-        attackCollider3.SetActive(attackIndex == 3);
+        if(attackIndex == 1) {
+            attackCollider1.GetComponent<HitEnemy>().SetDamage(damage);
+            attackCollider1.SetActive(attackIndex == 1);
+        }
+        if (attackIndex == 2) {
+            attackCollider2.GetComponent<HitEnemy>().SetDamage(damage);
+            attackCollider2.SetActive(attackIndex == 2);
+        }
+        if (attackIndex == 3) {
+            attackCollider3.GetComponent<HitEnemy>().SetDamage(damage);
+            attackCollider3.SetActive(attackIndex == 3);
+        }
+    }
+
+    public void SetPower(float power) {
+        damage = (int) power;
     }
 
     public void AttackEnd() {

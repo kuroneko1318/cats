@@ -129,6 +129,7 @@ public class PlayerBase : MonoBehaviour {
     // Animatorイベント用ラッパー
     public void AttackStartEvent() {
         pAttack.AttackStart();
+        pAttack.SetPower(attack);
     }
 
     public void AttackEndEvent() {
