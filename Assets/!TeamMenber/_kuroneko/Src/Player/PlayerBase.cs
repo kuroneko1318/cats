@@ -102,10 +102,8 @@ public class PlayerBase : MonoBehaviour {
 
         }
         if (hp <= 0) Dead(); // HPが0以下なら死亡処理
-
-        anim.SetTrigger("Hit"); // 被ダメージアニメーション
-
-
+        else anim.SetTrigger("Hit"); // 被ダメージアニメーション
+       
     }
 
     private void Dead() {
@@ -113,17 +111,14 @@ public class PlayerBase : MonoBehaviour {
 
             anim.SetTrigger("Death");
 
-            DeathAnimationEnd();
-
         }
     }
 
     public void DeathAnimationEnd() {
+
         transform.position = startPos.transform.position;
 
         hp = maxHp;
-
-        anim.ResetTrigger("Death");
     }
 
     // Animatorイベント用ラッパー

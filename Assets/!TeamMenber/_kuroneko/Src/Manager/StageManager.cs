@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StageManager : MonoBehaviour {
+
     [Header("エリア設定")]
     [SerializeField] private GameObject area1SceneObject;   // シーン上の常駐エリア1
     [SerializeField] private GameObject area2Prefab;        // 移動先エリア2のプレハブ
@@ -16,19 +17,19 @@ public class StageManager : MonoBehaviour {
     /// エリア1 → エリア2 に移動
     /// </summary>
     public void EnterArea2() {
-        if (currentArea2 != null) return; // 既に存在する場合は生成しない
+        // まだ生成されていなければ生成
+        if (currentArea2 == null) {
+            currentArea2 = Instantiate(area2Prefab, new Vector3(100, 0, 0), Quaternion.identity);
+        }
 
-        // エリア2を生成（例：X方向に100ずらして設置）
-        currentArea2 = Instantiate(area2Prefab, new Vector3(100, 0, 0), Quaternion.identity);
-
-        // 生成したエリア内の StartPos を取得
+        // StartPos を探す
         Transform startPos = currentArea2.transform.Find("StartPos");
         if (startPos == null) {
             Debug.LogError("Area2 に StartPos が見つかりません！");
             return;
         }
 
-        // プレイヤーを StartPos に移動＋向き合わせ
+        // プレイヤーを移動
         MovePlayerToStart(startPos);
     }
 
