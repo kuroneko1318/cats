@@ -7,7 +7,7 @@ public class ParticleHitbox : MonoBehaviour {
     protected PlayerBase player = null;
 
     private void OnParticleCollision(GameObject other) {
-        if(player == null) player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        if(player == null) player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBase>();
 
         if (other.CompareTag("Enemy")) {
             var enemy = other.GetComponent<EnemyBase>(); // 敵のベースクラス

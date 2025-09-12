@@ -15,25 +15,26 @@ public class PlayerBase : MonoBehaviour {
     private Vector2 moveInput;
 
     [Header("プレイヤーのステータス")]
-    [SerializeField] private int hp;
-    [SerializeField] private int maxHp;
-    [SerializeField] private int defence;
-    [SerializeField] private int attack;
-    [SerializeField] private float stamina;
+    [SerializeField] public int hp;
+    [SerializeField] public int maxHp;
+    [SerializeField] public int defence;
+    [SerializeField] public int attack;
+    [SerializeField] public float stamina;
 
     [Header("会心系ステータス")]
     // 会心率（最大値は1.00f）
-    [SerializeField] float criticalChance;
+    [SerializeField] public float criticalChance;
     // 会心ダメージ倍率
-    [SerializeField] float criticalMultiplier;
+    [SerializeField] public float criticalMultiplier;
     private bool isCritical = false; // クリティカル判定
-
-    private int damage;
 
     [Header("攻撃判定用コライダー")]
     [SerializeField] private GameObject attackCollider1;
     [SerializeField] private GameObject attackCollider2;
     [SerializeField] private GameObject attackCollider3;
+
+    [Header("リスポーン地点（街の初期位置保存用）")]
+    [SerializeField] private GameObject startPos;
 
 
     void Start() {
@@ -77,6 +78,8 @@ public class PlayerBase : MonoBehaviour {
 
                                    int elementalValue = 0, float staggerValue = 0) {
 
+        int damage;
+
         isCritical = Random.value < criticalChance; // クリティカル判定
 
         if (isCritical) {
@@ -103,6 +106,24 @@ public class PlayerBase : MonoBehaviour {
         anim.SetTrigger("Hit"); // 被ダメージアニメーション
 
 
+    }
+
+    private void Dead() {
+        if (hp <= 0) {
+
+            anim.SetTrigger("Death");
+
+            DeathAnimationEnd();
+
+        }
+    }
+
+    public void DeathAnimationEnd() {
+        transform.position = startPos.transform.position;
+
+        hp = maxHp;
+
+        anim.ResetTrigger("Death");
     }
 
     // Animatorイベント用ラッパー
