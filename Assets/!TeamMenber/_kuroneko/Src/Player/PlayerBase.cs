@@ -36,6 +36,8 @@ public class PlayerBase : MonoBehaviour {
     [Header("リスポーン地点（街の初期位置保存用）")]
     [SerializeField] private GameObject startPos;
 
+    private bool isDead = false;
+
 
     void Start() {
         input = GetComponent<PlayerInput>();
@@ -64,7 +66,7 @@ public class PlayerBase : MonoBehaviour {
 
     void Update() {
         // 攻撃中は移動不可
-        if (!pAttack.IsAttacking()) {
+        if (!pAttack.IsAttacking()&& !isDead) {
             pMove.Move(moveInput, mainCamera);
         }
 
@@ -77,6 +79,7 @@ public class PlayerBase : MonoBehaviour {
     public virtual void TakeDamage(int attack, float motionMultiplier = 1, float criticalChance = 0, float criticalMultiplier = 2,
 
                                    int elementalValue = 0, float staggerValue = 0) {
+        if (isDead) return;
 
         int damage;
 
@@ -108,6 +111,7 @@ public class PlayerBase : MonoBehaviour {
 
     private void Dead() {
         if (hp <= 0) {
+            isDead = true;
 
             anim.SetTrigger("Death");
 
@@ -115,6 +119,7 @@ public class PlayerBase : MonoBehaviour {
     }
 
     public void DeathAnimationEnd() {
+        isDead = false;
 
         transform.position = startPos.transform.position;
 
