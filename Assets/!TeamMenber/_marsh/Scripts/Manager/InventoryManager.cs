@@ -30,9 +30,9 @@ public class InventoryManager : SystemObject<InventoryManager> {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Tab)) {
-            ToggleInventory();
-        }
+        //if (Input.GetKeyDown(KeyCode.Tab)) {
+        //    ToggleInventory();
+        //}
 
         //デバッグ
         if (Input.GetKeyDown(KeyCode.O)) {

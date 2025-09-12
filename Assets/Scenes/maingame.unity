@@ -928,6 +928,14 @@ PrefabInstance:
       propertyPath: startPos
       value: 
       objectReference: {fileID: 559551162}
+    - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
+      propertyPath: GatherAction.m_Name
+      value: Gather
+      objectReference: {fileID: 0}
+    - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
+      propertyPath: OpenInventoryAction.m_Name
+      value: Open Inventory
+      objectReference: {fileID: 0}
     - target: {fileID: 8874673962408222264, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1161,6 +1169,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3299365039398631419, guid: c5aac0dc74144c342b9faaba6840b408, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5534155878890698502, guid: c5aac0dc74144c342b9faaba6840b408, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1479,11 +1491,15 @@ PrefabInstance:
     - target: {fileID: 694102968823499675, guid: b9929d38665d3bb438f4a23e09b8370d, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 11400000, guid: c2af7c23c0e76744ea91705197185893, type: 2}
     - target: {fileID: 694102968823499675, guid: b9929d38665d3bb438f4a23e09b8370d, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 6742878315089438324, guid: c2af7c23c0e76744ea91705197185893, type: 2}
+    - target: {fileID: 694102968823499675, guid: b9929d38665d3bb438f4a23e09b8370d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4542455093370892507, guid: b9929d38665d3bb438f4a23e09b8370d, type: 3}
       propertyPath: m_Name
       value: QuestBoardUI
@@ -1886,6 +1902,10 @@ PrefabInstance:
     - target: {fileID: 1771252583596871941, guid: 31f4de268662eba478b41d94f37d3387, type: 3}
       propertyPath: m_Name
       value: ItemUICanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1771252583596871941, guid: 31f4de268662eba478b41d94f37d3387, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
