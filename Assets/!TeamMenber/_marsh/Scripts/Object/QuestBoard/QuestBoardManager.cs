@@ -77,7 +77,7 @@ public class QuestBoardManager : MonoBehaviour {
         }
 
         // キャンセルボタン（Bボタン or Esc）
-        if (Input.GetKeyDown(KeyCode.JoystickButton1) || Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.JoystickButton2) || Input.GetKeyDown(KeyCode.Escape)) {
             gameObject.SetActive(false);
         }
     }

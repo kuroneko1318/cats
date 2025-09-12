@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48281ee50b65e7843af14505a635b92a, type: 3}
   m_Name: DefeatNasty
   m_EditorClassIdentifier: 
-  questName: Defeat
+  questName: DefeatBoss
   targetEnemyType: 2
   requiredAmount: 3
   rewardMoney: 1000

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48281ee50b65e7843af14505a635b92a, type: 3}
   m_Name: DefeatBeetle
   m_EditorClassIdentifier: 
-  questName: Defeat
+  questName: DefeatBeetle
   targetEnemyType: 0
   requiredAmount: 5
   rewardMoney: 100

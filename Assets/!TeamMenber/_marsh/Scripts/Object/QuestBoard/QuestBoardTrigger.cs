@@ -19,12 +19,12 @@ public class QuestBoardTrigger : MonoBehaviour {
         isPlayerNearby = Vector3.Distance(player.position, transform.position) <= interactRange;
 
         // E キーで開く
-        if (isPlayerNearby && Input.GetKeyDown(KeyCode.E)) {
+        if (isPlayerNearby && Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.JoystickButton3)) {
             questBoardPanel.SetActive(true);
         }
 
         // X キーで閉じる
-        if (questBoardPanel.activeSelf && Input.GetKeyDown(KeyCode.X)) {
+        if (questBoardPanel.activeSelf && Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.JoystickButton2)) {
             questBoardPanel.SetActive(false);
         }
     }
