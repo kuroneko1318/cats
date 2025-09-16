@@ -686,6 +686,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -2080326034339334469, guid: 7d8bb35060de6894fb04954ab1931112, type: 3}
+      propertyPath: enemyType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2080326034339334469, guid: 7d8bb35060de6894fb04954ab1931112, type: 3}
       propertyPath: combatRange
       value: 7.5
       objectReference: {fileID: 0}
@@ -789,6 +793,14 @@ PrefabInstance:
     - target: {fileID: 3169089563096948545, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
+      propertyPath: GatherAction.m_Name
+      value: Gather
+      objectReference: {fileID: 0}
+    - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
+      propertyPath: OpenInventoryAction.m_Name
+      value: Open Inventory
       objectReference: {fileID: 0}
     - target: {fileID: 8874673962408222264, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
       propertyPath: m_Name
