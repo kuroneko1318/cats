@@ -19,20 +19,14 @@ public class InventoryManager : SystemObject<InventoryManager> {
 
     //UIをスロットにする
     private int selectedIndex = 0;
-    private const int columns = 9;
-    private const int rows = 9;
+    private const int columns = 10;
+    private const int rows = 10;
     private List<InventoryUI> slotUIList = new List<InventoryUI>();
 
-    //プレイヤーキャッシュ用
-    PlayerBase player;
 
     public override void Initialize() {
         bag = Instantiate(inventory);
-        // シーン内から Player タグの付いたオブジェクトを探す
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null) {
-            player = playerObj.GetComponent<PlayerBase>();
-        }
+        
     }
 
     void Update() {
@@ -59,11 +53,6 @@ public class InventoryManager : SystemObject<InventoryManager> {
             if (Input.GetKeyDown(KeyCode.LeftArrow)) MoveSelection(-1, 0);
             if (Input.GetKeyDown(KeyCode.UpArrow)) MoveSelection(0, -1);
             if (Input.GetKeyDown(KeyCode.DownArrow)) MoveSelection(0, 1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)
-            || Input.GetKeyDown(KeyCode.JoystickButton0)) {
-            UseSelectedItem();
         }
     }
 
@@ -161,51 +150,6 @@ public class InventoryManager : SystemObject<InventoryManager> {
         for (int i = 0; i < slotUIList.Count; i++) {
             slotUIList[i].SetHighlight(i == selectedIndex);
         }
-    }
-    private void UseSelectedItem() {
-        if (bag == null || bag.slots == null) return;
-
-        if (selectedIndex < 0 || selectedIndex >= bag.slots.Length) return;
-
-        var slot = bag.slots[selectedIndex];
-        if (slot.item == null || slot.amount <= 0) {
-            Debug.Log("このスロットにはアイテムがありません");
-            return;
-        }
-
-        var item = slot.item;
-
-        if (player == null) {
-            Debug.LogError("Player が見つかりません");
-            return;
-        }
-
-        // 種類ごとに処理
-        switch (item.type) {
-            case eItemType.Heal:
-                if (item.itemID == 3000) { // ポーション例
-                    player.HealHp(50);
-                }
-                break;
-
-            case eItemType.Weapon: // 装備アイテム
-                Debug.Log($"{item.itemName} を装備しました");
-                // 装備処理を書く
-                break;
-
-            case eItemType.Material:
-                Debug.Log($"{item.itemName} は使えません");
-                return;
-        }
-
-        // 使用したので数量を減らす
-        slot.amount--;
-        if (slot.amount <= 0) {
-            slot.item = null;
-        }
-
-        // UI更新
-        RefreshUI();
     }
 
 }
