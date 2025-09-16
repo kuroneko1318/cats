@@ -19,8 +19,8 @@ public class InventoryManager : SystemObject<InventoryManager> {
 
     //UI‚ğƒXƒƒbƒg‚É‚·‚é
     private int selectedIndex = 0;
-    private const int columns = 10;
-    private const int rows = 10;
+    private const int columns = 9;
+    private const int rows = 9;
     private List<InventoryUI> slotUIList = new List<InventoryUI>();
 
 

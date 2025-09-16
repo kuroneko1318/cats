@@ -1498,6 +1498,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 694102968823499675, guid: b9929d38665d3bb438f4a23e09b8370d, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: c2af7c23c0e76744ea91705197185893, type: 2}
+    - target: {fileID: 694102968823499675, guid: b9929d38665d3bb438f4a23e09b8370d, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6742878315089438324, guid: c2af7c23c0e76744ea91705197185893, type: 2}
+    - target: {fileID: 694102968823499675, guid: b9929d38665d3bb438f4a23e09b8370d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4542455093370892507, guid: b9929d38665d3bb438f4a23e09b8370d, type: 3}
       propertyPath: m_Name
       value: QuestBoardUI
