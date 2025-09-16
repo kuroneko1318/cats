@@ -34,6 +34,7 @@ public class ItemManager : SystemObject<ItemManager> {
         itemList.Add(new ItemBase("“S", 4030, eItemType.Material));
         itemList.Add(new ItemBase("“º", 4031, eItemType.Material));
         itemList.Add(new ItemBase("–_", 4100, eItemType.Material));
+        itemList.Add(new ItemBase("j", 4101, eItemType.Material));
         weaponList.Add(new WeaponBase("•ŠíA", 1001,10));
         weaponList.Add(new WeaponBase("•ŠíB", 1002, 10));
         armorList.Add(new ArmorBase("–h‹ïA", 2001, 30));

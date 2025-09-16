@@ -8,7 +8,7 @@ using UnityEngine;
 public enum GatheringPointType {
     Bush,
     Ore,
-
+    saboten,
 }
 
 public abstract class GatheringPoint : MonoBehaviour {
