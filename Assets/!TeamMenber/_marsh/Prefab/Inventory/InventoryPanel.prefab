@@ -56,10 +56,15 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
+<<<<<<< Updated upstream
   m_CellSize: {x: 38.4, y: 38.4}
   m_Spacing: {x: 32, y: 32}
+=======
+  m_CellSize: {x: 100, y: 100}
+  m_Spacing: {x: 4, y: 4}
+>>>>>>> Stashed changes
   m_Constraint: 1
-  m_ConstraintCount: 10
+  m_ConstraintCount: 9
 --- !u!1 &6422574181324898603
 GameObject:
   m_ObjectHideFlags: 0

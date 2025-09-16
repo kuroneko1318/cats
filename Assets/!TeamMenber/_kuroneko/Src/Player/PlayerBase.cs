@@ -162,4 +162,9 @@ public class PlayerBase : MonoBehaviour {
         pAttack.ResetAttack();
     }
 
+    //回復などアイテムアクション用の関数
+    public void HealHp(int amount) {
+        this.hp += amount;
+    }
+
 }
