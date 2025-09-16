@@ -1,20 +1,19 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// プレイヤー攻撃クラス（3段コンボ対応＋攻撃ごとCollider表示制御、アニメイベント管理）
+/// </summary>
 public class NewPlayerAttack {
     private Animator anim;
-    private int attackIndex = 0;
-    private bool isAttacking = false;
-    private bool queuedNextAttack = false;
-
-    private float comboInputStart = 0.3f;
-    private float comboInputEnd = 0.75f;
+    private int attackIndex = 0;             // 現在の攻撃段
+    private bool isAttacking = false;        // 攻撃中フラグ
+    private bool queuedNextAttack = false;   // 次段予約
 
     private GameObject attackCollider1;
     private GameObject attackCollider2;
     private GameObject attackCollider3;
 
-    //　敵に与えるダメージ格納用変数
-    public int damage;
+    public int damage;                        // 攻撃力
 
     public NewPlayerAttack(Animator animator, GameObject col1, GameObject col2, GameObject col3) {
         anim = animator;
@@ -29,15 +28,23 @@ public class NewPlayerAttack {
 
     public bool IsAttacking() => isAttacking;
 
+    /// <summary>
+    /// 攻撃入力（ボタン押下時に呼ぶ）
+    /// </summary>
     public void Attack() {
         if (!isAttacking) {
+            // 攻撃未中なら1段目を開始
             StartAttack();
         }
         else if (!queuedNextAttack && attackIndex < 3) {
+            // 攻撃中かつ最大3段未満なら次段予約
             queuedNextAttack = true;
         }
     }
 
+    /// <summary>
+    /// 攻撃開始処理（AttackStartイベントで呼ぶ）
+    /// </summary>
     private void StartAttack() {
         isAttacking = true;
         attackIndex = Mathf.Clamp(attackIndex + 1, 1, 3);
@@ -46,69 +53,71 @@ public class NewPlayerAttack {
         anim.SetBool("Attack", true);
 
         queuedNextAttack = false;
-        // Collider はイベントで制御
     }
 
+    /// <summary>
+    /// 毎フレーム更新（Update）: 入力予約の管理のみ
+    /// </summary>
     public void Update() {
-        if (!isAttacking) return;
-
-        AnimatorStateInfo state = anim.GetCurrentAnimatorStateInfo(0);
-
-        // 次段予約があれば条件内で開始
-        if (queuedNextAttack && state.normalizedTime >= comboInputStart && state.normalizedTime <= comboInputEnd) {
-            queuedNextAttack = false;
-            StartAttack();
-        }
-
-        // 攻撃終了判定（アニメ終了確認のみ、Collider はイベントで制御）
-        if (state.IsTag("Attack") && state.normalizedTime >= 0.95f) {
-            anim.SetBool("Attack", false);
-            isAttacking = false;
-            attackIndex = 0;
-            queuedNextAttack = false;
-        }
+        // 攻撃中で予約があれば、次段はイベントで開始するのでここでは触らない
     }
 
     // =========================================
-    // Animatorイベント用
+    // アニメーションイベント用関数
     // =========================================
+
+    /// <summary>
+    /// 各段攻撃開始時にイベントから呼ぶ
+    /// </summary>
     public void AttackStart() {
-        // 現在の攻撃段のColliderのみON
-        if(attackIndex == 1) {
-            attackCollider1.GetComponent<HitEnemy>().SetDamage(damage);
-            attackCollider1.SetActive(attackIndex == 1);
-        }
-        if (attackIndex == 2) {
-            attackCollider2.GetComponent<HitEnemy>().SetDamage(damage);
-            attackCollider2.SetActive(attackIndex == 2);
-        }
-        if (attackIndex == 3) {
-            attackCollider3.GetComponent<HitEnemy>().SetDamage(damage);
-            attackCollider3.SetActive(attackIndex == 3);
-        }
+        // 現在段のColliderのみON
+        attackCollider1.SetActive(attackIndex == 1);
+        attackCollider2.SetActive(attackIndex == 2);
+        attackCollider3.SetActive(attackIndex == 3);
+
+        // ダメージ設定
+        if (attackIndex == 1) attackCollider1.GetComponent<HitEnemy>().SetDamage(damage);
+        if (attackIndex == 2) attackCollider2.GetComponent<HitEnemy>().SetDamage(damage);
+        if (attackIndex == 3) attackCollider3.GetComponent<HitEnemy>().SetDamage(damage);
     }
 
-    public void SetPower(float power) {
-        damage = (int) power;
-    }
-
+    /// <summary>
+    /// 各段攻撃終了時にイベントから呼ぶ
+    /// </summary>
     public void AttackEnd() {
-        // 攻撃終了で全てOFF
+        // Colliderを全てOFF
         attackCollider1.SetActive(false);
         attackCollider2.SetActive(false);
         attackCollider3.SetActive(false);
 
-        //anim.SetBool("Attack", false);
-        //isAttacking = false;
-        //queuedNextAttack = false;
-        //attackIndex = 0;
+        if (queuedNextAttack) {
+            // 次段予約がある場合は次段を開始
+            queuedNextAttack = false;
+            StartAttack();
+        }
+        else {
+            // 予約なしなら攻撃終了
+            anim.SetBool("Attack", false);
+            isAttacking = false;
+            attackIndex = 0;
+        }
     }
 
+    /// <summary>
+    /// 攻撃リセット
+    /// </summary>
     public void ResetAttack() {
         anim.SetBool("Attack", false);
         isAttacking = false;
         attackIndex = 0;
         queuedNextAttack = false;
+
+        attackCollider1.SetActive(false);
+        attackCollider2.SetActive(false);
+        attackCollider3.SetActive(false);
     }
 
+    public void SetPower(float power) {
+        damage = (int)power;
+    }
 }
