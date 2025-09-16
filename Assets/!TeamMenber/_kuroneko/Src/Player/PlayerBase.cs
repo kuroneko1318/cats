@@ -140,6 +140,8 @@ public class PlayerBase : MonoBehaviour {
 
         if (other.gameObject.CompareTag("GatheringPoint") && GatherAction.WasPressedThisFrame()) {
 
+            anim.SetTrigger("Pick");
+
             var point = other.gameObject.GetComponent<GatheringPoint>();
 
             point?.Gather();
