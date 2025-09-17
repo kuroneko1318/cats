@@ -48,7 +48,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
         for (int i = 0; i < craftSlots.Length; i++)
             craftSlots[i] = new InventorySlot();
 
-        equipSlots = new InventorySlot[6]; // 武器1、防具1、アクセ4
+        equipSlots = new InventorySlot[2]; // 武器1、防具1
         for (int i = 0; i < equipSlots.Length; i++)
             equipSlots[i] = new InventorySlot();
     }
@@ -136,31 +136,33 @@ public class InventoryManager : SystemObject<InventoryManager> {
     }
 
     private void UpdateHighlight() {
+        // まず全てのUIのハイライトをリセット
+        foreach (var ui in inventoryTopUI) ui.SetHighlight(false);
+        foreach (var ui in inventoryBottomUI) ui.SetHighlight(false);
+        foreach (var ui in craftUI) ui.SetHighlight(false);
+        foreach (var ui in equipUI) ui.SetHighlight(false);
+
+        // 現在選択中のUIだけハイライト
         switch (currentArea) {
             case UIArea.InventoryTop:
-                for (int i = 0; i < inventoryTopUI.Count; i++) {
-                    inventoryTopUI[i].SetHighlight(i == selectedIndex);
-                }
+                if (selectedIndex >= 0 && selectedIndex < inventoryTopUI.Count)
+                    inventoryTopUI[selectedIndex].SetHighlight(true);
                 break;
             case UIArea.InventoryBottom:
-                for (int i = 0; i < inventoryBottomUI.Count; i++) {
-                    inventoryBottomUI[i].SetHighlight(i == selectedIndex);
-                }
+                if (selectedIndex >= 0 && selectedIndex < inventoryBottomUI.Count)
+                    inventoryBottomUI[selectedIndex].SetHighlight(true);
                 break;
-
             case UIArea.Craft:
-                for (int i = 0; i < craftUI.Count; i++) {
-                    craftUI[i].SetHighlight(i == selectedIndex);
-                }
+                if (selectedIndex >= 0 && selectedIndex < craftUI.Count)
+                    craftUI[selectedIndex].SetHighlight(true);
                 break;
-
             case UIArea.Equip:
-                for (int i = 0; i < equipUI.Count; i++) {
-                    equipUI[i].SetHighlight(i == selectedIndex);
-                }
+                if (selectedIndex >= 0 && selectedIndex < equipUI.Count)
+                    equipUI[selectedIndex].SetHighlight(true);
                 break;
         }
     }
+
 
 
     private InventoryUI GetCurrentUI() {
@@ -178,15 +180,24 @@ public class InventoryManager : SystemObject<InventoryManager> {
     private void MoveRight() {
         switch (currentArea) {
             case UIArea.InventoryTop:
+                if (selectedIndex % columns == columns - 1) {
+                    currentArea = UIArea.Craft;
+                    selectedIndex = 0;
+                }
+                else selectedIndex++;
+                break;
             case UIArea.InventoryBottom:
-                if (IsAtRightEdge()) currentArea = (currentArea == UIArea.InventoryTop) ? UIArea.Craft : UIArea.Equip;
+                if (selectedIndex % columns == columns - 1) {
+                    currentArea = UIArea.Equip;
+                    selectedIndex = 0;
+                }
                 else selectedIndex++;
                 break;
             case UIArea.Craft:
-                if (selectedIndex < craftSlots.Length - 1) selectedIndex++;
+                selectedIndex = Mathf.Min(selectedIndex + 1, craftUI.Count - 1);
                 break;
             case UIArea.Equip:
-                if (selectedIndex < equipSlots.Length - 1) selectedIndex++;
+                selectedIndex = Mathf.Min(selectedIndex + 1, equipUI.Count - 1);
                 break;
         }
         UpdateHighlight();
@@ -195,36 +206,59 @@ public class InventoryManager : SystemObject<InventoryManager> {
     private void MoveLeft() {
         switch (currentArea) {
             case UIArea.InventoryTop:
+                if (selectedIndex > 0) selectedIndex--;
+                break;
             case UIArea.InventoryBottom:
                 if (selectedIndex > 0) selectedIndex--;
                 break;
             case UIArea.Craft:
                 if (selectedIndex > 0) selectedIndex--;
-                else { currentArea = UIArea.InventoryTop; selectedIndex = inventoryTopCount - 1; }
+                else { currentArea = UIArea.InventoryTop; selectedIndex = columns - 1; }
                 break;
             case UIArea.Equip:
                 if (selectedIndex > 0) selectedIndex--;
-                else { currentArea = UIArea.InventoryBottom; selectedIndex = inventoryBottomCount - 1; }
+                else { currentArea = UIArea.InventoryBottom; selectedIndex = columns - 1; }
                 break;
+        }
+        UpdateHighlight();
+    }
+
+    private void MoveDown() {
+        if (currentArea == UIArea.InventoryTop) {
+            if (selectedIndex + columns < inventoryTopCount) selectedIndex += columns;
+            else { currentArea = UIArea.InventoryBottom; selectedIndex = selectedIndex % columns; }
+        }
+        else if (currentArea == UIArea.InventoryBottom) {
+            if (selectedIndex + columns < inventoryBottomCount) selectedIndex += columns;
         }
         UpdateHighlight();
     }
 
     private void MoveUp() {
-        if (IsInventoryArea()) { if (selectedIndex >= columns) selectedIndex -= columns; }
+        if (!IsInventoryArea()) return;
+
+        switch (currentArea) {
+            case UIArea.InventoryTop:
+                // 一番上の行は上に移動できない
+                if (selectedIndex >= columns)
+                    selectedIndex -= columns;
+                break;
+
+            case UIArea.InventoryBottom:
+                // 下部インベントリの最上段にいる場合は上部インベントリに移動
+                if (selectedIndex < columns) {
+                    currentArea = UIArea.InventoryTop;
+                    selectedIndex += inventoryTopCount - columns; // 下部最上段から上部最下段に移動
+                }
+                else {
+                    selectedIndex -= columns;
+                }
+                break;
+        }
+
         UpdateHighlight();
     }
 
-    private void MoveDown() {
-        if (IsInventoryArea()) {
-            if (currentArea == UIArea.InventoryTop && selectedIndex + columns >= inventoryTopCount)
-                currentArea = UIArea.InventoryBottom;
-            else if (selectedIndex + columns < inventoryTopCount) selectedIndex += columns;
-            else if (currentArea == UIArea.InventoryBottom && selectedIndex + columns < inventoryBottomCount)
-                selectedIndex += columns;
-        }
-        UpdateHighlight();
-    }
 
     private bool IsAtRightEdge() {
         return (selectedIndex % columns) == (columns - 1);
