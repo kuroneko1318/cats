@@ -811,6 +811,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4334351043751984096, guid: 6c9092224dbfab543b6f96819fd3b9e5, type: 3}
   m_PrefabInstance: {fileID: 559551161}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &559551163 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8577272089598016558, guid: 6c9092224dbfab543b6f96819fd3b9e5, type: 3}
+  m_PrefabInstance: {fileID: 559551161}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &608544926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -945,11 +950,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
---- !u!1 &700649465 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8874673962408222264, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
-  m_PrefabInstance: {fileID: 692902432}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &724925691 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7727461717467718344, guid: 4abd50cf14287f142abdd2550c464072, type: 3}
@@ -1328,11 +1328,6 @@ Transform:
   - {fileID: 201001872}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1839617840 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5822571628870702315, guid: 6c9092224dbfab543b6f96819fd3b9e5, type: 3}
-  m_PrefabInstance: {fileID: 559551161}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1839811877
 GameObject:
   m_ObjectHideFlags: 0
@@ -1687,9 +1682,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf73acb9f029f7943b9e22af4c9441a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  area1SceneObject: {fileID: 1839617840}
-  area2Prefab: {fileID: 8444830881619778750, guid: 17c5bcdecf2201f46a1f8e2e924f73bf, type: 3}
-  player: {fileID: 700649465}
+  areaPrefabs: []
+  baseStartPos: {fileID: 559551163}
 --- !u!1 &1929120095
 GameObject:
   m_ObjectHideFlags: 0
@@ -1735,7 +1729,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98a1489373e071b4f82c59ab6dbcfa72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goToArea2: 1
 --- !u!65 &1929120098
 BoxCollider:
   m_ObjectHideFlags: 0
