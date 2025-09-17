@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour {
     //インベントリスロットの最大数
-    public int slotCount = 100;
+    public int slotCount = 81;
     //インベントリの中身保存用
     public InventorySlot[] slots;
 

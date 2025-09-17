@@ -22,6 +22,8 @@ public class ItemManager : SystemObject<ItemManager> {
         Debug.Log("ItemManager　Initialize開始");
         Sprite potionIcon = Resources.Load<Sprite>("icon/potion");
         Sprite herbIcon = Resources.Load<Sprite>("icon/herb");
+        //Sprite armorIcon = Resources.Load<Sprite>("icon/herb");
+        //Sprite swordIcon = Resources.Load<Sprite>("icon/herb");
 
 
         // ここでアイテム5種を登録（ID）
@@ -35,9 +37,9 @@ public class ItemManager : SystemObject<ItemManager> {
         itemList.Add(new ItemBase("銅", 4031, eItemType.Material));
         itemList.Add(new ItemBase("棒", 4100, eItemType.Material));
         itemList.Add(new ItemBase("針", 4101, eItemType.Material));
-        weaponList.Add(new WeaponBase("武器A", 1001,10));
-        weaponList.Add(new WeaponBase("武器B", 1002, 10));
-        armorList.Add(new ArmorBase("防具A", 2001, 30));
+        weaponList.Add(new WeaponBase("剣", 1001,10));
+        weaponList.Add(new WeaponBase("剣1", 1002, 10));
+        armorList.Add(new ArmorBase("アーマー", 2001, 30));
     }
 
     //  IDからアイテムを取得する
@@ -63,12 +65,12 @@ public class ItemManager : SystemObject<ItemManager> {
     }
 
     //  武器を追加する際に末尾に新規生成
-    public void AddWeapon(string name, int id, int atk, int skill1, int skill2) {
-        weaponList.Append(new WeaponBase(name, id, atk, skill1, skill2));
+    public void AddWeapon(string name, int id, int atk, Sprite image, int skill1, int skill2) {
+        weaponList.Append(new WeaponBase(name, id, atk, image, skill1, skill2));
     }
 
-    public void AddArmor(string name, int id, int hp, int skill1, int skill2) {
-        armorList.Append(new ArmorBase(name, id, hp, skill1, skill2));
+    public void AddArmor(string name, int id, int hp, Sprite image, int skill1, int skill2) {
+        armorList.Append(new ArmorBase(name, id, hp, image, skill1, skill2));
     }
 
     private Sprite icon(string pass) {

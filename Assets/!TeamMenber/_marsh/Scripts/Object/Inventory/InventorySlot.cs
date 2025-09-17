@@ -34,4 +34,18 @@ public class InventorySlot {
             name = null;
         }
     }
+
+    /// <summary> スロットからアイテムを取り出す（取得してスロットを空にする）
+    public ItemBase TakeItem() {
+        ItemBase temp = item;
+        item = null;
+        amount = 0;
+        return temp;
+    }
+
+    /// <summary> スロットにアイテムをセットする（上書き）
+    public void SetItem(ItemBase newItem, int newAmount = 1) {
+        item = newItem;
+        amount = newItem != null ? newAmount : 0;
+    }
 }

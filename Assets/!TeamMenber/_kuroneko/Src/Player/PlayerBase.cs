@@ -78,7 +78,7 @@ public class PlayerBase : MonoBehaviour {
 
         if (OpenInventoryAction.WasPressedThisFrame()) {
 
-            InventoryManager.Instance.ToggleInventory();
+            InventoryManager.Instance.OpenInventory();
 
         }
 
