@@ -1,177 +1,249 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using System;
 using System.Collections.Generic;
-using static UnityEditor.Progress;
+using System;
 
 public class InventoryManager : SystemObject<InventoryManager> {
-    [Header("InventoryData")]
-    public Inventory inventory; // インベントリ
+    [Header("Inventory Data")]
+    public Inventory inventory; // 元データ
     [NonSerialized] public Inventory bag;
 
-    [Header("UIプレハブ")]
+    [Header("UI Prefab")]
     public GameObject inventoryPanelPrefab;
     public GameObject inventorySlotUIPrefab;
 
+    [Header("UI Parents")]
+    public Transform InventoryTop;
+    public Transform InventoryBottom;
+    public Transform Craft;
+    public Transform Equip;
+
     private GameObject inventoryPanelInstance;
-    private Transform contentParent;
+
+    // インベントリUI
+    private List<InventoryUI> inventoryTopUI = new List<InventoryUI>();
+    private List<InventoryUI> inventoryBottomUI = new List<InventoryUI>();
+    private List<InventoryUI> craftUI = new List<InventoryUI>();
+    private List<InventoryUI> equipUI = new List<InventoryUI>();
+
+    private InventorySlot[] craftSlots;
+    private InventorySlot[] equipSlots;
 
     private int selectedIndex = 0;
-    private const int columns = 9;
-    private const int rows = 9;
-
-    private List<InventoryUI> slotUIList = new List<InventoryUI>();
-
-    // クラフト用スロット
-    private InventorySlot[] craftSlots = new InventorySlot[2];
-    private InventorySlot craftResult = new InventorySlot();
-
-    // 装備用スロット
-    private InventorySlot weaponSlot = new InventorySlot();
-    private InventorySlot armorSlot = new InventorySlot();
-    private InventorySlot[] accessorySlots = new InventorySlot[4];
-
-    private enum UIArea { InventoryTop, InventoryBottom, Craft, Equip }
-    private UIArea currentArea = UIArea.InventoryTop;
-
     private ItemBase heldItem = null;
     private int originIndex = -1;
     private UIArea originArea;
 
+    private const int columns = 9;
+    private const int inventoryTopCount = 36;
+    private const int inventoryBottomCount = 45;
+
+    private enum UIArea { InventoryTop, InventoryBottom, Craft, Equip }
+    private UIArea currentArea = UIArea.InventoryTop;
+
     public override void Initialize() {
         bag = Instantiate(inventory);
 
-        // クラフトと装備スロット初期化
-        for (int i = 0; i < craftSlots.Length; i++) craftSlots[i] = new InventorySlot();
-        craftResult = new InventorySlot();
+        // クラフト・装備スロット初期化
+        craftSlots = new InventorySlot[3]; // 2枠＋完成品1
+        for (int i = 0; i < craftSlots.Length; i++)
+            craftSlots[i] = new InventorySlot();
 
-        weaponSlot = new InventorySlot();
-        armorSlot = new InventorySlot();
-        for (int i = 0; i < accessorySlots.Length; i++) accessorySlots[i] = new InventorySlot();
+        equipSlots = new InventorySlot[6]; // 武器1、防具1、アクセ4
+        for (int i = 0; i < equipSlots.Length; i++)
+            equipSlots[i] = new InventorySlot();
     }
 
     void Update() {
-        if (inventoryPanelInstance != null && inventoryPanelInstance.activeSelf) {
-            if (Input.GetKeyDown(KeyCode.RightArrow)) MoveRight();
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) MoveLeft();
-            if (Input.GetKeyDown(KeyCode.UpArrow)) MoveSelection(0, -1);
-            if (Input.GetKeyDown(KeyCode.DownArrow)) MoveSelection(0, 1);
+        if (inventoryPanelInstance == null || !inventoryPanelInstance.activeSelf) return;
 
-            if (Input.GetKeyDown(KeyCode.Z)) HandleSelect(); // A
-            if (Input.GetKeyDown(KeyCode.X)) HandleCancel(); // B
-        }
+        if (Input.GetKeyDown(KeyCode.RightArrow)) MoveRight();
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) MoveLeft();
+        if (Input.GetKeyDown(KeyCode.UpArrow)) MoveUp();
+        if (Input.GetKeyDown(KeyCode.DownArrow)) MoveDown();
+
+        if (Input.GetKeyDown(KeyCode.Z)) HandleSelect();
+        if (Input.GetKeyDown(KeyCode.X)) HandleCancel();
     }
 
+    #region UI
     public void OpenInventory() {
         if (inventoryPanelInstance == null) {
-            Transform canvasTransform = GameObject.Find("ItemUICanvas").transform;
-            inventoryPanelInstance = Instantiate(inventoryPanelPrefab, canvasTransform);
-            inventoryPanelInstance.SetActive(true);
-            contentParent = inventoryPanelInstance.transform.Find("Content");
+            Transform canvas = GameObject.Find("ItemUICanvas").transform;
+            inventoryPanelInstance = Instantiate(inventoryPanelPrefab, canvas);
+
+            InventoryTop = inventoryPanelInstance.transform.Find("InventoryTop");
+            InventoryBottom = inventoryPanelInstance.transform.Find("InventoryBottom");
+            Craft = inventoryPanelInstance.transform.Find("Craft");
+            Equip = inventoryPanelInstance.transform.Find("Equip");
+
+            if (InventoryTop == null || InventoryBottom == null || Craft == null || Equip == null)
+                Debug.LogError("InventoryManager: UI Contentの取得に失敗しました。名前を確認してください。");
         }
+
         inventoryPanelInstance.SetActive(true);
         RefreshUI();
     }
 
     public void CloseInventory() {
-        if (inventoryPanelInstance != null) {
+        if (inventoryPanelInstance != null)
             inventoryPanelInstance.SetActive(false);
-        }
     }
 
     private void RefreshUI() {
-        if (contentParent == null) return;
-
-        foreach (Transform child in contentParent) Destroy(child.gameObject);
-        slotUIList.Clear();
-
-        // Inventory表示
-        for (int i = 0; i < bag.slots.Length; i++) {
+        // インベントリ上部
+        inventoryTopUI.Clear();
+        ClearChildren(InventoryTop);
+        for (int i = 0; i < inventoryTopCount; i++) {
             var slot = bag.slots[i];
-            GameObject itemObj = Instantiate(inventorySlotUIPrefab, contentParent);
-            var slotUI = itemObj.GetComponent<InventoryUI>();
-            if (slotUI == null) continue;
-
-            slotUI.SetSlot(slot.item, slot.amount);
-            slotUIList.Add(slotUI);
+            var ui = Instantiate(inventorySlotUIPrefab, InventoryTop).GetComponent<InventoryUI>();
+            ui.SetSlot(slot.item, slot.amount);
+            inventoryTopUI.Add(ui);
         }
 
-        // Craftスロット表示（簡易的に同じUIで流用）
-        foreach (var slot in craftSlots) {
-            var itemObj = Instantiate(inventorySlotUIPrefab, contentParent);
-            var slotUI = itemObj.GetComponent<InventoryUI>();
-            slotUI.SetSlot(slot.item, slot.amount);
-            slotUIList.Add(slotUI);
+        // インベントリ下部
+        inventoryBottomUI.Clear();
+        ClearChildren(InventoryBottom);
+        for (int i = 0; i < inventoryBottomCount; i++) {
+            var slot = bag.slots[i + inventoryTopCount];
+            var ui = Instantiate(inventorySlotUIPrefab, InventoryBottom).GetComponent<InventoryUI>();
+            ui.SetSlot(slot.item, slot.amount);
+            inventoryBottomUI.Add(ui);
         }
 
-        // Craft結果表示
-        {
-            var itemObj = Instantiate(inventorySlotUIPrefab, contentParent);
-            var slotUI = itemObj.GetComponent<InventoryUI>();
-            slotUI.SetSlot(craftResult.item, craftResult.amount);
-            slotUIList.Add(slotUI);
+        // クラフト
+        craftUI.Clear();
+        ClearChildren(Craft);
+        for (int i = 0; i < craftSlots.Length; i++) {
+            var ui = Instantiate(inventorySlotUIPrefab, Craft).GetComponent<InventoryUI>();
+            ui.SetSlot(craftSlots[i].item, craftSlots[i].amount);
+            craftUI.Add(ui);
         }
 
-        // Equip表示
-        var equipSlots = new List<InventorySlot> { weaponSlot, armorSlot };
-        equipSlots.AddRange(accessorySlots);
-        foreach (var slot in equipSlots) {
-            var itemObj = Instantiate(inventorySlotUIPrefab, contentParent);
-            var slotUI = itemObj.GetComponent<InventoryUI>();
-            slotUI.SetSlot(slot.item, slot.amount);
-            slotUIList.Add(slotUI);
+        // 装備
+        equipUI.Clear();
+        ClearChildren(Equip);
+        for (int i = 0; i < equipSlots.Length; i++) {
+            var ui = Instantiate(inventorySlotUIPrefab, Equip).GetComponent<InventoryUI>();
+            ui.SetSlot(equipSlots[i].item, equipSlots[i].amount);
+            equipUI.Add(ui);
         }
 
-        UpdateSelectionHighlight();
+        UpdateHighlight();
     }
 
-    private void MoveSelection(int x, int y) {
-        int col = selectedIndex % columns;
-        int row = selectedIndex / columns;
-
-        col = Mathf.Clamp(col + x, 0, columns - 1);
-        row = Mathf.Clamp(row + y, 0, rows - 1);
-
-        selectedIndex = row * columns + col;
-        UpdateSelectionHighlight();
+    private void ClearChildren(Transform parent) {
+        foreach (Transform t in parent) Destroy(t.gameObject);
     }
 
-    private void UpdateSelectionHighlight() {
-        for (int i = 0; i < slotUIList.Count; i++)
-            slotUIList[i].SetHighlight(i == selectedIndex);
+    private void UpdateHighlight() {
+        switch (currentArea) {
+            case UIArea.InventoryTop:
+                for (int i = 0; i < inventoryTopUI.Count; i++) {
+                    inventoryTopUI[i].SetHighlight(i == selectedIndex);
+                }
+                break;
+            case UIArea.InventoryBottom:
+                for (int i = 0; i < inventoryBottomUI.Count; i++) {
+                    inventoryBottomUI[i].SetHighlight(i == selectedIndex);
+                }
+                break;
+
+            case UIArea.Craft:
+                for (int i = 0; i < craftUI.Count; i++) {
+                    craftUI[i].SetHighlight(i == selectedIndex);
+                }
+                break;
+
+            case UIArea.Equip:
+                for (int i = 0; i < equipUI.Count; i++) {
+                    equipUI[i].SetHighlight(i == selectedIndex);
+                }
+                break;
+        }
     }
 
+
+    private InventoryUI GetCurrentUI() {
+        switch (currentArea) {
+            case UIArea.InventoryTop: return inventoryTopUI[selectedIndex];
+            case UIArea.InventoryBottom: return inventoryBottomUI[selectedIndex];
+            case UIArea.Craft: return craftUI[selectedIndex];
+            case UIArea.Equip: return equipUI[selectedIndex];
+        }
+        return null;
+    }
+    #endregion
+
+    #region 移動
     private void MoveRight() {
-        // エリア移動判定（Inventory→Craft/Equip）
-        if ((currentArea == UIArea.InventoryTop && IsAtRightEdge()) ||
-            (currentArea == UIArea.InventoryBottom && IsAtRightEdge())) {
-            currentArea = currentArea == UIArea.InventoryTop ? UIArea.Craft : UIArea.Equip;
-            selectedIndex = 0;
-            RefreshUI();
+        switch (currentArea) {
+            case UIArea.InventoryTop:
+            case UIArea.InventoryBottom:
+                if (IsAtRightEdge()) currentArea = (currentArea == UIArea.InventoryTop) ? UIArea.Craft : UIArea.Equip;
+                else selectedIndex++;
+                break;
+            case UIArea.Craft:
+                if (selectedIndex < craftSlots.Length - 1) selectedIndex++;
+                break;
+            case UIArea.Equip:
+                if (selectedIndex < equipSlots.Length - 1) selectedIndex++;
+                break;
         }
-        else {
-            MoveSelection(1, 0);
-        }
+        UpdateHighlight();
     }
 
     private void MoveLeft() {
-        if (currentArea == UIArea.Craft || currentArea == UIArea.Equip) {
-            currentArea = currentArea == UIArea.Craft ? UIArea.InventoryTop : UIArea.InventoryBottom;
-            selectedIndex = GetRightEdgeIndex();
-            RefreshUI();
+        switch (currentArea) {
+            case UIArea.InventoryTop:
+            case UIArea.InventoryBottom:
+                if (selectedIndex > 0) selectedIndex--;
+                break;
+            case UIArea.Craft:
+                if (selectedIndex > 0) selectedIndex--;
+                else { currentArea = UIArea.InventoryTop; selectedIndex = inventoryTopCount - 1; }
+                break;
+            case UIArea.Equip:
+                if (selectedIndex > 0) selectedIndex--;
+                else { currentArea = UIArea.InventoryBottom; selectedIndex = inventoryBottomCount - 1; }
+                break;
         }
-        else {
-            MoveSelection(-1, 0);
-        }
+        UpdateHighlight();
     }
 
-    private InventorySlot GetCurrentSlot() {
-        if (bag == null || bag.slots == null) return null;
-        if (selectedIndex < 0 || selectedIndex >= slotUIList.Count) return null;
+    private void MoveUp() {
+        if (IsInventoryArea()) { if (selectedIndex >= columns) selectedIndex -= columns; }
+        UpdateHighlight();
+    }
 
-        // 仮でInventory範囲内かを判定（後でエリア分割で調整）
-        return selectedIndex < bag.slots.Length ? bag.slots[selectedIndex] : null;
+    private void MoveDown() {
+        if (IsInventoryArea()) {
+            if (currentArea == UIArea.InventoryTop && selectedIndex + columns >= inventoryTopCount)
+                currentArea = UIArea.InventoryBottom;
+            else if (selectedIndex + columns < inventoryTopCount) selectedIndex += columns;
+            else if (currentArea == UIArea.InventoryBottom && selectedIndex + columns < inventoryBottomCount)
+                selectedIndex += columns;
+        }
+        UpdateHighlight();
+    }
+
+    private bool IsAtRightEdge() {
+        return (selectedIndex % columns) == (columns - 1);
+    }
+
+    private bool IsInventoryArea() {
+        return currentArea == UIArea.InventoryTop || currentArea == UIArea.InventoryBottom;
+    }
+    #endregion
+
+    #region アイテム操作
+    private InventorySlot GetCurrentSlot() {
+        switch (currentArea) {
+            case UIArea.InventoryTop: return bag.slots[selectedIndex];
+            case UIArea.InventoryBottom: return bag.slots[selectedIndex + inventoryTopCount];
+            case UIArea.Craft: return craftSlots[selectedIndex];
+            case UIArea.Equip: return equipSlots[selectedIndex];
+        }
+        return null;
     }
 
     private void HandleSelect() {
@@ -187,16 +259,18 @@ public class InventoryManager : SystemObject<InventoryManager> {
             ItemBase temp = slot.TakeItem();
             slot.SetItem(heldItem);
             heldItem = temp;
-            if (heldItem == null) originIndex = -1;
-        }
 
+            if (heldItem == null) {
+                originIndex = -1;
+            }
+        }
         RefreshUI();
     }
 
     private void HandleCancel() {
-        if (heldItem != null) {
+        if (heldItem != null && originIndex >= 0) {
             var originSlot = GetSlot(originArea, originIndex);
-            if (originSlot != null) originSlot.SetItem(heldItem);
+            originSlot.SetItem(heldItem);
             heldItem = null;
             originIndex = -1;
             RefreshUI();
@@ -207,18 +281,13 @@ public class InventoryManager : SystemObject<InventoryManager> {
     }
 
     private InventorySlot GetSlot(UIArea area, int index) {
-        if (bag == null || bag.slots == null) return null;
-        if (index < 0 || index >= bag.slots.Length) return null;
-        return bag.slots[index];
+        switch (area) {
+            case UIArea.InventoryTop: return bag.slots[index];
+            case UIArea.InventoryBottom: return bag.slots[index + inventoryTopCount];
+            case UIArea.Craft: return craftSlots[index];
+            case UIArea.Equip: return equipSlots[index];
+        }
+        return null;
     }
-
-    private bool IsAtRightEdge() {
-        int col = selectedIndex % columns;
-        return col == columns - 1;
-    }
-
-    private int GetRightEdgeIndex() {
-        int row = selectedIndex / columns;
-        return row * columns + (columns - 1);
-    }
+    #endregion
 }
