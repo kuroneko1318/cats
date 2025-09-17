@@ -3,85 +3,62 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StageManager : MonoBehaviour {
+    [Header("エリアプレハブ（順番に登録）")]
+    [SerializeField] private GameObject[] areaPrefabs; // エリア1,2,3…のPrefab
 
-    [Header("エリア設定")]
-    [SerializeField] private GameObject area1SceneObject;   // シーン上の常駐エリア1
-    [SerializeField] private GameObject area2Prefab;        // 移動先エリア2のプレハブ
+    private GameObject currentArea; // 現在アクティブなエリア
+    [SerializeField] private Transform baseStartPos; // 拠点のスタート地点
 
-    [Header("プレイヤー参照")]
-    [SerializeField] private GameObject player;             // プレイヤーオブジェクト
-
-    private GameObject currentArea2;                        // 現在生成中のエリア2
-
-    /// <summary>
-    /// エリア1 → エリア2 に移動
-    /// </summary>
-    public void EnterArea2() {
-        // まだ生成されていなければ生成
-        if (currentArea2 == null) {
-            currentArea2 = Instantiate(area2Prefab, new Vector3(100, 0, 0), Quaternion.identity);
+    // エリアに入る処理
+    public void EnterArea(int index) {
+        // すでにエリアが存在するなら破棄
+        if (currentArea != null) {
+            Destroy(currentArea);
+            currentArea = null;
         }
 
-        // StartPos を探す
-        Transform startPos = currentArea2.transform.Find("StartPos");
-        if (startPos == null) {
-            Debug.LogError("Area2 に StartPos が見つかりません！");
+        // 範囲外チェック
+        if (index < 0 || index >= areaPrefabs.Length) {
+            Debug.LogError("エリア番号が範囲外です: " + index);
             return;
         }
 
-        // プレイヤーを移動
-        MovePlayerToStart(startPos);
+        // エリア生成
+        currentArea = Instantiate(areaPrefabs[index], Vector3.zero, Quaternion.identity);
+
+        // エリア内の StartPos を探す
+        Transform startPos = currentArea.transform.Find("StartPos");
+        if (startPos == null) {
+            Debug.LogError("エリアPrefabに StartPos が見つかりません: " + areaPrefabs[index].name);
+            return;
+        }
+
+        // プレイヤーをエリアのスタート地点に移動
+        MovePlayer(startPos.position);
     }
 
-    /// <summary>
-    /// エリア2 → エリア1 に戻る
-    /// </summary>
-    public void ReturnToArea1() {
-        // エリア2を削除して負荷軽減
-        if (currentArea2 != null) {
-            Destroy(currentArea2);
-            currentArea2 = null;
+    // 拠点に戻る処理
+    public void ReturnToBase() {
+        // エリアを破棄
+        if (currentArea != null) {
+            Destroy(currentArea);
+            currentArea = null;
         }
 
-        if (area1SceneObject == null) {
-            Debug.LogError("シーン上のエリア1が設定されていません");
-            return;
+        // プレイヤーを拠点のスタート地点に移動
+        if (baseStartPos != null) {
+            MovePlayer(baseStartPos.position);
         }
-
-        // エリア1の StartPos を取得
-        Transform startPos = area1SceneObject.transform.Find("StartPos");
-        if (startPos == null) {
-            Debug.LogError("シーン上のエリア1に StartPos が見つかりません");
-            return;
+        else {
+            Debug.LogError("拠点の StartPos が設定されていません");
         }
-
-        // プレイヤーを StartPos に移動＋向き合わせ
-        MovePlayerToStart(startPos);
     }
 
-    /// <summary>
-    /// プレイヤーを指定 StartPos に移動し、進行方向を StartPos.forward に合わせる
-    /// </summary>
-    private void MovePlayerToStart(Transform startPos) {
-        if (player == null) {
-            Debug.LogError("プレイヤーが設定されていません");
-            return;
-        }
-
-        // 位置を StartPos に合わせる
-        player.transform.position = startPos.position;
-
-        // forward を StartPos に合わせて水平回転
-        Vector3 forward = startPos.forward;
-        forward.y = 0f; // 上下回転は無視
-        if (forward.sqrMagnitude > 0.001f)
-            player.transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
-
-        // Rigidbody がある場合は速度をリセット
-        Rigidbody rb = player.GetComponent<Rigidbody>();
-        if (rb != null) {
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+    // プレイヤーを特定の位置に移動するヘルパー
+    private void MovePlayer(Vector3 pos) {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null) {
+            player.transform.position = pos;
         }
     }
 }
