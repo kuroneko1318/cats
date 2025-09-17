@@ -24,7 +24,7 @@ public class StageManager : MonoBehaviour {
         }
 
         // エリア生成
-        currentArea = Instantiate(areaPrefabs[index], Vector3.zero, Quaternion.identity);
+        currentArea = Instantiate(areaPrefabs[index], new Vector3(100, 0, 0), Quaternion.identity);
 
         // エリア内の StartPos を探す
         Transform startPos = currentArea.transform.Find("StartPos");
