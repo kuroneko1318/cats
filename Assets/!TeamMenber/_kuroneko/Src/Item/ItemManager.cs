@@ -20,24 +20,33 @@ public class ItemManager : SystemObject<ItemManager> {
     //  コンストラクタ：初期化時に全アイテムを登録
     public override void Initialize() {
         Debug.Log("ItemManager　Initialize開始");
+        //Sprite armorIcon = Resources.Load<Sprite>("icon/armor");
+        //Sprite swordIcon = Resources.Load<Sprite>("icon/armor");
+        Sprite BarIcon = Resources.Load<Sprite>("icon/Bar");
+        Sprite CopperIcon = Resources.Load<Sprite>("icon/Copper");
+        Sprite HerbIcon = Resources.Load<Sprite>("icon/Herb");
+        Sprite IronIcon = Resources.Load<Sprite>("icon/iron");
+        Sprite NeedleIcon = Resources.Load<Sprite>("icon/needle");
+        Sprite NutIcon = Resources.Load<Sprite>("icon/nut");
+        Sprite ObsidianIcon = Resources.Load<Sprite>("icon/Obsidian");
         Sprite potionIcon = Resources.Load<Sprite>("icon/potion");
-        Sprite herbIcon = Resources.Load<Sprite>("icon/herb");
-        //Sprite armorIcon = Resources.Load<Sprite>("icon/herb");
-        //Sprite swordIcon = Resources.Load<Sprite>("icon/herb");
+        Sprite RopeIcon = Resources.Load<Sprite>("icon/rope");
+        Sprite StoneAIcon = Resources.Load<Sprite>("icon/stoneA");
+        Sprite StoneBIcon = Resources.Load<Sprite>("icon/stoneB");
 
 
         // ここでアイテム5種を登録（ID）
         itemList.Add(new ItemBase("回復薬", 3000, eItemType.Heal, potionIcon));
-        itemList.Add(new ItemBase("木の実", 3001, eItemType.Heal));
-        itemList.Add(new ItemBase("薬草", 4001, eItemType.Material, herbIcon));
-        itemList.Add(new ItemBase("紐", 4002, eItemType.Material));
-        itemList.Add(new ItemBase("石A", 4020, eItemType.Material));
-        itemList.Add(new ItemBase("石B", 4021, eItemType.Material));
-        itemList.Add(new ItemBase("鉄", 4030, eItemType.Material));
-        itemList.Add(new ItemBase("銅", 4031, eItemType.Material));
-        itemList.Add(new ItemBase("棒", 4100, eItemType.Material));
-        itemList.Add(new ItemBase("針", 4101, eItemType.Material));
-        itemList.Add(new ItemBase("黒曜石", 4102, eItemType.Material));
+        itemList.Add(new ItemBase("木の実", 3001, eItemType.Heal, NutIcon));
+        itemList.Add(new ItemBase("薬草", 4001, eItemType.Material, HerbIcon));
+        itemList.Add(new ItemBase("紐", 4002, eItemType.Material, RopeIcon));
+        itemList.Add(new ItemBase("石A", 4020, eItemType.Material, StoneAIcon));
+        itemList.Add(new ItemBase("石B", 4021, eItemType.Material, StoneBIcon));
+        itemList.Add(new ItemBase("鉄", 4030, eItemType.Material, IronIcon));
+        itemList.Add(new ItemBase("銅", 4031, eItemType.Material, CopperIcon));
+        itemList.Add(new ItemBase("棒", 4100, eItemType.Material, BarIcon));
+        itemList.Add(new ItemBase("針", 4101, eItemType.Material, NeedleIcon));
+        itemList.Add(new ItemBase("黒曜石", 4102, eItemType.Material, ObsidianIcon));
         weaponList.Add(new WeaponBase("剣", 1001,10));
         weaponList.Add(new WeaponBase("剣1", 1002, 10));
         armorList.Add(new ArmorBase("アーマー", 2001, 30));
