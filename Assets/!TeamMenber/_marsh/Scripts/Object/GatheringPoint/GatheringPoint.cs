@@ -9,13 +9,17 @@ public enum GatheringPointType {
     Bush,
     Ore,
     saboten,
+    magma,
 }
+
+
+
 
 public abstract class GatheringPoint : MonoBehaviour {
     public GatheringPointType pointType;
     public float respawnTime = 30f;
     protected bool isAvailable = true;
-
+public bool IsAvailable => isAvailable;
     [NonSerialized]public Inventory bag;
 
     public virtual void Interact() {

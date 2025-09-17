@@ -136,19 +136,19 @@ public class PlayerBase : MonoBehaviour {
         hp = maxHp;
     }
 
+
     private void OnTriggerStay(Collider other) {
-
         if (other.gameObject.CompareTag("GatheringPoint") && GatherAction.WasPressedThisFrame()) {
-
-            anim.SetTrigger("Pick");
-
             var point = other.gameObject.GetComponent<GatheringPoint>();
 
-            point?.Gather();
-
+            // 採取ポイントが存在し、利用可能な場合のみ採取処理を行う
+            if (point != null && point.IsAvailable) {
+                anim.SetTrigger("Pick");
+                point.Interact();
+            }
         }
-
     }
+
 
     // Animatorイベント用ラッパー
     public void AttackStartEvent() {
