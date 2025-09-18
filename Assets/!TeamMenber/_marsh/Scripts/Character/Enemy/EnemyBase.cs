@@ -14,6 +14,7 @@ public enum EnemyType {
     Beetle,
     StagBeetle,
     Nasty,
+    Cow,
     // 必要に応じて追加
 }
 
