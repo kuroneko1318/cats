@@ -2,10 +2,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// プレイヤーコントローラー（移動・回避・攻撃統合＋攻撃中は移動不可）
+/// プレイヤーコントローラー（移動・回避・攻撃・スキル統合）
+/// 攻撃中・スキル中は移動不可
 /// </summary>
 public class PlayerBase : MonoBehaviour {
-
     private PlayerInput input;
     private NewPlayerMove pMove;
     private NewPlayerAttack pAttack;
@@ -22,11 +22,9 @@ public class PlayerBase : MonoBehaviour {
     [SerializeField] public float stamina;
 
     [Header("会心系ステータス")]
-    // 会心率（最大値は1.00f）
-    [SerializeField] public float criticalChance;
-    // 会心ダメージ倍率
-    [SerializeField] public float criticalMultiplier;
-    private bool isCritical = false; // クリティカル判定
+    [SerializeField] public float criticalChance;     // 会心率（最大値は1.00f）
+    [SerializeField] public float criticalMultiplier; // 会心ダメージ倍率
+    private bool isCritical = false;                  // クリティカル判定
 
     [Header("攻撃判定用コライダー")]
     [SerializeField] private GameObject attackCollider1;
@@ -36,13 +34,16 @@ public class PlayerBase : MonoBehaviour {
     [Header("リスポーン地点（街の初期位置保存用）")]
     [SerializeField] private GameObject startPos;
 
-    //  行動中の制御
+    // 行動制御フラグ
     private bool isDead = false;
     private bool isPick = false;
-    
+
+    // スキル制御
+    private SkillManager skillManager;        // スキル管理
+    public bool IsSkillActive { get; private set; } = false; // スキル中フラグ
+
     public InputAction GatherAction;
     public InputAction OpenInventoryAction;
-
 
     void Start() {
         input = GetComponent<PlayerInput>();
@@ -54,98 +55,95 @@ public class PlayerBase : MonoBehaviour {
         pMove = new NewPlayerMove(transform, anim);
         pAttack = new NewPlayerAttack(anim, attackCollider1, attackCollider2, attackCollider3);
 
-        // 入力イベント登録
+        // スキルマネージャーを生成してスキルを登録
+        skillManager = new SkillManager();
+        skillManager.RegisterSkill(new FrontSlashSkill());
+
+        // 移動入力
         input.actions["Move"].performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         input.actions["Move"].canceled += ctx => moveInput = Vector2.zero;
 
         // 攻撃入力
         input.actions["Attack"].performed += ctx => {
-            pAttack.Attack();
+            if (!IsSkillActive) // スキル中は攻撃不可
+                pAttack.Attack();
         };
 
-        // 回避入力（攻撃中は無効化）
+        // 回避入力
         input.actions["Avoidance"].performed += ctx => {
-            if (!pAttack.IsAttacking()) {
+            if (!pAttack.IsAttacking() && !IsSkillActive) // 攻撃中/スキル中は回避不可
+            {
                 pMove.Avoid(moveInput, mainCamera);
+            }
+        };
+
+        // スキル入力
+        input.actions["Skill"].performed += ctx => {
+            if (!IsSkillActive && !pAttack.IsAttacking() && !isDead && !isPick) {
+                skillManager.UseSkill(0, gameObject); // 0番スキルを発動
             }
         };
     }
 
     void Update() {
-        // 攻撃中は移動不可
-        if (!pAttack.IsAttacking()&& !isDead && !isPick) {
+        // 攻撃中やスキル中は移動不可
+        if (!pAttack.IsAttacking() && !IsSkillActive && !isDead && !isPick) {
             pMove.Move(moveInput, mainCamera);
         }
 
         pAttack.Update();
 
         if (OpenInventoryAction.WasPressedThisFrame()) {
-
             InventoryManager.Instance.OpenInventory();
-
         }
-
     }
 
     // ダメージ処理
-    public virtual void TakeDamage(int attack, float motionMultiplier = 1, float criticalChance = 0, float criticalMultiplier = 2,
-
+    public virtual void TakeDamage(int attack, float motionMultiplier = 1,
+                                   float criticalChance = 0, float criticalMultiplier = 2,
                                    int elementalValue = 0, float staggerValue = 0) {
-        if (isDead) return;
+        if (isDead || IsSkillActive) return;
         isPick = false;
 
-        int damage;
 
+        int damage;
         isCritical = Random.value < criticalChance; // クリティカル判定
 
         if (isCritical) {
-
             damage = Mathf.RoundToInt(
-
-                (Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f) * criticalMultiplier);
-
+                (Mathf.Pow(attack, 2) / attack + defence) *
+                motionMultiplier * Random.Range(0.90f, 1.1f) * criticalMultiplier);
             hp -= damage;
-
         }
-
         else {
-
             damage = Mathf.RoundToInt(
-
-                (Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f));
-
+                (Mathf.Pow(attack, 2) / attack + defence) *
+                motionMultiplier * Random.Range(0.90f, 1.1f));
             hp -= damage;
-
         }
+
         pAttack.AttackEnd();
-        if (hp <= 0) Dead(); // HPが0以下なら死亡処理
-        else anim.SetTrigger("Hit"); // 被ダメージアニメーション
-       
+
+        if (hp <= 0) Dead();
+        else anim.SetTrigger("Hit");
     }
 
     private void Dead() {
         if (hp <= 0) {
             isDead = true;
-
             anim.SetTrigger("Death");
-
         }
     }
 
     public void DeathAnimationEnd() {
         isDead = false;
-
         transform.position = startPos.transform.position;
-
         hp = maxHp;
     }
-
 
     private void OnTriggerStay(Collider other) {
         if (other.gameObject.CompareTag("GatheringPoint") && GatherAction.WasPressedThisFrame()) {
             var point = other.gameObject.GetComponent<GatheringPoint>();
-
-            // 採取ポイントが存在し、利用可能な場合のみ採取処理を行う
             if (point != null && point.IsAvailable) {
                 anim.SetTrigger("Pick");
                 isPick = true;
@@ -153,7 +151,6 @@ public class PlayerBase : MonoBehaviour {
             }
         }
     }
-
 
     // Animatorイベント用ラッパー
     public void AttackStartEvent() {
@@ -173,4 +170,12 @@ public class PlayerBase : MonoBehaviour {
         isPick = false;
     }
 
+    // スキルフラグ制御（スキルクラスから呼び出される）
+    public void SetSkillActive(bool active) {
+        IsSkillActive = active;
+    }
+
+    public void EndSkillEvent() {
+        SetSkillActive(false);
+    }
 }
