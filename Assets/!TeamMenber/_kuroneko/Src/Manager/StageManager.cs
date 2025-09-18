@@ -9,6 +9,8 @@ public class StageManager : MonoBehaviour {
     private GameObject currentArea; // 現在アクティブなエリア
     [SerializeField] private Transform baseStartPos; // 拠点のスタート地点
 
+    private Vector3 instantiatePos = new Vector3(100, 0, 0);
+
     // エリアに入る処理
     public void EnterArea(int index) {
         // すでにエリアが存在するなら破棄
@@ -23,8 +25,11 @@ public class StageManager : MonoBehaviour {
             return;
         }
 
+        //  エリア生成座標計算
+        instantiatePos = new Vector3(100 + (200 * index), 0, 0);
+
         // エリア生成
-        currentArea = Instantiate(areaPrefabs[index], new Vector3(100, 0, 0), Quaternion.identity);
+        currentArea = Instantiate(areaPrefabs[index], instantiatePos, Quaternion.identity);
 
         // エリア内の StartPos を探す
         Transform startPos = currentArea.transform.Find("StartPos");
