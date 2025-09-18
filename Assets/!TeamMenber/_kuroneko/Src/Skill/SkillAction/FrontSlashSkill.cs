@@ -1,63 +1,50 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class FrontSlashSkill : SkillBase
-{
-    private float attackTiming = 2.8f;         // 攻撃発生までの時間（秒）
-    private bool isRunning = false;    // 発動中フラグ
+/// <summary>
+/// 前方範囲斬りスキル
+/// </summary>
+public class FrontSlashSkill : SkillBase {
+    private float attackTiming = 2.8f; // 攻撃発生までの時間
+    private bool isRunning = false;
 
     public FrontSlashSkill() {
         SkillName = "前方範囲斬り";
         Cooldown = 5.0f;
     }
 
-    /// <summary>
-    /// スキル発動時の処理
-    /// </summary>
     public override void Activate(GameObject user) {
         if (!CanUse() || isRunning) return;
 
-        isRunning = true; // 発動開始
+        isRunning = true;
 
-        // Animator を取得
+        PlayerBase player = user.GetComponent<PlayerBase>();
+        if (player != null)
+            player.SetSkillActive(true); // スキル中は行動不可
+
         Animator anim = user.GetComponent<Animator>();
-        if (anim != null) {
-            anim.SetTrigger("Skill"); // 攻撃アニメーション再生
-        }
+        if (anim != null)
+            anim.SetTrigger("Skill");
 
-        Transform userPos = user.transform;
-        Vector3 spawnPos = userPos.position + user.transform.up * 0.1f;
-
-        // EffectManager を使ってエフェクトを生成
+        Vector3 spawnPos = user.transform.position + user.transform.up * 0.1f;
         EffectManager.Instance.SpawnEffect("ChargeFrontSkill", spawnPos, Quaternion.identity, 2f);
 
-        // 攻撃発生をタイミングに合わせて遅延実行
         user.GetComponent<MonoBehaviour>().StartCoroutine(DelayedAttack(user));
     }
 
-    /// <summary>
-    /// 指定時間後に攻撃エフェクトを発生させる
-    /// </summary>
-    private System.Collections.IEnumerator DelayedAttack(GameObject user) {
+    private IEnumerator DelayedAttack(GameObject user) {
         yield return new WaitForSeconds(attackTiming);
 
-        Transform userPos = user.transform;
-
-        Vector3 spawnPos = userPos.position + user.transform.forward * 0.5f + user.transform.up * 0.2f;
+        Vector3 spawnPos = user.transform.position +
+                           user.transform.forward * 0.5f +
+                           user.transform.up * 0.2f;
         Quaternion spawnRot = user.transform.rotation * Quaternion.Euler(0f, -90f, 0f);
 
-        // EffectManager を使ってエフェクトを生成
         EffectManager.Instance.SpawnEffect("FrontSkill", spawnPos, spawnRot, 1f);
 
         lastUseTime = Time.time;
-
-        // 発動状態を解除
         isRunning = false;
 
         Debug.Log($"{SkillName} の攻撃発生！");
     }
-
 }
