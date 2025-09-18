@@ -76,9 +76,18 @@ public class NewPlayerAttack {
         attackCollider3.SetActive(attackIndex == 3);
 
         // ダメージ設定
-        if (attackIndex == 1) attackCollider1.GetComponent<HitEnemy>().SetDamage(damage);
-        if (attackIndex == 2) attackCollider2.GetComponent<HitEnemy>().SetDamage(damage);
-        if (attackIndex == 3) attackCollider3.GetComponent<HitEnemy>().SetDamage(damage);
+        if (attackIndex == 1) {
+            attackCollider1.GetComponent<HitEnemy>().SetDamage(damage);
+            AudioManager.Instance.PlaySE("FirstAttack");
+        }
+        if (attackIndex == 2) {
+            attackCollider2.GetComponent<HitEnemy>().SetDamage(damage);
+            AudioManager.Instance.PlaySE("SecondAttack");
+        }
+        if (attackIndex == 3) {
+            attackCollider3.GetComponent<HitEnemy>().SetDamage(damage);
+            AudioManager.Instance.PlaySE("ThirdAttack");
+        }
     }
 
     /// <summary>
