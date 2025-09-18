@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Transactions;
+using UnityEngine;
 
 /// <summary>
 /// プレイヤー攻撃クラス（3段コンボ対応＋攻撃ごとCollider表示制御、アニメイベント管理）
