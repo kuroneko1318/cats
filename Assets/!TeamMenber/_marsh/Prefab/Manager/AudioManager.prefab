@@ -46,15 +46,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmList: []
   seList:
-  - name: FA
+  - name: FirstAttack
     clip: {fileID: 8300000, guid: 17ab5432d7fcecb4ebee0315b29799d3, type: 3}
     volume: 1
     pitch: 1
-  - name: SA
+  - name: SecondAttack
     clip: {fileID: 8300000, guid: 4d4719daf4b781d488be325079e6cd6c, type: 3}
     volume: 1
     pitch: 1
-  - name: EA
+  - name: ThirdAttack
     clip: {fileID: 8300000, guid: 960f5b7290c2774458e1613a671facfa, type: 3}
     volume: 1
     pitch: 1

@@ -124,7 +124,7 @@ public class UnusePlayerBase : CharacterBase {
 
     WeaponBase weapon; // 装備中の武器
 
-    Inventory inventory = null; // インベントリ参照
+    //Inventory inventory = null; // インベントリ参照
 
     [SerializeField] RawImage swordImage; // 武器画像表示
 

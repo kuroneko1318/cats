@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[System.Serializable]
 public class InventorySlot {
     public ItemBase item;
     public int amount;
@@ -49,6 +50,24 @@ public class InventorySlot {
         }
         else {
             Debug.LogWarning("削除量が多すぎます。");
+        }
+    }
+
+    /// <summary>
+    /// スロットを空にする
+    /// </summary>
+    public void Clear() {
+        item = null;
+        amount = 0;
+    }
+
+    /// <summary>
+    /// 数量を減らす
+    /// </summary>
+    public void Consume(int count) {
+        amount -= count;
+        if (amount <= 0) {
+            Clear();
         }
     }
 }

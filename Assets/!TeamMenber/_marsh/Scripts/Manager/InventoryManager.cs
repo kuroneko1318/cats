@@ -10,6 +10,8 @@ public class InventoryManager : SystemObject<InventoryManager> {
     [Header("UI Prefab")]
     public GameObject inventoryPanelPrefab;
     public GameObject inventorySlotUIPrefab;
+    public GameObject craftSlotUIPrefab;
+    public GameObject equipSlotUIPrefab;
 
     [Header("UI Parents")]
     public Transform InventoryTop;
@@ -22,7 +24,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
     // インベントリUI
     private List<InventoryUI> inventoryTopUI = new List<InventoryUI>();
     private List<InventoryUI> inventoryBottomUI = new List<InventoryUI>();
-    private List<InventoryUI> craftUI = new List<InventoryUI>();
+    private List<CraftingSlot> craftUI = new List<CraftingSlot>();
     private List<InventoryUI> equipUI = new List<InventoryUI>();
 
     private InventorySlot[] craftSlots;
@@ -30,6 +32,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
 
     private int selectedIndex = 0;
     private ItemBase heldItem = null;
+    private int heldAmount = 0;
     private int originIndex = -1;
     private UIArea originArea;
 
@@ -63,6 +66,15 @@ public class InventoryManager : SystemObject<InventoryManager> {
 
         if (Input.GetKeyDown(KeyCode.Z)) HandleSelect();
         if (Input.GetKeyDown(KeyCode.X)) HandleCancel();
+
+
+
+        if (Input.GetKeyDown(KeyCode.O)) {
+            bag.AddItem(ItemManager.Instance.GetItemByName("棒"), 5);
+            bag.AddItem(ItemManager.Instance.GetItemByName("鉄"), 5);
+            bag.AddItem(ItemManager.Instance.GetItemByName("薬草"), 5);
+            bag.AddItem(ItemManager.Instance.GetItemByName("紐"), 5);
+        }
     }
 
     #region UI
@@ -113,19 +125,37 @@ public class InventoryManager : SystemObject<InventoryManager> {
         // クラフト
         craftUI.Clear();
         ClearChildren(Craft);
+
+        // craftSlots を InventoryManager 内で保持している場合
         for (int i = 0; i < craftSlots.Length; i++) {
-            var ui = Instantiate(inventorySlotUIPrefab, Craft).GetComponent<InventoryUI>();
-            ui.SetSlot(craftSlots[i].item, craftSlots[i].amount);
-            craftUI.Add(ui);
+            GameObject obj = Instantiate(craftSlotUIPrefab, Craft);
+            CraftingSlot slotUI = obj.GetComponent<CraftingSlot>();
+
+            // craftSlots[i] は InventorySlot とかデータ用の構造体
+            // CraftingSlot UI にデータを紐付け
+            slotUI.SetItem(craftSlots[i].item, craftSlots[i].amount);
+
+            // craftUI リストに追加
+            craftUI.Add(slotUI);
         }
+        // CraftManager にスロットとUIを渡す
+        if (craftUI.Count >= 3 && craftSlots.Length >= 3) {
+            CraftManager.Instance.SetCraftSlot(0, craftSlots[0], craftUI[0]);
+            CraftManager.Instance.SetCraftSlot(1, craftSlots[1], craftUI[1]);
+            CraftManager.Instance.SetCraftSlot(2, craftSlots[2], craftUI[2]);
+        }
+
+        CraftManager.Instance.UpdateResult();
+
+        // 選択インデックスが範囲外の場合は 0 に
+        if (selectedIndex >= craftUI.Count) selectedIndex = 0;
 
         // 装備
         equipUI.Clear();
         ClearChildren(Equip);
         for (int i = 0; i < equipSlots.Length; i++) {
-            var ui = Instantiate(inventorySlotUIPrefab, Equip).GetComponent<InventoryUI>();
+            var ui = Instantiate(equipSlotUIPrefab, Equip).GetComponent<InventoryUI>();
             ui.SetSlot(equipSlots[i].item, equipSlots[i].amount);
-            equipUI.Add(ui);
         }
 
         UpdateHighlight();
@@ -281,30 +311,54 @@ public class InventoryManager : SystemObject<InventoryManager> {
     }
 
     private void HandleSelect() {
-        var slot = GetCurrentSlot();
+        InventorySlot slot = GetCurrentSlot();
         if (slot == null) return;
 
+        // スロットのアイテムを一時保存
+        ItemBase slotItem = slot.item;
+        int slotAmount = slot.amount;
+
+        // まだ何も持っていない場合
         if (heldItem == null) {
-            heldItem = slot.TakeItem();
+            if (slot.item == null || slot.amount <= 0) return; // 空なら何もしない
+
+            heldItem = slot.item;
+            heldAmount = slot.amount;
+
+            // クラフトスロットなら数量を消さない
+            if (currentArea != UIArea.Craft) {
+                slot.Clear();
+            }
+
             originArea = currentArea;
             originIndex = selectedIndex;
         }
         else {
-            ItemBase temp = slot.TakeItem();
-            slot.SetItem(heldItem);
-            heldItem = temp;
+            // 移動先に何かある場合もない場合も入れ替え
+            slot.SetItem(heldItem, heldAmount);
 
-            if (heldItem == null) {
-                originIndex = -1;
+            // 元スロットに元々あったアイテムを戻す
+            if (originIndex >= 0) {
+                var originSlot = GetSlot(originArea, originIndex);
+                originSlot.SetItem(slotItem, slotAmount);
             }
+
+            // 持ち物を更新（今回の操作で持つものは無し）
+            heldItem = null;
+            heldAmount = 0;
+            originIndex = -1;
         }
+
         RefreshUI();
+
+        // --- クラフト結果更新 ---
+        CraftManager.Instance.UpdateResult(); // これで craftSlots[2] に結果をセット
     }
 
     private void HandleCancel() {
         if (heldItem != null && originIndex >= 0) {
             var originSlot = GetSlot(originArea, originIndex);
-            originSlot.SetItem(heldItem);
+            originSlot.SetItem(heldItem, heldAmount);
             heldItem = null;
             originIndex = -1;
             RefreshUI();

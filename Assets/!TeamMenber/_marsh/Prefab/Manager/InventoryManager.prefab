@@ -47,3 +47,9 @@ MonoBehaviour:
   inventory: {fileID: 2088805496112318309, guid: 19a3bb257231b38419a9cc9f878f849a, type: 3}
   inventoryPanelPrefab: {fileID: 3954979831821031195, guid: 02314d86d5ef3fa4988cfb1651924dec, type: 3}
   inventorySlotUIPrefab: {fileID: 9095456995864241013, guid: 902e1197997e11748865188669a90d56, type: 3}
+  craftSlotUIPrefab: {fileID: 5604357066264392973, guid: df4860d72eeabae4eb907c02c5c23085, type: 3}
+  equipSlotUIPrefab: {fileID: 9095456995864241013, guid: 902e1197997e11748865188669a90d56, type: 3}
+  InventoryTop: {fileID: 0}
+  InventoryBottom: {fileID: 0}
+  Craft: {fileID: 0}
+  Equip: {fileID: 0}
