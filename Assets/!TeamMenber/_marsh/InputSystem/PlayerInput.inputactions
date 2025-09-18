@@ -96,7 +96,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MoveInventory",
+                    "name": "MoveMenu",
                     "type": "Value",
                     "id": "c40f515e-b6d9-48e6-a42f-c576b8469672",
                     "expectedControlType": "",
@@ -417,7 +417,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveInventory",
+                    "action": "MoveMenu",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -428,7 +428,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "MoveInventory",
+                    "action": "MoveMenu",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -439,7 +439,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "MoveInventory",
+                    "action": "MoveMenu",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -450,7 +450,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "MoveInventory",
+                    "action": "MoveMenu",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -461,7 +461,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "MoveInventory",
+                    "action": "MoveMenu",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -472,7 +472,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveInventory",
+                    "action": "MoveMenu",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -483,7 +483,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "MoveInventory",
+                    "action": "MoveMenu",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -494,7 +494,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "MoveInventory",
+                    "action": "MoveMenu",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -505,7 +505,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "MoveInventory",
+                    "action": "MoveMenu",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -516,7 +516,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "MoveInventory",
+                    "action": "MoveMenu",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -527,7 +527,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveInventory",
+                    "action": "MoveMenu",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -538,7 +538,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "MoveInventory",
+                    "action": "MoveMenu",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -549,7 +549,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "MoveInventory",
+                    "action": "MoveMenu",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -560,7 +560,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "MoveInventory",
+                    "action": "MoveMenu",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -571,7 +571,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "MoveInventory",
+                    "action": "MoveMenu",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -589,7 +589,7 @@
                 {
                     "name": "",
                     "id": "eaa49b91-0b4a-416d-8834-68dc371bec1f",
-                    "path": "<NPad>/buttonEast",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -611,7 +611,7 @@
                 {
                     "name": "",
                     "id": "83cd3b32-b284-4e54-b5b3-d3ad7ff8c45d",
-                    "path": "<NPad>/buttonSouth",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

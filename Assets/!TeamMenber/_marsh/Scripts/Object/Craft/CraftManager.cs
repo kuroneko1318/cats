@@ -1,15 +1,21 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
-public class CraftManager : MonoBehaviour {
-    public CraftingSlot slot1;
-    public CraftingSlot slot2;
-    public CraftingSlot resultSlot;
+public class CraftManager : SystemObject<CraftManager> {
+    private CraftingSlot slot1UI;
+    private CraftingSlot slot2UI;
+    private CraftingSlot resultUI;
+
+    private InventorySlot slot1Data = new InventorySlot();
+    private InventorySlot slot2Data = new InventorySlot();
+    private InventorySlot resultData = new InventorySlot();
 
     // レシピ辞書（順不同対応）
     private Dictionary<(string, string), string> recipes = new Dictionary<(string, string), string>();
 
-    void Start() {
+    public override void Initialize() {
+        Debug.Log("CraftManager Initialize called!");
         // レシピ登録例
         AddRecipe("木", "木", "棒");
         AddRecipe("鉄", "棒", "普通の剣");
@@ -64,46 +70,127 @@ public class CraftManager : MonoBehaviour {
         //AddRecipe("", "", "");
     }
 
+    public void SetCraftSlot(int index, InventorySlot data, CraftingSlot ui) {
+        switch (index) {
+            case 0:
+                slot1Data = data;
+                slot1UI = ui;
+                break;
+            case 1:
+                slot2Data = data;
+                slot2UI = ui;
+                break;
+            case 2:
+                resultData = data;
+                resultUI = ui;
+                break;
+        }
+
+        // UI 初期化
+        ui.SetItem(data.item, data.amount);
+    }
+
     void AddRecipe(string item1, string item2, string result) {
         recipes[(item1, item2)] = result;
         recipes[(item2, item1)] = result;
+        Debug.Log($"[Recipe Added] {item1} + {item2} => {result}");
     }
 
     void Update() {
         UpdateResult();
-    }
-
-    void UpdateResult() {
-        resultSlot.Clear();
-
-        if (slot1.IsEmpty() || slot2.IsEmpty())
-            return;
-
-        if (recipes.TryGetValue((slot1.currentItem, slot2.currentItem), out string result)) {
-            int craftCount = Mathf.Min(slot1.amount, slot2.amount);
-
-            // アイコンを ItemManager から取得（例）
-            Sprite resultIcon = ItemManager.Instance?.GetItemByName(result)?.icon;
-
-            resultSlot.SetItem(result, craftCount, resultIcon);
+        if (Input.GetKeyDown(KeyCode.P)) {
+            PrintAllRecipes();
         }
     }
+
+    //public void UpdateResult() {
+    //    if (slot1Data.IsEmpty || slot2Data.IsEmpty) {
+    //        resultData.Clear();
+    //        resultUI?.Clear();
+    //        return;
+    //    }
+
+    //    if (recipes.TryGetValue((slot1Data.item.itemName, slot2Data.item.itemName), out string resultName)) {
+    //        ItemBase resultItem = ItemManager.Instance?.GetItemByName(resultName);
+    //        int craftCount = Mathf.Min(slot1Data.amount, slot2Data.amount);
+
+    //        resultData.SetItem(resultItem, craftCount);
+    //        resultUI?.SetItem(resultItem, craftCount);
+    //    }
+    //    else {
+    //        resultData.Clear();
+    //        resultUI?.Clear();
+    //    }
+    //}
+
+    public void UpdateResult() {
+        var slotA = slot1Data;
+        var slotB = slot2Data;
+
+        if (slotA.item == null || slotB.item == null) {
+            resultData.Clear();
+            resultUI?.SetItem(null, 0);
+            Debug.Log("[Craft Debug] どちらかのスロットが空なのでクラフト不可");
+            return;
+        }
+
+        ItemBase result = GetRecipeResult(slotA.item, slotB.item);
+
+        if (result != null) {
+            int craftCount = Mathf.Min(slotA.amount, slotB.amount);
+            resultData.SetItem(result, craftCount);
+            resultUI?.SetItem(result, craftCount);
+            Debug.Log($"[Craft Debug] クラフト成功: {result.itemName} x{craftCount}");
+        }
+        else {
+            resultData.Clear();
+            resultUI?.SetItem(null, 0);
+        }
+    }
+
+    private ItemBase GetRecipeResult(ItemBase item1, ItemBase item2) {
+        string resultName;
+
+        foreach (var kvp in recipes) {
+            var key = kvp.Key;
+            if ((key.Item1 == item1.itemName && key.Item2 == item2.itemName) ||
+                (key.Item1 == item2.itemName && key.Item2 == item1.itemName)) {
+                resultName = kvp.Value;
+                return ItemManager.Instance.GetItemByName(resultName);
+            }
+        }
+
+        Debug.Log($"[Craft Debug] レシピなし: {item1.itemName} + {item2.itemName}");
+        return null;
+    }
+
 
     // 結果取得処理（Aボタンで呼ばれる想定）
     public string TakeResult(out int craftedAmount) {
         craftedAmount = 0;
-        if (resultSlot.IsEmpty()) return null;
+        if (resultData.IsEmpty) return null;
 
-        string craftedItem = resultSlot.currentItem;
-        craftedAmount = resultSlot.amount;
+        string craftedItem = resultData.item.itemName;
+        craftedAmount = resultData.amount;
 
         // 素材消費
-        slot1.Consume(craftedAmount);
-        slot2.Consume(craftedAmount);
+        slot1Data.Consume(craftedAmount);
+        slot2Data.Consume(craftedAmount);
+
+        slot1UI?.SetItem(slot1Data.item, slot1Data.amount);
+        slot2UI?.SetItem(slot2Data.item, slot2Data.amount);
 
         // 結果スロット消去
-        resultSlot.Clear();
+        resultData.Clear();
+        resultUI?.Clear();
 
         return craftedItem;
+    }
+
+    public void PrintAllRecipes() {
+        Debug.Log("=== レシピ一覧 ===");
+        foreach (var kv in recipes) {
+            Debug.Log($"{kv.Key.Item1} + {kv.Key.Item2} => {kv.Value}");
+        }
     }
 }

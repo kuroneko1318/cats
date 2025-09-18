@@ -6,7 +6,7 @@ public class Inventory : MonoBehaviour {
     //インベントリスロットの最大数
     public int slotCount = 81;
     //インベントリの中身保存用
-    public InventorySlot[] slots;
+    [SerializeField]public InventorySlot[] slots;
 
     //実行時にインベントリのスロット生成する
     private void Awake() {

@@ -2,28 +2,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class CraftingSlot : MonoBehaviour {
-    [Header("UI参照")]
-    public Image itemIcon;
-    public TextMeshProUGUI amountText;
+public class CraftingSlot : InventoryUI {
 
     [Header("データ")]
-    public string currentItem;
+    public ItemBase currentItem;
     public int amount;
 
     /// <summary>
     /// アイテムをセット
     /// </summary>
-    public void SetItem(string item, int count = 1, Sprite icon = null) {
-        currentItem = item;
-        amount = count;
-
-        if (itemIcon != null) {
-            itemIcon.enabled = true;
-            if (icon != null) itemIcon.sprite = icon;
+    public void SetItem(ItemBase item, int count = 1) {
+        if (item != null) {
+            icon.sprite = item.icon;
+            icon.enabled = true;
+            UpdateAmountUI();
         }
-
-        UpdateAmountUI();
+        else {
+            icon.enabled = false;
+            amountText.text = "";
+        }
     }
 
     /// <summary>
@@ -32,8 +29,9 @@ public class CraftingSlot : MonoBehaviour {
     public void Clear() {
         currentItem = null;
         amount = 0;
-
-        if (itemIcon != null) itemIcon.enabled = false;
+        icon.sprite = null;
+        icon.enabled = false;
+        amountText.text = "";
         UpdateAmountUI();
     }
 
@@ -54,7 +52,7 @@ public class CraftingSlot : MonoBehaviour {
     /// 空かどうか
     /// </summary>
     public bool IsEmpty() {
-        return string.IsNullOrEmpty(currentItem) || amount <= 0;
+        return string.IsNullOrEmpty(currentItem.itemName) || amount <= 0;
     }
 
     /// <summary>
