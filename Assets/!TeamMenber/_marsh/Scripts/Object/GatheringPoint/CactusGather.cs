@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+//shimura is draw
 public class CactusGather : GatheringPoint {
 
     private void Awake() {
@@ -22,9 +22,9 @@ public class CactusGather : GatheringPoint {
         bag.AddItem(ItemManager.Instance.GetItemByName("êj"), Random.Range(2, 5));
     }
 
-    //private void Update() {
-    //    if(bag == null) {
-    //        bag = GameObject.FindGameObjectWithTag("bag")?.GetComponent<Inventory>();
-    //    }
-    //}
+    private void Update() {
+        if(bag == null) {
+            bag = GameObject.FindGameObjectWithTag("bag")?.GetComponent<Inventory>();
+        }
+    }
 }

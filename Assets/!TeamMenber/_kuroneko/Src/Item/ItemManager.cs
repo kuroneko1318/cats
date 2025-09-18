@@ -40,16 +40,34 @@ public class ItemManager : SystemObject<ItemManager> {
         itemList.Add(new ItemBase("木の実", 3001, eItemType.Heal, NutIcon));
         itemList.Add(new ItemBase("薬草", 4001, eItemType.Material, HerbIcon));
         itemList.Add(new ItemBase("紐", 4002, eItemType.Material, RopeIcon));
-        itemList.Add(new ItemBase("石A", 4020, eItemType.Material, StoneAIcon));
-        itemList.Add(new ItemBase("石B", 4021, eItemType.Material, StoneBIcon));
+        itemList.Add(new ItemBase("石", 4020, eItemType.Material, StoneAIcon));
+        itemList.Add(new ItemBase("ライトストーン", 4021, eItemType.Material, StoneBIcon));
+        itemList.Add(new ItemBase("ブラッドストーン", 4022,eItemType.Material));
+        itemList.Add(new ItemBase("ブラックマリン", 4023,eItemType.Material));
+        itemList.Add(new ItemBase("シーネリアン", 4024,eItemType.Material));
+        itemList.Add(new ItemBase("マカライト", 4025,eItemType.Material));
         itemList.Add(new ItemBase("鉄", 4030, eItemType.Material, IronIcon));
         itemList.Add(new ItemBase("銅", 4031, eItemType.Material, CopperIcon));
-        itemList.Add(new ItemBase("棒", 4100, eItemType.Material, BarIcon));
-        itemList.Add(new ItemBase("針", 4101, eItemType.Material, NeedleIcon));
-        itemList.Add(new ItemBase("黒曜石", 4102, eItemType.Material, ObsidianIcon));
+        itemList.Add(new ItemBase("黒曜石", 4032, eItemType.Material, ObsidianIcon));
+        itemList.Add(new ItemBase("鋭い黒曜石", 4033, eItemType.Material));
+        itemList.Add(new ItemBase("研磨石", 4034, eItemType.Material));
+        itemList.Add(new ItemBase("魔石", 4035, eItemType.Material));
+        itemList.Add(new ItemBase("融合石", 4036, eItemType.Material));
+        itemList.Add(new ItemBase("木", 4100, eItemType.Material));
+        itemList.Add(new ItemBase("丈夫な木", 4101, eItemType.Material));
+        itemList.Add(new ItemBase("棒", 4102, eItemType.Material, BarIcon));
+        itemList.Add(new ItemBase("針", 4103, eItemType.Material, NeedleIcon));
+        itemList.Add(new ItemBase("魔剣の剣身", 4104, eItemType.Material));
+        itemList.Add(new ItemBase("普通の柄", 4105, eItemType.Material));
+        itemList.Add(new ItemBase("魔剣の柄", 4106, eItemType.Material));
         weaponList.Add(new WeaponBase("剣", 1001,10));
-        weaponList.Add(new WeaponBase("剣1", 1002, 10));
-        armorList.Add(new ArmorBase("アーマー", 2001, 30));
+        weaponList.Add(new WeaponBase("ライトソード", 1002, 10));
+        weaponList.Add(new WeaponBase("未完成の魔剣", 1003, 1));
+        weaponList.Add(new WeaponBase("魔剣ズルフィカール", 1004, 100));
+        weaponList.Add(new WeaponBase("魔剣フルンティング", 1005, 100));
+        weaponList.Add(new WeaponBase("魔剣ネイリング", 1006, 100));
+        armorList.Add(new ArmorBase("普通のアーマー", 2001, 30));
+
     }
 
     //  IDからアイテムを取得する

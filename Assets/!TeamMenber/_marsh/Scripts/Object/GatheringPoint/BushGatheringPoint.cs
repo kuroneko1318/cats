@@ -12,8 +12,9 @@ public class BushGatheringPoint : GatheringPoint {
         Debug.Log("茂みから薬草を採取しました！");
         // アイテム追加処理など
         bag.AddItem(ItemManager.Instance.GetItemByName("薬草"), Random.Range(1, 5));
-        bag.AddItem(ItemManager.Instance.GetItemByName("紐"), Random.Range(0, 3));
+        bag.AddItem(ItemManager.Instance.GetItemByName("紐"), Random.Range(1, 3));
         bag.AddItem(ItemManager.Instance.GetItemByName("木の実"), Random.Range(0, 2));
+        bag.AddItem(ItemManager.Instance.GetItemByName("木"), Random.Range(2, 5));
     }
 
     private void Update() {

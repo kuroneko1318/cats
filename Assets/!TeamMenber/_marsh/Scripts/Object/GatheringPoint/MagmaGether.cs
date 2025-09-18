@@ -22,9 +22,9 @@ public class MagmaGather : GatheringPoint {
         bag.AddItem(ItemManager.Instance.GetItemByName("çïójêŒ"), Random.Range(1, 3));
     }
 
-    //private void Update() {
-    //    if(bag == null) {
-    //        bag = GameObject.FindGameObjectWithTag("bag")?.GetComponent<Inventory>();
-    //    }
-    //}
+    private void Update() {
+        if(bag == null) {
+            bag = GameObject.FindGameObjectWithTag("bag")?.GetComponent<Inventory>();
+        }
+    }
 }

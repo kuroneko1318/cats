@@ -11,9 +11,57 @@ public class CraftManager : MonoBehaviour {
 
     void Start() {
         // レシピ登録例
-        AddRecipe("木", "石", "斧");
-        AddRecipe("鉄", "木", "剣");
+        AddRecipe("木", "木", "棒");
+        AddRecipe("鉄", "棒", "普通の剣");
+        AddRecipe("鉄", "紐", "普通のアーマー");
         AddRecipe("薬草", "紐", "回復薬");
+        AddRecipe("棒", "ライトストーン", "ライトソード");
+        AddRecipe("木", "紐", "丈夫な木");
+        AddRecipe("ライトストーン", "石", "研磨石");
+        AddRecipe("研磨石", "黒曜石", "鋭い黒曜石");
+        AddRecipe("ライトストーン", "ブラッドストーン", "魔石");
+        AddRecipe("魔石", "鋭い黒曜石", "魔剣の剣身");
+        AddRecipe("鉄", "木", "普通の柄");
+        AddRecipe("棒", "石", "斧");
+        AddRecipe("普通の柄", "融合石", "魔剣の柄");
+        AddRecipe("マカライト", "シーネリアン", "融合石");
+        AddRecipe("魔剣の剣身", "魔剣の柄", "未完成の魔剣");
+        AddRecipe("未完成の魔剣", "ブラックマリン", "魔剣ズルフィカール");
+        AddRecipe("未完成の魔剣", "ライトストーン", "魔剣フルンティング");
+        AddRecipe("未完成の魔剣", "ブラッドストーン", "魔剣ネイリング");
+        //AddRecipe("棒", "ブラッドストーン", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
+        //AddRecipe("", "", "");
     }
 
     void AddRecipe(string item1, string item2, string result) {
