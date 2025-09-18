@@ -36,7 +36,10 @@ public class PlayerBase : MonoBehaviour {
     [Header("リスポーン地点（街の初期位置保存用）")]
     [SerializeField] private GameObject startPos;
 
+    //  行動中の制御
     private bool isDead = false;
+    private bool isPick = false;
+    
     public InputAction GatherAction;
     public InputAction OpenInventoryAction;
 
@@ -70,7 +73,7 @@ public class PlayerBase : MonoBehaviour {
 
     void Update() {
         // 攻撃中は移動不可
-        if (!pAttack.IsAttacking()&& !isDead) {
+        if (!pAttack.IsAttacking()&& !isDead && !isPick) {
             pMove.Move(moveInput, mainCamera);
         }
 
@@ -89,6 +92,7 @@ public class PlayerBase : MonoBehaviour {
 
                                    int elementalValue = 0, float staggerValue = 0) {
         if (isDead) return;
+        isPick = false;
 
         int damage;
 
@@ -144,6 +148,7 @@ public class PlayerBase : MonoBehaviour {
             // 採取ポイントが存在し、利用可能な場合のみ採取処理を行う
             if (point != null && point.IsAvailable) {
                 anim.SetTrigger("Pick");
+                isPick = true;
                 point.Interact();
             }
         }
@@ -162,6 +167,10 @@ public class PlayerBase : MonoBehaviour {
 
     public void ResetAttackFlag() {
         pAttack.ResetAttack();
+    }
+
+    public void PickEnd() {
+        isPick = false;
     }
 
 }
