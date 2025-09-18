@@ -41,7 +41,7 @@ public class ItemManager : SystemObject<ItemManager> {
         itemList.Add(new ItemBase("薬草", 4001, eItemType.Material, HerbIcon));
         itemList.Add(new ItemBase("紐", 4002, eItemType.Material, RopeIcon));
         itemList.Add(new ItemBase("石", 4020, eItemType.Material, StoneAIcon));
-        itemList.Add(new ItemBase("ライトストーン", 4021, eItemType.Material, StoneBIcon));
+        itemList.Add(new ItemBase("ライトストーン", 4021, eItemType.Material));
         itemList.Add(new ItemBase("ブラッドストーン", 4022,eItemType.Material));
         itemList.Add(new ItemBase("ブラックマリン", 4023,eItemType.Material));
         itemList.Add(new ItemBase("シーネリアン", 4024,eItemType.Material));
@@ -61,12 +61,18 @@ public class ItemManager : SystemObject<ItemManager> {
         itemList.Add(new ItemBase("普通の柄", 4105, eItemType.Material));
         itemList.Add(new ItemBase("魔剣の柄", 4106, eItemType.Material));
         weaponList.Add(new WeaponBase("剣", 1001,10));
-        weaponList.Add(new WeaponBase("ライトソード", 1002, 10));
-        weaponList.Add(new WeaponBase("未完成の魔剣", 1003, 1));
-        weaponList.Add(new WeaponBase("魔剣ズルフィカール", 1004, 100));
-        weaponList.Add(new WeaponBase("魔剣フルンティング", 1005, 100));
-        weaponList.Add(new WeaponBase("魔剣ネイリング", 1006, 100));
+        weaponList.Add(new WeaponBase("ライトソード", 1002, 15));
+        weaponList.Add(new WeaponBase("ブラッドソード", 1003, 15));
+        weaponList.Add(new WeaponBase("ブラックソード", 1004, 15));
+        weaponList.Add(new WeaponBase("シーソード", 1005, 15));
+        weaponList.Add(new WeaponBase("マカライトソード", 1006, 15));
+        weaponList.Add(new WeaponBase("未完成の魔剣", 1007, 1));
+        weaponList.Add(new WeaponBase("魔剣ズルフィカール", 1008, 100));
+        weaponList.Add(new WeaponBase("魔剣フルンティング", 1009, 100));
+        weaponList.Add(new WeaponBase("魔剣ネイリング", 1010, 100));
         armorList.Add(new ArmorBase("普通のアーマー", 2001, 30));
+        armorList.Add(new ArmorBase("マジックアーマー", 2002, 50));
+        armorList.Add(new ArmorBase("フュージョンアーマー", 2003, 50));
 
     }
 
