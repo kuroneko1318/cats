@@ -21,8 +21,8 @@ public class ItemManager : SystemObject<ItemManager> {
     public override void Initialize() {
         Debug.Log("ItemManager　Initialize開始");
         //Sprite armorIcon = Resources.Load<Sprite>("icon/armor");
-        //Sprite swordIcon = Resources.Load<Sprite>("icon/armor");
-        Sprite BarIcon = Resources.Load<Sprite>("icon/Bar");
+        Sprite swordIcon = Resources.Load<Sprite>("icon/NormalSword");
+        Sprite BarIcon = Resources.Load<Sprite>("icon/Stick");
         Sprite CopperIcon = Resources.Load<Sprite>("icon/Copper");
         Sprite HerbIcon = Resources.Load<Sprite>("icon/Herb");
         Sprite IronIcon = Resources.Load<Sprite>("icon/iron");
@@ -60,16 +60,12 @@ public class ItemManager : SystemObject<ItemManager> {
         itemList.Add(new ItemBase("魔剣の剣身", 4104, eItemType.Material));
         itemList.Add(new ItemBase("普通の柄", 4105, eItemType.Material));
         itemList.Add(new ItemBase("魔剣の柄", 4106, eItemType.Material));
-        weaponList.Add(new WeaponBase("剣", 1001,10));
-        weaponList.Add(new WeaponBase("ライトソード", 1002, 15));
-        weaponList.Add(new WeaponBase("ブラッドソード", 1003, 15));
-        weaponList.Add(new WeaponBase("ブラックソード", 1004, 15));
-        weaponList.Add(new WeaponBase("シーソード", 1005, 15));
-        weaponList.Add(new WeaponBase("マカライトソード", 1006, 15));
-        weaponList.Add(new WeaponBase("未完成の魔剣", 1007, 1));
-        weaponList.Add(new WeaponBase("魔剣ズルフィカール", 1008, 100));
-        weaponList.Add(new WeaponBase("魔剣フルンティング", 1009, 100));
-        weaponList.Add(new WeaponBase("魔剣ネイリング", 1010, 100));
+        weaponList.Add(new WeaponBase("普通の剣", 1001,10, swordIcon));
+        weaponList.Add(new WeaponBase("ライトソード", 1002, 10));
+        weaponList.Add(new WeaponBase("未完成の魔剣", 1003, 1));
+        weaponList.Add(new WeaponBase("魔剣ズルフィカール", 1004, 100));
+        weaponList.Add(new WeaponBase("魔剣フルンティング", 1005, 100));
+        weaponList.Add(new WeaponBase("魔剣ネイリング", 1006, 100));
         armorList.Add(new ArmorBase("普通のアーマー", 2001, 30));
         armorList.Add(new ArmorBase("マジックアーマー", 2002, 50));
         armorList.Add(new ArmorBase("フュージョンアーマー", 2003, 50));
@@ -85,12 +81,19 @@ public class ItemManager : SystemObject<ItemManager> {
         return weaponList.Find(i => i.itemID == id);
     }
 
+    public ArmorBase GetArmorByID(int id) {
+        return armorList.Find(i => i.itemID == id);
+    }
+
     //  名前からアイテムを取得する
     public ItemBase GetItemByName(string name) {
         return itemList.Find(i => i.itemName == name);
     }
     public WeaponBase GetWeaponByName(string name) {
         return weaponList.Find(i => i.itemName == name);
+    }
+    public ArmorBase GetArmorByName(string name) {
+        return armorList.Find(i => i.itemName == name);
     }
 
     //  登録されているすべてのアイテムを取得（デバッグ・UI用など）

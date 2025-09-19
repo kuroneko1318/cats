@@ -23,8 +23,8 @@ public class InventorySlot {
 
     // アイテムを設定する
     public void SetItem(ItemBase newItem, int newAmount = 1) {
-        item = newItem;
-        amount = newAmount;
+        this.item = newItem;
+        this.amount = newAmount;
     }
 
     // アイテムを追加する（既存アイテムと同じ場合は数量加算）
