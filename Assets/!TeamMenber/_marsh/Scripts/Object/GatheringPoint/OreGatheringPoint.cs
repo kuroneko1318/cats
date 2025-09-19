@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class OreGatheringPoint : GatheringPoint {
 
-    public override void Awake() {
-        base.Awake();
+    public override void Start() {
+        base.Start();
         pointType = GatheringPointType.Ore;
     }
 

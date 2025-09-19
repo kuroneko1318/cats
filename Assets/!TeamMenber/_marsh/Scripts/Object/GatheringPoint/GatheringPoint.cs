@@ -19,7 +19,7 @@ public abstract class GatheringPoint : MonoBehaviour {
 public bool IsAvailable => isAvailable;
     [NonSerialized]public Inventory bag;
 
-    public virtual void Awake() {
+    public virtual void Start() {
         // Šî–{‚Í InventoryManager ‚Ì bag ‚ğQÆ
         bag = InventoryManager.Instance?.bag;
 

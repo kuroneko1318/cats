@@ -5,8 +5,8 @@ using UnityEngine;
 //shimura is draw
 public class CactusGatheringPoint: GatheringPoint {
 
-    public override void Awake() {
-        base.Awake();
+    public override void Start() {
+        base.Start();
         pointType = GatheringPointType.Cactus;
     }
 

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BushGatheringPoint : GatheringPoint {
 
-    public override void Awake() {
-        base.Awake();
+    public override void Start() {
+        base.Start();
         pointType = GatheringPointType.Bush;
     }
 
