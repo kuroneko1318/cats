@@ -47,8 +47,21 @@ public class InventoryManager : SystemObject<InventoryManager> {
     private UIArea currentArea = UIArea.InventoryTop;
 
     public override void Initialize() {
-        bag = Instantiate(inventory);
+        if (inventory == null) {
+            Debug.LogError("InventoryManager: inventoryが設定されていません！");
+            return;
+        }
 
+        // bag にコピー
+        bag = inventory;
+
+        // slots が null なら初期化
+        if (bag.slots == null || bag.slots.Length != bag.slotCount) {
+            bag.slots = new InventorySlot[bag.slotCount];
+            for (int i = 0; i < bag.slotCount; i++) {
+                bag.slots[i] = new InventorySlot();
+            }
+        }
         // クラフト・装備スロット初期化
         craftSlots = new InventorySlot[3]; // 2枠＋完成品1
         for (int i = 0; i < craftSlots.Length; i++)
@@ -319,6 +332,40 @@ public class InventoryManager : SystemObject<InventoryManager> {
         // スロットのアイテムを一時保存
         ItemBase slotItem = slot.item;
         int slotAmount = slot.amount;
+
+        // --- クラフト領域 ---
+        if (currentArea == UIArea.Craft) {
+            // 選択が結果スロット（完成品）なら取得処理
+            if (currentArea == UIArea.Craft && selectedIndex == 2) {
+                int craftedAmount;
+                string craftedName = CraftManager.Instance.TakeResult(out craftedAmount);
+                if (string.IsNullOrEmpty(craftedName)) return;
+
+                // アイテム取得
+                ItemBase item = ItemManager.Instance.GetItemByName(craftedName);
+                if (item != null) {
+                    bag.AddItem(item, craftedAmount);
+                    RefreshUI();
+                    return;
+                }
+
+                WeaponBase weapon = ItemManager.Instance.GetWeaponByName(craftedName);
+                if (weapon != null) {
+                    bag.AddItem(weapon, craftedAmount);
+                    RefreshUI();
+                    return;
+                }
+
+                ArmorBase armor = ItemManager.Instance.GetArmorByName(craftedName);
+                if (armor != null) {
+                    bag.AddItem(armor, craftedAmount);
+                    RefreshUI();
+                    return;
+                }
+
+                Debug.LogError($"[Craft] ItemManager に '{craftedName}' が存在しません");
+            }
+        }
 
         // まだ何も持っていない場合
         if (heldItem == null) {

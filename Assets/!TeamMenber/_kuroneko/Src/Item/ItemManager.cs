@@ -21,8 +21,8 @@ public class ItemManager : SystemObject<ItemManager> {
     public override void Initialize() {
         Debug.Log("ItemManagerÅ@InitializeäJén");
         //Sprite armorIcon = Resources.Load<Sprite>("icon/armor");
-        Sprite swordIcon = Resources.Load<Sprite>("icon/Sword");
-        Sprite BarIcon = Resources.Load<Sprite>("icon/Bar");
+        Sprite swordIcon = Resources.Load<Sprite>("icon/NormalSword");
+        Sprite BarIcon = Resources.Load<Sprite>("icon/Stick");
         Sprite CopperIcon = Resources.Load<Sprite>("icon/Copper");
         Sprite HerbIcon = Resources.Load<Sprite>("icon/Herb");
         Sprite IronIcon = Resources.Load<Sprite>("icon/iron");
