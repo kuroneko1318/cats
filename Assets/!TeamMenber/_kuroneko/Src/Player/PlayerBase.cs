@@ -11,7 +11,6 @@ public class PlayerBase : MonoBehaviour {
     private NewPlayerAttack pAttack;
     private Animator anim;
     private Transform mainCamera;
-
     private Vector2 moveInput;
 
     [Header("プレイヤーのステータス")]

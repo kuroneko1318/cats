@@ -44,167 +44,87 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2732555095ac9004190653ba4624c5df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ItemPopupPrefab: {fileID: 8421513149820117960, guid: 0d03a3d4a7297b547b7a658aad26becb, type: 3}
   slotCount: 81
   slots:
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
-  - name: 
-    amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
+  - amount: 0
