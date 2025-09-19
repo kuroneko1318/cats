@@ -5,13 +5,27 @@ using UnityEngine;
 public class Inventory : MonoBehaviour {
     public GameObject ItemPopupPrefab;
     private ItemPopupController currentPopup;
+    private GameObject Player;
     //インベントリスロットの最大数
     public int slotCount = 81;
     //インベントリの中身保存用
     [SerializeField]public InventorySlot[] slots;
     
+
+    private void Start () {
+        Player = GameObject.Find("Player");
+    }
+
+
+    private void Update () {
+        
+        transform.position=Player.transform.position;
+    }
+
     //実行時にインベントリのスロット生成する
     private void Awake() {
+        
+        
         slots = new InventorySlot[slotCount];
         for (int i = 0; i < slotCount; i++) {
             slots[i] = new InventorySlot();

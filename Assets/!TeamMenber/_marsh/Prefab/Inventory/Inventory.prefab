@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemPopupPrefab: {fileID: 8421513149820117960, guid: 0d03a3d4a7297b547b7a658aad26becb, type: 3}
+  Player: {fileID: 8874673962408222264, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
   slotCount: 81
   slots:
   - amount: 0
