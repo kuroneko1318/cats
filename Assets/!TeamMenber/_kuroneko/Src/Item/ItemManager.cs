@@ -25,14 +25,14 @@ public class ItemManager : SystemObject<ItemManager> {
         Sprite BarIcon = Resources.Load<Sprite>("icon/Stick");
         Sprite CopperIcon = Resources.Load<Sprite>("icon/Copper");
         Sprite HerbIcon = Resources.Load<Sprite>("icon/Herb");
-        Sprite IronIcon = Resources.Load<Sprite>("icon/iron");
-        Sprite NeedleIcon = Resources.Load<Sprite>("icon/needle");
-        Sprite NutIcon = Resources.Load<Sprite>("icon/nut");
+        Sprite IronIcon = Resources.Load<Sprite>("icon/Iron");
+        Sprite NeedleIcon = Resources.Load<Sprite>("icon/Needle");
+        Sprite NutIcon = Resources.Load<Sprite>("icon/Nut");
         Sprite ObsidianIcon = Resources.Load<Sprite>("icon/Obsidian");
-        Sprite potionIcon = Resources.Load<Sprite>("icon/potion");
-        Sprite RopeIcon = Resources.Load<Sprite>("icon/rope");
+        Sprite potionIcon = Resources.Load<Sprite>("icon/Potion");
+        Sprite RopeIcon = Resources.Load<Sprite>("icon/Rope");
         Sprite StoneIcon = Resources.Load<Sprite>("icon/Stone");
-        Sprite WoodIcon = Resources.Load<Sprite>("icon/wood");
+        Sprite WoodIcon = Resources.Load<Sprite>("icon/Wood");
 
 
         // ここでアイテム5種を登録（ID）
