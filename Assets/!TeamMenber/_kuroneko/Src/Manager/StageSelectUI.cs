@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem; // Input Systemを使用
 
 public class StageSelectUI : MonoBehaviour {
     [Header("UIパネル")]
@@ -20,6 +21,22 @@ public class StageSelectUI : MonoBehaviour {
     private StageManager stageManager;
     private int selectedIndex = 0;
     private Vector3 cursorInitialScale;
+
+    // InputSystem関連
+    private PlayerInput playerInput;
+    private InputAction moveMenuAction;
+    private InputAction selectAction;
+
+    private void Awake() {
+        playerInput = GetComponent<PlayerInput>();
+        if (playerInput == null) {
+            Debug.LogError("PlayerInput コンポーネントが見つかりません");
+            return;
+        }
+
+        moveMenuAction = playerInput.actions["MoveMenu"];
+        selectAction = playerInput.actions["Select"];
+    }
 
     private void Start() {
         if (panel != null)
@@ -47,25 +64,39 @@ public class StageSelectUI : MonoBehaviour {
             returnButton.onClick.AddListener(OnReturnBase);
     }
 
-    private void Update() {
+    private void OnEnable() {
+        if (moveMenuAction != null) moveMenuAction.performed += OnMoveMenu;
+        if (selectAction != null) selectAction.performed += OnSelect;
+    }
+
+    private void OnDisable() {
+        if (moveMenuAction != null) moveMenuAction.performed -= OnMoveMenu;
+        if (selectAction != null) selectAction.performed -= OnSelect;
+    }
+
+    private void OnMoveMenu(InputAction.CallbackContext ctx) {
         if (panel == null || !panel.activeSelf) return;
 
-        // 矢印キーで選択移動
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
+        Vector2 input = ctx.ReadValue<Vector2>();
+
+        // 上下で移動
+        if (input.y > 0.5f) {
             selectedIndex--;
             if (selectedIndex < 0) selectedIndex = stageButtons.Length;
             UpdateCursor();
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+        else if (input.y < -0.5f) {
             selectedIndex++;
             if (selectedIndex > stageButtons.Length) selectedIndex = 0;
             UpdateCursor();
         }
 
-        // 決定
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)) {
-            ActivateSelected();
-        }
+        // （オプションで左右移動も対応可。必要ならここに追加）
+    }
+
+    private void OnSelect(InputAction.CallbackContext ctx) {
+        if (panel == null || !panel.activeSelf) return;
+        ActivateSelected();
     }
 
     private void UpdateCursor() {
@@ -109,7 +140,7 @@ public class StageSelectUI : MonoBehaviour {
             panel.SetActive(true);
 
         selectedIndex = 0;
-        UpdateCursor(); // ここでカーソルを表示＆初期位置更新
+        UpdateCursor(); // カーソルを表示＆初期位置更新
     }
 
     public void Hide() {
