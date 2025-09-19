@@ -8,8 +8,8 @@ using UnityEngine;
 public enum GatheringPointType {
     Bush,
     Ore,
-    saboten,
-    magma,
+    Cactus,
+    Lava,
 }
 
 
@@ -21,6 +21,12 @@ public abstract class GatheringPoint : MonoBehaviour {
     protected bool isAvailable = true;
 public bool IsAvailable => isAvailable;
     [NonSerialized]public Inventory bag;
+
+    public virtual void Awake() {
+        bag = InventoryManager.Instance?.bag;
+        if (bag == null)
+            Debug.LogError("[OreGatheringPoint] Inventory‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñI");
+    }
 
     public virtual void Interact() {
         if (!isAvailable) return;

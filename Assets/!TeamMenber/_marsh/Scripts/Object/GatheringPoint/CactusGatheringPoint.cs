@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //shimura is draw
-public class CactusGather : GatheringPoint {
+public class CactusGatheringPoint: GatheringPoint {
 
-    private void Awake() {
-        pointType = GatheringPointType.saboten;
+    public override void Awake() {
+        base.Awake();
+        pointType = GatheringPointType.Ore;
     }
 
     private void Start() {

@@ -5,14 +5,9 @@ using UnityEngine;
 
 public class OreGatheringPoint : GatheringPoint {
 
-    private void Awake() {
+    public override void Awake() {
+        base.Awake();
         pointType = GatheringPointType.Ore;
-    }
-
-    private void Start() {
-        if (bag == null) {
-            bag = GameObject.FindGameObjectWithTag("bag")?.GetComponent<Inventory>();
-        }
     }
 
     public override void Gather() {

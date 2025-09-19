@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class MagmaGather : GatheringPoint {
+public class LavaGatheringPoint : GatheringPoint {
 
-    private void Awake() {
-        pointType = GatheringPointType.magma;
+    public override void Awake() {
+        base.Awake();
+        pointType = GatheringPointType.Lava;
     }
 
     private void Start() {
