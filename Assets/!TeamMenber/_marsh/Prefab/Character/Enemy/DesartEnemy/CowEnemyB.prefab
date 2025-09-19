@@ -1450,13 +1450,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 3
-  hp: 200
-  maxHp: 200
-  attack: 5
+  hp: 50
+  maxHp: 50
+  attack: 2
   defence: 0
-  moveSpeed: 10
+  moveSpeed: 15
   detectionRange: 10
-  combatRange: 3
+  combatRange: 1
   attackMultiplier: 1
   deadTime: 3
   damagePopupPrefab: {fileID: 6179850667043835373, guid: 2b52a3a79f3cc4041804f3e366c0b9a4, type: 3}
@@ -2068,7 +2068,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5060001765034691089, guid: 1671d9feedfb8844b9433ef3dd1221fa, type: 3}
       propertyPath: m_Size.z
-      value: 1.7849722
+      value: 1.2891006
       objectReference: {fileID: 0}
     - target: {fileID: 5060001765034691089, guid: 1671d9feedfb8844b9433ef3dd1221fa, type: 3}
       propertyPath: m_Center.x
@@ -2076,7 +2076,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5060001765034691089, guid: 1671d9feedfb8844b9433ef3dd1221fa, type: 3}
       propertyPath: m_Center.z
-      value: 1.400662
+      value: 1.1527262
       objectReference: {fileID: 0}
     - target: {fileID: 5620233310464657209, guid: 1671d9feedfb8844b9433ef3dd1221fa, type: 3}
       propertyPath: m_Name

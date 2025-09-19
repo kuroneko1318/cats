@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 199872204952017267}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 910.334, y: 587.84247, z: -595.9276}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemPopupPrefab: {fileID: 8421513149820117960, guid: 0d03a3d4a7297b547b7a658aad26becb, type: 3}
+  Player: {fileID: 8874673962408222264, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
   slotCount: 81
   slots:
   - amount: 0

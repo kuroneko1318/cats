@@ -79,20 +79,20 @@ public class StageSelectUI : MonoBehaviour {
 
         Vector2 input = ctx.ReadValue<Vector2>();
 
-        // 上下で移動
+        // 上移動
         if (input.y > 0.5f) {
             selectedIndex--;
-            if (selectedIndex < 0) selectedIndex = stageButtons.Length;
+            if (selectedIndex < 0) selectedIndex = stageButtons.Length; // 最後は Return に行く
             UpdateCursor();
         }
+        // 下移動
         else if (input.y < -0.5f) {
             selectedIndex++;
-            if (selectedIndex > stageButtons.Length) selectedIndex = 0;
+            if (selectedIndex > stageButtons.Length) selectedIndex = 0; // 最初に戻る
             UpdateCursor();
         }
-
-        // （オプションで左右移動も対応可。必要ならここに追加）
     }
+
 
     private void OnSelect(InputAction.CallbackContext ctx) {
         if (panel == null || !panel.activeSelf) return;
