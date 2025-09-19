@@ -3096,7 +3096,7 @@ MonoBehaviour:
   attackCollider2: {fileID: 781487942760229589}
   attackCollider3: {fileID: 6060315978935405810}
   startPos: {fileID: 0}
-  trailObject: {fileID: 0}
+  trailObject: {fileID: 278950945400560208}
   GatherAction:
     m_Name: Gather
     m_Type: 0
