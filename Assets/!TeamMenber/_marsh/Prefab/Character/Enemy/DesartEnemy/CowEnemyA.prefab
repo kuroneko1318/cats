@@ -1574,7 +1574,7 @@ MonoBehaviour:
   combatRange: 3
   attackMultiplier: 1
   deadTime: 3
-  damagePopupPrefab: {fileID: 0}
+  damagePopupPrefab: {fileID: 6874668722503263158, guid: 84d7f1e2f40c4cc4bb1e936cc2d76a02, type: 3}
   patrolRadius: 5
   idleTime: 2
 --- !u!1 &7552025604132190375
@@ -2062,6 +2062,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6689775106125983024}
     m_Modifications:
+    - target: {fileID: 5060001765034691089, guid: 1671d9feedfb8844b9433ef3dd1221fa, type: 3}
+      propertyPath: m_Size.x
+      value: 1.5873673
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060001765034691089, guid: 1671d9feedfb8844b9433ef3dd1221fa, type: 3}
+      propertyPath: m_Size.z
+      value: 1.9599711
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060001765034691089, guid: 1671d9feedfb8844b9433ef3dd1221fa, type: 3}
+      propertyPath: m_Center.x
+      value: 0.07280147
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060001765034691089, guid: 1671d9feedfb8844b9433ef3dd1221fa, type: 3}
+      propertyPath: m_Center.z
+      value: 0.6299855
+      objectReference: {fileID: 0}
     - target: {fileID: 5620233310464657209, guid: 1671d9feedfb8844b9433ef3dd1221fa, type: 3}
       propertyPath: m_Name
       value: AttackHitBox
