@@ -17,24 +17,24 @@ public class CraftManager : SystemObject<CraftManager> {
     public override void Initialize() {
         Debug.Log("CraftManager Initialize called!");
         // レシピ登録例
-        AddRecipe("木", "木", "棒");
+        //AddRecipe("木", "木", "棒");
         AddRecipe("鉄", "棒", "普通の剣");
-        AddRecipe("鉄", "紐", "普通のアーマー");
-        AddRecipe("薬草", "紐", "回復薬");
-        AddRecipe("棒", "ライトストーン", "ライトソード");
-        AddRecipe("木", "紐", "丈夫な木");
-        AddRecipe("ライトストーン", "石", "研磨石");
-        AddRecipe("研磨石", "黒曜石", "鋭い黒曜石");
-        AddRecipe("ライトストーン", "ブラッドストーン", "魔石");
-        AddRecipe("魔石", "鋭い黒曜石", "魔剣の剣身");
-        AddRecipe("鉄", "木", "普通の柄");
-        AddRecipe("棒", "石", "斧");
-        AddRecipe("普通の柄", "融合石", "魔剣の柄");
-        AddRecipe("マカライト", "シーネリアン", "融合石");
-        AddRecipe("魔剣の剣身", "魔剣の柄", "未完成の魔剣");
-        AddRecipe("未完成の魔剣", "ブラックマリン", "魔剣ズルフィカール");
-        AddRecipe("未完成の魔剣", "ライトストーン", "魔剣フルンティング");
-        AddRecipe("未完成の魔剣", "ブラッドストーン", "魔剣ネイリング");
+        //AddRecipe("鉄", "紐", "普通のアーマー");
+        //AddRecipe("薬草", "紐", "回復薬");
+        //AddRecipe("棒", "ライトストーン", "ライトソード");
+        //AddRecipe("木", "紐", "丈夫な木");
+        //AddRecipe("ライトストーン", "石", "研磨石");
+        //AddRecipe("研磨石", "黒曜石", "鋭い黒曜石");
+        //AddRecipe("ライトストーン", "ブラッドストーン", "魔石");
+        //AddRecipe("魔石", "鋭い黒曜石", "魔剣の剣身");
+        //AddRecipe("鉄", "木", "普通の柄");
+        //AddRecipe("棒", "石", "斧");
+        //AddRecipe("普通の柄", "融合石", "魔剣の柄");
+        //AddRecipe("マカライト", "シーネリアン", "融合石");
+        //AddRecipe("魔剣の剣身", "魔剣の柄", "未完成の魔剣");
+        //AddRecipe("未完成の魔剣", "ブラックマリン", "魔剣ズルフィカール");
+        //AddRecipe("未完成の魔剣", "ライトストーン", "魔剣フルンティング");
+        //AddRecipe("未完成の魔剣", "ブラッドストーン", "魔剣ネイリング");
         //AddRecipe("棒", "ブラッドストーン", "");
         //AddRecipe("", "", "");
         //AddRecipe("", "", "");
@@ -98,9 +98,6 @@ public class CraftManager : SystemObject<CraftManager> {
 
     void Update() {
         UpdateResult();
-        if (Input.GetKeyDown(KeyCode.P)) {
-            PrintAllRecipes();
-        }
     }
 
     //public void UpdateResult() {
@@ -130,7 +127,6 @@ public class CraftManager : SystemObject<CraftManager> {
         if (slotA.item == null || slotB.item == null) {
             resultData.Clear();
             resultUI?.SetItem(null, 0);
-            Debug.Log("[Craft Debug] どちらかのスロットが空なのでクラフト不可");
             return;
         }
 
@@ -149,18 +145,28 @@ public class CraftManager : SystemObject<CraftManager> {
     }
 
     private ItemBase GetRecipeResult(ItemBase item1, ItemBase item2) {
-        string resultName;
+        string name1 = item1.itemName.Trim();
+        string name2 = item2.itemName.Trim();
 
-        foreach (var kvp in recipes) {
-            var key = kvp.Key;
-            if ((key.Item1 == item1.itemName && key.Item2 == item2.itemName) ||
-                (key.Item1 == item2.itemName && key.Item2 == item1.itemName)) {
-                resultName = kvp.Value;
-                return ItemManager.Instance.GetItemByName(resultName);
-            }
+        string resultName;
+        if (recipes.TryGetValue((name1, name2), out resultName) ||
+            recipes.TryGetValue((name2, name1), out resultName)) {
+            // まず通常アイテムを探す
+            var resultItem = ItemManager.Instance.GetItemByName(resultName);
+            if (resultItem != null) return resultItem;
+
+            // 次に武器を探す
+            var resultWeapon = ItemManager.Instance.GetWeaponByName(resultName);
+            if (resultWeapon != null) return resultWeapon;
+
+            // 次に防具を探す
+            var resultArmor = ItemManager.Instance.GetArmorByName(resultName);
+            if (resultArmor != null) return resultArmor;
+
+            Debug.LogError($"[Craft Debug] ItemManagerに '{resultName}' が存在しません！（Item/Weapon/Armor 全部探した）");
         }
 
-        Debug.Log($"[Craft Debug] レシピなし: {item1.itemName} + {item2.itemName}");
+        Debug.Log("[Craft Debug] レシピなし: " + name1 + " + " + name2);
         return null;
     }
 
@@ -185,12 +191,5 @@ public class CraftManager : SystemObject<CraftManager> {
         resultUI?.Clear();
 
         return craftedItem;
-    }
-
-    public void PrintAllRecipes() {
-        Debug.Log("=== レシピ一覧 ===");
-        foreach (var kv in recipes) {
-            Debug.Log($"{kv.Key.Item1} + {kv.Key.Item2} => {kv.Value}");
-        }
     }
 }

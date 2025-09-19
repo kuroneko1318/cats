@@ -30,6 +30,9 @@ public class InventoryManager : SystemObject<InventoryManager> {
     private InventorySlot[] craftSlots;
     private InventorySlot[] equipSlots;
 
+    private InventorySlot craftResultSlot = new InventorySlot();
+
+
     private int selectedIndex = 0;
     private ItemBase heldItem = null;
     private int heldAmount = 0;
@@ -73,7 +76,6 @@ public class InventoryManager : SystemObject<InventoryManager> {
             bag.AddItem(ItemManager.Instance.GetItemByName("棒"), 5);
             bag.AddItem(ItemManager.Instance.GetItemByName("鉄"), 5);
             bag.AddItem(ItemManager.Instance.GetItemByName("薬草"), 5);
-            bag.AddItem(ItemManager.Instance.GetItemByName("紐"), 5);
         }
     }
 
@@ -311,7 +313,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
     }
 
     private void HandleSelect() {
-        InventorySlot slot = GetCurrentSlot();
+        var slot = GetCurrentSlot();
         if (slot == null) return;
 
         // スロットのアイテムを一時保存

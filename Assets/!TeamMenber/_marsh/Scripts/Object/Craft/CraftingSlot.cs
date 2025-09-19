@@ -15,6 +15,7 @@ public class CraftingSlot : InventoryUI {
         if (item != null) {
             icon.sprite = item.icon;
             icon.enabled = true;
+            amount = count;
             UpdateAmountUI();
         }
         else {
