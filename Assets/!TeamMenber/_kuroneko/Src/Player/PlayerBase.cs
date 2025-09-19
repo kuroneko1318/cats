@@ -33,6 +33,10 @@ public class PlayerBase : MonoBehaviour {
     [Header("リスポーン地点（街の初期位置保存用）")]
     [SerializeField] private GameObject startPos;
 
+    [Header("軌跡")]
+    [SerializeField] private GameObject trailObject;
+    private TrailRenderer swordTrail;
+
     // 行動制御フラグ
     private bool isDead = false;
     private bool isPick = false;
@@ -53,6 +57,8 @@ public class PlayerBase : MonoBehaviour {
         OpenInventoryAction = input.actions["Menu"];
         pMove = new NewPlayerMove(transform, anim);
         pAttack = new NewPlayerAttack(anim, attackCollider1, attackCollider2, attackCollider3);
+
+        swordTrail = trailObject.GetComponent<TrailRenderer>();
 
         // スキルマネージャーを生成してスキルを登録
         skillManager = new SkillManager();
@@ -153,15 +159,18 @@ public class PlayerBase : MonoBehaviour {
 
     // Animatorイベント用ラッパー
     public void AttackStartEvent() {
+        swordTrail.emitting = true;
         pAttack.AttackStart();
         pAttack.SetPower(attack);
     }
 
     public void AttackEndEvent() {
+        swordTrail.emitting = false;
         pAttack.AttackEnd();
     }
 
     public void ResetAttackFlag() {
+        swordTrail.emitting = false;
         pAttack.ResetAttack();
     }
 
