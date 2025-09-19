@@ -868,6 +868,10 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
+      propertyPath: trailObject
+      value: 
+      objectReference: {fileID: 3264133247982828063}
+    - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
       propertyPath: criticalChance
       value: 0.2
       objectReference: {fileID: 0}
@@ -892,6 +896,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
+--- !u!1 &3264133247982828063 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 278950945400560208, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
+  m_PrefabInstance: {fileID: 3264133247982828062}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5906296085938725924
 PrefabInstance:
   m_ObjectHideFlags: 0
