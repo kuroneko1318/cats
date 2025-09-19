@@ -18,8 +18,6 @@ public bool IsFadingOut => isDisappearing;
         mainCamera = Camera.main;
     }
 
-    //ダメージを受ける処理
-    //damage = ダメージ, isCritical = 会心
     public void GetItemUI(string itemName,int amount) {
 
         //テキスト表示
