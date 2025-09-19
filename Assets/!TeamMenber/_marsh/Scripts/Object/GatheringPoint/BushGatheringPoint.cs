@@ -14,7 +14,7 @@ public class BushGatheringPoint : GatheringPoint {
         // ƒAƒCƒeƒ€’Ç‰Áˆ—‚È‚Ç
         bag.AddItem(ItemManager.Instance.GetItemByName("–ò‘"), Random.Range(1, 5));
         bag.AddItem(ItemManager.Instance.GetItemByName("•R"), Random.Range(1, 3));
-        bag.AddItem(ItemManager.Instance.GetItemByName("–Ø‚ÌÀ"), Random.Range(0, 2));
+        bag.AddItem(ItemManager.Instance.GetItemByName("–Ø‚ÌÀ"), Random.Range(1, 2));
         bag.AddItem(ItemManager.Instance.GetItemByName("–Ø"), Random.Range(2, 5));
     }
 }

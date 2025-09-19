@@ -31,8 +31,8 @@ public class ItemManager : SystemObject<ItemManager> {
         Sprite ObsidianIcon = Resources.Load<Sprite>("icon/Obsidian");
         Sprite potionIcon = Resources.Load<Sprite>("icon/potion");
         Sprite RopeIcon = Resources.Load<Sprite>("icon/rope");
-        Sprite StoneAIcon = Resources.Load<Sprite>("icon/stoneA");
-        Sprite StoneBIcon = Resources.Load<Sprite>("icon/stoneB");
+        Sprite StoneIcon = Resources.Load<Sprite>("icon/Stone");
+        Sprite WoodIcon = Resources.Load<Sprite>("icon/wood");
 
 
         // ここでアイテム5種を登録（ID）
@@ -40,7 +40,7 @@ public class ItemManager : SystemObject<ItemManager> {
         itemList.Add(new ItemBase("木の実", 3001, eItemType.Heal, NutIcon));
         itemList.Add(new ItemBase("薬草", 4001, eItemType.Material, HerbIcon));
         itemList.Add(new ItemBase("紐", 4002, eItemType.Material, RopeIcon));
-        itemList.Add(new ItemBase("石", 4020, eItemType.Material, StoneAIcon));
+        itemList.Add(new ItemBase("石", 4020, eItemType.Material, StoneIcon));
         itemList.Add(new ItemBase("ライトストーン", 4021, eItemType.Material));
         itemList.Add(new ItemBase("ブラッドストーン", 4022,eItemType.Material));
         itemList.Add(new ItemBase("ブラックマリン", 4023,eItemType.Material));
@@ -53,7 +53,7 @@ public class ItemManager : SystemObject<ItemManager> {
         itemList.Add(new ItemBase("研磨石", 4034, eItemType.Material));
         itemList.Add(new ItemBase("魔石", 4035, eItemType.Material));
         itemList.Add(new ItemBase("融合石", 4036, eItemType.Material));
-        itemList.Add(new ItemBase("木", 4100, eItemType.Material));
+        itemList.Add(new ItemBase("木", 4100, eItemType.Material, WoodIcon));
         itemList.Add(new ItemBase("丈夫な木", 4101, eItemType.Material));
         itemList.Add(new ItemBase("棒", 4102, eItemType.Material, BarIcon));
         itemList.Add(new ItemBase("針", 4103, eItemType.Material, NeedleIcon));

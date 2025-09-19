@@ -52,8 +52,17 @@ public class InventoryManager : SystemObject<InventoryManager> {
             return;
         }
 
-        // bag にコピー
-        bag = inventory;
+        // --- bag を新規生成してコピー ---
+        bag = Instantiate(inventory);
+        bag.slotCount = inventory.slotCount;
+
+        // slots をコピー
+        bag.slots = new InventorySlot[bag.slotCount];
+        for (int i = 0; i < bag.slotCount; i++) {
+            bag.slots[i] = new InventorySlot();
+            if (inventory.slots != null && inventory.slots.Length > i && inventory.slots[i] != null)
+                bag.slots[i].SetItem(inventory.slots[i].item, inventory.slots[i].amount);
+        }
 
         // slots が null なら初期化
         if (bag.slots == null || bag.slots.Length != bag.slotCount) {
