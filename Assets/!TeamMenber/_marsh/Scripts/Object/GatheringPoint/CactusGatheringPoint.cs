@@ -7,13 +7,7 @@ public class CactusGatheringPoint: GatheringPoint {
 
     public override void Awake() {
         base.Awake();
-        pointType = GatheringPointType.Ore;
-    }
-
-    private void Start() {
-        if (bag == null) {
-            bag = GameObject.FindGameObjectWithTag("bag")?.GetComponent<Inventory>();
-        }
+        pointType = GatheringPointType.Cactus;
     }
 
     public override void Gather() {
@@ -21,11 +15,5 @@ public class CactusGatheringPoint: GatheringPoint {
         bag.AddItem(ItemManager.Instance.GetItemByName("ñÚëê"), Random.Range(1, 5));
         bag.AddItem(ItemManager.Instance.GetItemByName("ïR"), Random.Range(1, 3));
         bag.AddItem(ItemManager.Instance.GetItemByName("êj"), Random.Range(2, 5));
-    }
-
-    private void Update() {
-        if(bag == null) {
-            bag = GameObject.FindGameObjectWithTag("bag")?.GetComponent<Inventory>();
-        }
     }
 }

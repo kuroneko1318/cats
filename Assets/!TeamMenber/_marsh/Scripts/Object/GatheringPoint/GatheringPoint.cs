@@ -12,9 +12,6 @@ public enum GatheringPointType {
     Lava,
 }
 
-
-
-
 public abstract class GatheringPoint : MonoBehaviour {
     public GatheringPointType pointType;
     public float respawnTime = 30f;
@@ -23,9 +20,15 @@ public bool IsAvailable => isAvailable;
     [NonSerialized]public Inventory bag;
 
     public virtual void Awake() {
+        // 基本は InventoryManager の bag を参照
         bag = InventoryManager.Instance?.bag;
-        if (bag == null)
-            Debug.LogError("[OreGatheringPoint] Inventoryが見つかりません！");
+
+        if (bag == null) {
+            // 万一 null ならシーン内の Inventory を探す
+            bag = GameObject.FindGameObjectWithTag("bag")?.GetComponent<Inventory>();
+            if (bag == null)
+                Debug.LogError($"[{pointType}] Inventoryが見つかりません！");
+        }
     }
 
     public virtual void Interact() {

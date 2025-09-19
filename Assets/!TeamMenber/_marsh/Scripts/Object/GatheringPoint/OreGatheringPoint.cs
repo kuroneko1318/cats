@@ -16,11 +16,5 @@ public class OreGatheringPoint : GatheringPoint {
         bag.AddItem(ItemManager.Instance.GetItemByName("“S"), Random.Range(1,3));
         bag.AddItem(ItemManager.Instance.GetItemByName("“º"), Random.Range(0,2));
     }
-
-    private void Update() {
-        if(bag == null) {
-            bag = GameObject.FindGameObjectWithTag("bag")?.GetComponent<Inventory>();
-        }
-    }
 }
 

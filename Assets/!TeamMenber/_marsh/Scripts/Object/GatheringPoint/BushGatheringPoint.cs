@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BushGatheringPoint : GatheringPoint {
 
-    private void Awake() {
+    public override void Awake() {
+        base.Awake();
         pointType = GatheringPointType.Bush;
     }
 
@@ -15,12 +16,6 @@ public class BushGatheringPoint : GatheringPoint {
         bag.AddItem(ItemManager.Instance.GetItemByName("•R"), Random.Range(1, 3));
         bag.AddItem(ItemManager.Instance.GetItemByName("–Ø‚ÌŽÀ"), Random.Range(0, 2));
         bag.AddItem(ItemManager.Instance.GetItemByName("–Ø"), Random.Range(2, 5));
-    }
-
-    private void Update() {
-        if (bag == null) {
-            bag = GameObject.FindGameObjectWithTag("bag")?.GetComponent<Inventory>();
-        }
     }
 }
 
