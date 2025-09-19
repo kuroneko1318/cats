@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48281ee50b65e7843af14505a635b92a, type: 3}
   m_Name: DefeatCow
   m_EditorClassIdentifier: 
-  questName: DefeatBeetle
-  targetEnemyType: 0
+  questName: DefeatCow
+  targetEnemyType: 3
   requiredAmount: 5
   rewardMoney: 100
   currentAmount: 0
-  status: 0
+  status: 1
   isCleared: 0
