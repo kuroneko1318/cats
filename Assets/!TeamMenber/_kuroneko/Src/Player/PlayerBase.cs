@@ -72,7 +72,7 @@ public class PlayerBase : MonoBehaviour {
         input.actions["Move"].canceled += ctx => moveInput = Vector2.zero;
         input.actions["Attack"].performed += ctx => { if (!IsSkillActive) pAttack.Attack(); };
         input.actions["Avoid"].performed += ctx => { if (!IsSkillActive && !pAttack.IsAttacking()) pMove.Avoid(moveInput, mainCamera); };
-        input.actions["Skill"].performed += ctx => { if (!IsSkillActive && !pAttack.IsAttacking() && !isDead && isPick) skillManager.UseSkill(0, gameObject); };
+        input.actions["Skill"].performed += ctx => { if (!IsSkillActive && !pAttack.IsAttacking() && !isDead && !isPick) skillManager.UseSkill(0, gameObject); };
         GatherAction = input.actions["Gather"];
         OpenInventoryAction = input.actions["OpenInventory"];
 

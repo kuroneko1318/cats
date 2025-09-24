@@ -751,10 +751,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5658025134740311466, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
-      propertyPath: m_Actions
-      value: 
-      objectReference: {fileID: -944628639613478452, guid: cb28eb4a88fca3b46ab753f59946a193, type: 3}
-    - target: {fileID: 5658025134740311466, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
       propertyPath: m_DefaultActionMap
       value: GamePlay
       objectReference: {fileID: 0}
