@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class QuestBoardManager : MonoBehaviour {
@@ -13,6 +14,7 @@ public class QuestBoardManager : MonoBehaviour {
 
     private Image[] selectionImages;     // クエスト後ろの選択用Image
     private int selectedIndex = 0;
+    private Vector2 moveInput;
 
     private void Start() {
         PopulateQuestBoard();
@@ -51,33 +53,15 @@ public class QuestBoardManager : MonoBehaviour {
         UpdateSelection();
     }
 
-    private void Update() {
-        if (selectionImages == null || selectionImages.Length == 0) return;
-
+    private void HandleMove() {
         int prevIndex = selectedIndex;
+        if (moveInput.x > 0) selectedIndex = (selectedIndex + 1) % selectionImages.Length;
+        if (moveInput.x < 0) selectedIndex = (selectedIndex - 1 + selectionImages.Length) % selectionImages.Length;
+        if (moveInput.y > 0) selectedIndex = (selectedIndex - 3 + selectionImages.Length) % selectionImages.Length;
+        if (moveInput.y < 0) selectedIndex = (selectedIndex + 3) % selectionImages.Length;
 
-        // 十字キー移動（横3列固定）
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-            selectedIndex = (selectedIndex + 1) % selectionImages.Length;
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-            selectedIndex = (selectedIndex - 1 + selectionImages.Length) % selectionImages.Length;
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-            selectedIndex = (selectedIndex - 3 + selectionImages.Length) % selectionImages.Length;
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-            selectedIndex = (selectedIndex + 3) % selectionImages.Length;
-
-        if (prevIndex != selectedIndex)
-            UpdateSelection();
-
-        // 決定ボタン（Aボタン or Enter）
-        if (Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.Return)) {
-            AcceptQuest(allQuests[selectedIndex]);
-        }
-
-        // キャンセルボタン（Bボタン or Esc）
-        if (Input.GetKeyDown(KeyCode.JoystickButton2) || Input.GetKeyDown(KeyCode.Escape)) {
-            gameObject.SetActive(false);
-        }
+        if (prevIndex != selectedIndex) UpdateSelection();
+        moveInput = Vector2.zero;
     }
 
     private void UpdateSelection() {
@@ -94,5 +78,14 @@ public class QuestBoardManager : MonoBehaviour {
         else {
             Debug.Log("既にクエスト受注中です！");
         }
+    }
+    public void OpenBoard() {
+        gameObject.SetActive(true);
+        FindObjectOfType<PlayerInput>().SwitchCurrentActionMap("UI");
+    }
+
+    public void CloseBoard() {
+        gameObject.SetActive(false);
+        FindObjectOfType<PlayerInput>().SwitchCurrentActionMap("Gameplay");
     }
 }
