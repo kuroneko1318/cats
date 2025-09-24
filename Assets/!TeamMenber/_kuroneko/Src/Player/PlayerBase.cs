@@ -51,8 +51,6 @@ public class PlayerBase : MonoBehaviour {
 
     // UI用カーソル移動
     private Vector2 uiMoveInput;
-    private bool selectPressed;
-    private bool cancelPressed;
 
     void Start() {
         input = GetComponent<PlayerInput>();
@@ -81,8 +79,6 @@ public class PlayerBase : MonoBehaviour {
         // UI
         input.actions["MoveMenu"].performed += ctx => uiMoveInput = ctx.ReadValue<Vector2>();
         input.actions["MoveQuest"].performed += ctx => moveInput = ctx.ReadValue<Vector2>();
-        input.actions["Select"].performed += ctx => selectPressed = ctx.ReadValue<float>() > 0;
-        input.actions["Cancel"].performed += ctx => cancelPressed = ctx.ReadValue<float>() > 0;
     }
 
     void Update() {
@@ -124,13 +120,11 @@ public class PlayerBase : MonoBehaviour {
         // 決定
         if (input.actions["Select"].WasPressedThisFrame()) {
             QuestBoardManager.Instance.AcceptQuest();
-            selectPressed = false; // リセット
         }
 
         // キャンセル
         if (input.actions["Cancel"].WasPressedThisFrame()) {
             CloseQuest(); // QuestUIを閉じてGameplayに戻す
-            cancelPressed = false; // リセット
         }
         moveInput = Vector2.zero; // 移動入力もリセット
     }
@@ -155,7 +149,6 @@ public class PlayerBase : MonoBehaviour {
 
         if (input.actions["Select"].WasPressedThisFrame()) {
             InventoryManager.Instance.HandleSelect();
-            selectPressed = false; // リセット
         }
         if (input.actions["Cancel"].WasPressedThisFrame()) {
             if (InventoryManager.Instance.IsHoldingItem) {
@@ -164,7 +157,6 @@ public class PlayerBase : MonoBehaviour {
             else {
                 CloseInventory(); // 何も持っていなければインベントリ閉じる
             }
-            cancelPressed = false; // リセット
         }
 
         uiMoveInput = Vector2.zero; // 移動入力もリセット
