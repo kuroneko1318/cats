@@ -3,30 +3,19 @@ using UnityEngine;
 public class QuestBoardTrigger : MonoBehaviour {
     public GameObject questBoardPanel;   // クエストボードUI
     public float interactRange = 3f;     // プレイヤーとの距離
-    private Transform player;
 
     private bool isPlayerNearby = false;
 
     private void Start() {
-        player = GameObject.FindGameObjectWithTag("Player")?.transform;
         questBoardPanel.SetActive(false);
     }
 
-    private void Update() {
-        if (player == null) return;
+    public void OpenBoard() {
+        questBoardPanel.SetActive(true);
+    }
 
-        // プレイヤーが一定範囲内か
-        isPlayerNearby = Vector3.Distance(player.position, transform.position) <= interactRange;
-
-        // E キーで開く
-        if ((isPlayerNearby && Input.GetKeyDown(KeyCode.E)) || (isPlayerNearby && Input.GetKeyDown(KeyCode.JoystickButton3))) {
-            questBoardPanel.SetActive(true);
-        }
-
-        // X キーで閉じる
-        if ((questBoardPanel.activeSelf && Input.GetKeyDown(KeyCode.X)) || (questBoardPanel.activeSelf && Input.GetKeyDown(KeyCode.JoystickButton2))) {
-            questBoardPanel.SetActive(false);
-        }
+    public void CloseBoard() {
+        questBoardPanel.SetActive(false);
     }
 
     // （任意）Gizmoで範囲確認
