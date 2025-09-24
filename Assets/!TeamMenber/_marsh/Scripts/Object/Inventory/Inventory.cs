@@ -34,9 +34,9 @@ public class Inventory : MonoBehaviour {
 
     //アイテムの追加
     public bool AddItem(ItemBase item, int amount = 1) {
-        Vector3 popupPos = transform.position + Vector3.up * 2f;
+      Vector3 popupPos = transform.position + Vector3.up * 2f;
         GameObject popupObj = Instantiate(ItemPopupPrefab, popupPos, Quaternion.identity);
-        currentPopup = popupObj.GetComponent<ItemPopupController>();
+       currentPopup = popupObj.GetComponent<ItemPopupController>();
 
         currentPopup.GetItemUI(item.itemName, amount);
         // 既存スタックに追加
