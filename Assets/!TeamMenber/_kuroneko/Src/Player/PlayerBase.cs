@@ -48,13 +48,16 @@ public class PlayerBase : MonoBehaviour {
     public InputAction GatherAction;
     public InputAction OpenInventoryAction;
 
+    // UI用カーソル移動
+    private Vector2 uiMoveInput;
+    private bool selectPressed;
+    private bool cancelPressed;
+
     void Start() {
         input = GetComponent<PlayerInput>();
         anim = GetComponent<Animator>();
         mainCamera = Camera.main.transform;
 
-        GatherAction = input.actions["Gather"];
-        OpenInventoryAction = input.actions["Menu"];
         pMove = new NewPlayerMove(transform, anim);
         pAttack = new NewPlayerAttack(anim, attackCollider1, attackCollider2, attackCollider3);
 
@@ -64,43 +67,65 @@ public class PlayerBase : MonoBehaviour {
         skillManager = new SkillManager();
         skillManager.RegisterSkill(new FrontSlashSkill());
 
-        // 移動入力
+        // Gameplay
         input.actions["Move"].performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         input.actions["Move"].canceled += ctx => moveInput = Vector2.zero;
+        input.actions["Attack"].performed += ctx => { if (!IsSkillActive) pAttack.Attack(); };
+        input.actions["Avoid"].performed += ctx => { if (!IsSkillActive && !pAttack.IsAttacking()) pMove.Avoid(moveInput, mainCamera); };
+        input.actions["Skill"].performed += ctx => { if (!IsSkillActive && !pAttack.IsAttacking() && !isDead && !isPick) skillManager.UseSkill(0, gameObject); };
+        GatherAction = input.actions["Gather"];
+        OpenInventoryAction = input.actions["OpenInventory"];
 
-        // 攻撃入力
-        input.actions["Attack"].performed += ctx => {
-            if (!IsSkillActive) // スキル中は攻撃不可
-                pAttack.Attack();
-        };
-
-        // 回避入力
-        input.actions["Avoidance"].performed += ctx => {
-            if (!pAttack.IsAttacking() && !IsSkillActive) // 攻撃中/スキル中は回避不可
-            {
-                pMove.Avoid(moveInput, mainCamera);
-            }
-        };
-
-        // スキル入力
-        input.actions["Skill"].performed += ctx => {
-            if (!IsSkillActive && !pAttack.IsAttacking() && !isDead && !isPick) {
-                skillManager.UseSkill(0, gameObject); // 0番スキルを発動
-            }
-        };
+        // UI
+        input.actions["MoveMenu"].performed += ctx => uiMoveInput = ctx.ReadValue<Vector2>();
+        input.actions["Select"].performed += ctx => selectPressed = ctx.ReadValue<float>() > 0;
+        input.actions["Cancel"].performed += ctx => cancelPressed = ctx.ReadValue<float>() > 0;
     }
 
     void Update() {
-        // 攻撃中やスキル中は移動不可
-        if (!pAttack.IsAttacking() && !IsSkillActive && !isDead && !isPick) {
-            pMove.Move(moveInput, mainCamera);
+        if (input.currentActionMap.name == "Gameplay") {
+            if (!IsSkillActive && !pAttack.IsAttacking() && !isDead && !isPick)
+                pMove.Move(moveInput, mainCamera);
+            pAttack.Update();
+            if (OpenInventoryAction.WasPressedThisFrame()) OpenInventory();
+        }
+        else if (input.currentActionMap.name == "Inventory") {
+            HandleUI();
         }
 
-        pAttack.Update();
+    }
+    void OpenInventory() {
+        InventoryManager.Instance.OpenInventory();
+        input.SwitchCurrentActionMap("Inventory");
+    }
 
-        if (OpenInventoryAction.WasPressedThisFrame()) {
-            InventoryManager.Instance.OpenInventory();
+    void CloseInventory() {
+        InventoryManager.Instance.CloseInventory();
+        input.SwitchCurrentActionMap("Gameplay");
+    }
+
+    void HandleUI() {
+        // カーソル移動
+        if (uiMoveInput.y > 0) InventoryManager.Instance.MoveUp();
+        if (uiMoveInput.y < 0) InventoryManager.Instance.MoveDown();
+        if (uiMoveInput.x > 0) InventoryManager.Instance.MoveRight();
+        if (uiMoveInput.x < 0) InventoryManager.Instance.MoveLeft();
+
+        if (selectPressed) {
+            InventoryManager.Instance.HandleSelect();
+            selectPressed = false; // リセット
         }
+        if (cancelPressed) {
+            if (InventoryManager.Instance.IsHoldingItem) {
+                InventoryManager.Instance.HandleCancel(); // 持っているものを戻す
+            }
+            else {
+                CloseInventory(); // 何も持っていなければインベントリ閉じる
+            }
+            cancelPressed = false; // リセット
+        }
+
+        uiMoveInput = Vector2.zero; // 移動入力もリセット
     }
 
     // ダメージ処理

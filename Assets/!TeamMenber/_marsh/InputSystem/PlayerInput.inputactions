@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Avoidance",
+                    "name": "Avoid",
                     "type": "Button",
                     "id": "6cc9ca64-ca68-4927-9d93-8bcbaa76be15",
                     "expectedControlType": "",
@@ -219,7 +219,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Avoidance",
+                    "action": "Avoid",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -230,7 +230,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Avoidance",
+                    "action": "Avoid",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

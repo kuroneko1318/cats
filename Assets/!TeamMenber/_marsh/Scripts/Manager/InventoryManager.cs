@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEngine.InputSystem;
 
 public class InventoryManager : SystemObject<InventoryManager> {
     [Header("Inventory Data")]
@@ -35,6 +36,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
 
     private int selectedIndex = 0;
     private ItemBase heldItem = null;
+    public bool IsHoldingItem => heldItem != null;
     private int heldAmount = 0;
     private int originIndex = -1;
     private UIArea originArea;
@@ -81,26 +83,6 @@ public class InventoryManager : SystemObject<InventoryManager> {
             equipSlots[i] = new InventorySlot();
     }
 
-    void Update() {
-        if (inventoryPanelInstance == null || !inventoryPanelInstance.activeSelf) return;
-
-        if (Input.GetKeyDown(KeyCode.RightArrow)) MoveRight();
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) MoveLeft();
-        if (Input.GetKeyDown(KeyCode.UpArrow)) MoveUp();
-        if (Input.GetKeyDown(KeyCode.DownArrow)) MoveDown();
-
-        if (Input.GetKeyDown(KeyCode.Z)) HandleSelect();
-        if (Input.GetKeyDown(KeyCode.X)) HandleCancel();
-
-
-
-        if (Input.GetKeyDown(KeyCode.O)) {
-            bag.AddItem(ItemManager.Instance.GetItemByName("棒"), 5);
-            bag.AddItem(ItemManager.Instance.GetItemByName("鉄"), 5);
-            bag.AddItem(ItemManager.Instance.GetItemByName("薬草"), 5);
-        }
-    }
-
     #region UI
     public void OpenInventory() {
         if (inventoryPanelInstance == null) {
@@ -112,12 +94,14 @@ public class InventoryManager : SystemObject<InventoryManager> {
             Craft = inventoryPanelInstance.transform.Find("Craft");
             Equip = inventoryPanelInstance.transform.Find("Equip");
 
+            RefreshUI();
             if (InventoryTop == null || InventoryBottom == null || Craft == null || Equip == null)
                 Debug.LogError("InventoryManager: UI Contentの取得に失敗しました。名前を確認してください。");
         }
-
-        inventoryPanelInstance.SetActive(true);
-        RefreshUI();
+        else {
+            inventoryPanelInstance.SetActive(true);
+            RefreshUI();
+        }
     }
 
     public void CloseInventory() {
@@ -231,7 +215,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
     #endregion
 
     #region 移動
-    private void MoveRight() {
+    public void MoveRight() {
         switch (currentArea) {
             case UIArea.InventoryTop:
                 if (selectedIndex % columns == columns - 1) {
@@ -257,7 +241,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
         UpdateHighlight();
     }
 
-    private void MoveLeft() {
+    public void MoveLeft() {
         switch (currentArea) {
             case UIArea.InventoryTop:
                 if (selectedIndex > 0) selectedIndex--;
@@ -277,7 +261,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
         UpdateHighlight();
     }
 
-    private void MoveDown() {
+    public void MoveDown() {
         if (currentArea == UIArea.InventoryTop) {
             if (selectedIndex + columns < inventoryTopCount) selectedIndex += columns;
             else { currentArea = UIArea.InventoryBottom; selectedIndex = selectedIndex % columns; }
@@ -288,7 +272,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
         UpdateHighlight();
     }
 
-    private void MoveUp() {
+    public void MoveUp() {
         if (!IsInventoryArea()) return;
 
         switch (currentArea) {
@@ -334,7 +318,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
         return null;
     }
 
-    private void HandleSelect() {
+    public void HandleSelect() {
         var slot = GetCurrentSlot();
         if (slot == null) return;
 
@@ -413,7 +397,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
         CraftManager.Instance.UpdateResult(); // これで craftSlots[2] に結果をセット
     }
 
-    private void HandleCancel() {
+    public void HandleCancel() {
         if (heldItem != null && originIndex >= 0) {
             var originSlot = GetSlot(originArea, originIndex);
             originSlot.SetItem(heldItem, heldAmount);
