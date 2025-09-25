@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 /// 攻撃中・スキル中は移動不可
 /// </summary>
 public class PlayerBase : MonoBehaviour {
-    private PlayerInput input;
+    public PlayerInput input;
     private NewPlayerMove pMove;
     private NewPlayerAttack pAttack;
     private Animator anim;
