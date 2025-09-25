@@ -57,8 +57,36 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.9710526
+      - time: 0.29646018
+        functionName: GatherStart
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 318a956a34158044790f916f60100b4f, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.48672566
+        functionName: GatherStart
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 318a956a34158044790f916f60100b4f, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.6961477
+        functionName: GatherStart
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 318a956a34158044790f916f60100b4f, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.908738
         functionName: PickEnd
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: f49d187467a58414180460a3ad42aa96, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.93768543
+        functionName: StartCol
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: f49d187467a58414180460a3ad42aa96, type: 3}
         floatParameter: 0

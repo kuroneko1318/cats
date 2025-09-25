@@ -177,7 +177,7 @@ public class PlayerBase : MonoBehaviour {
             if (point != null && point.IsAvailable) {
                 anim.SetTrigger("Pick");
                 isPick = true;
-                point.Interact();
+                
             }
         }
     }
