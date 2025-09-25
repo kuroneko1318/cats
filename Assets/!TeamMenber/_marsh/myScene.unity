@@ -1167,9 +1167,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
+      propertyPath: attack
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
+      propertyPath: defence
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
       propertyPath: startPos
       value: 
       objectReference: {fileID: 559551162}
+    - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
+      propertyPath: baseAttack
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
+      propertyPath: baseDefence
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 8874673962408222264, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
       propertyPath: m_Name
       value: Player
