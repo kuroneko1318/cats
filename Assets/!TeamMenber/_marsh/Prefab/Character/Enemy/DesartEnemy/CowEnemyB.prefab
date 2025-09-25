@@ -1460,6 +1460,7 @@ MonoBehaviour:
   attackMultiplier: 1
   deadTime: 3
   damagePopupPrefab: {fileID: 6179850667043835373, guid: 2b52a3a79f3cc4041804f3e366c0b9a4, type: 3}
+  boxCollider: {fileID: 8666065133042074449}
   patrolRadius: 5
   idleTime: 2
 --- !u!195 &5293432870727371474

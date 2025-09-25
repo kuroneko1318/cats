@@ -14,6 +14,7 @@ public enum GatheringPointType {
 
 public abstract class GatheringPoint : MonoBehaviour {
     public GatheringPointType pointType;
+
     public float respawnTime = 30f;
     protected bool isAvailable = true;
 public bool IsAvailable => isAvailable;

@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public enum EnemyState {
     Idle,       // 待機
@@ -21,7 +23,7 @@ public enum EnemyType {
 public class EnemyBase : MonoBehaviour {
     [Header("敵の種類設定")]
     public EnemyType enemyType;
-
+    protected Inventory bag;
     [Header("共通ステータス")]
     public int hp;
     public int maxHp;
@@ -49,6 +51,8 @@ public class EnemyBase : MonoBehaviour {
     //死亡時用のアクション
     public System.Action<EnemyBase> OnEnemyDead;
 
+    private int Itemrand;
+    public Collider boxCollider; 
     protected virtual void Start() {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -59,6 +63,14 @@ public class EnemyBase : MonoBehaviour {
         if (hitbox != null) hitbox.gameObject.SetActive(false);
 
         hp = maxHp;
+
+        // 基本は InventoryManager の bag を参照
+        bag = InventoryManager.Instance?.bag;
+
+        if (bag == null) {
+            // 万一 null ならシーン内の Inventory を探す
+            bag = GameObject.FindGameObjectWithTag("bag")?.GetComponent<Inventory>();
+        }
     }
 
     protected virtual void OnEnable() {
@@ -182,13 +194,32 @@ public class EnemyBase : MonoBehaviour {
 
     public virtual void Dead() {
         if (state == EnemyState.Dead) return; // 二重呼び出し防止
+        boxCollider.enabled=false;
         ChangeState(EnemyState.Dead);
         animator.SetTrigger("Dead");
         agent.isStopped = true;
         // クエストへ報告
         QuestManager.Instance.EnemyDefeated(enemyType);
-
+        Itemrand = Random.Range(0, 4);
+        Drop();
         StartCoroutine(DeadRoutine());
+    }
+
+    public void Drop() {
+        switch (enemyType) {
+            case EnemyType.Beetle:
+                bag.AddItem(ItemManager.Instance.GetItemByName("回復薬"), Random.Range(1, 5));
+                break;
+            case EnemyType.StagBeetle:
+                bag.AddItem(ItemManager.Instance.GetItemByName("紐"), Random.Range(1, 5));
+                break;
+            case EnemyType.Nasty:
+                bag.AddItem(ItemManager.Instance.GetItemByName("針"), Random.Range(1, 5));
+                break;
+            case EnemyType.Cow:
+                bag.AddItem(ItemManager.Instance.GetItemByName("鉄"), Random.Range(1, 5));
+                break;
+        }
     }
 
     private IEnumerator DeadRoutine() {
