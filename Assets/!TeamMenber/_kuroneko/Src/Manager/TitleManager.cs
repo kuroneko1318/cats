@@ -1,24 +1,24 @@
 using UnityEngine;
-using UnityEngine.InputSystem;   // 新Input System
-using UnityEngine.SceneManagement; // シーン切り替え用
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour {
-    [Header("遷移先シーン名")]
-    [SerializeField] private string gameSceneName = "GameScene";
-    // ゲーム本編のシーン名をインスペクタから指定
+    [Header("ロード画面シーン名")]
+    [SerializeField] private string loadingSceneName = "LoadingScene";
 
     private PlayerInput playerInput;
     private InputAction selectAction;
 
+    // 連打防止フラグ
+    private bool isLoading = false;
+
     void Awake() {
-        // PlayerInput を同じオブジェクトに付ける前提
         playerInput = GetComponent<PlayerInput>();
         if (playerInput == null) {
             Debug.LogError("PlayerInput が見つかりません。TitleManagerと同じオブジェクトに追加してください。");
             return;
         }
 
-        // "Select" アクションを取得
         selectAction = playerInput.actions["Select"];
     }
 
@@ -32,12 +32,14 @@ public class TitleManager : MonoBehaviour {
             selectAction.performed -= OnSelect;
     }
 
-    // 決定ボタン押下時に呼ばれる
     private void OnSelect(InputAction.CallbackContext context) {
-        Debug.Log("タイトル画面で決定ボタンを押しました → ゲーム開始");
+        if (isLoading) return; // 既にロード中なら無視
+        isLoading = true;
 
-        if (!string.IsNullOrEmpty(gameSceneName)) {
-            SceneManager.LoadScene(gameSceneName);
+        Debug.Log("タイトル画面で決定ボタンを押しました → ロード画面へ");
+
+        if (!string.IsNullOrEmpty(loadingSceneName)) {
+            SceneManager.LoadScene(loadingSceneName);
         }
     }
 }
