@@ -48,6 +48,8 @@ public class PlayerBase : MonoBehaviour {
     public InputAction GatherAction;
     public InputAction OpenInventoryAction;
     public InputAction OpenQuestAction;
+    public InputAction UseItemAction;
+    public InputAction DropItemAction;
 
     // UI用カーソル移動
     private Vector2 uiMoveInput;
@@ -75,10 +77,20 @@ public class PlayerBase : MonoBehaviour {
         GatherAction = input.actions["Gather"];
         OpenInventoryAction = input.actions["OpenInventory"];
         OpenQuestAction = input.actions["OpenQuest"];
+        DropItemAction = input.actions["DropItem"];
 
         // UI
         input.actions["MoveMenu"].performed += ctx => uiMoveInput = ctx.ReadValue<Vector2>();
         input.actions["MoveQuest"].performed += ctx => moveInput = ctx.ReadValue<Vector2>();
+
+        UseItemAction = input.actions["UseItem"];
+        // UseItem が押されたら InventoryManager に通知
+        UseItemAction.performed += ctx => {
+            // インベントリが開いている場合のみ
+            if (input.currentActionMap.name == "Inventory") {
+                InventoryManager.Instance.UseSelectedItem();
+            }
+        };
     }
 
     void Update() {
@@ -216,6 +228,13 @@ public class PlayerBase : MonoBehaviour {
         }
     }
 
+    public void Heal(int amount) {
+        hp += amount;
+        if (hp >= maxHp) {
+            hp= maxHp;
+        }
+    }
+
     public void GatherStart() {
         point.Interact();
     }
@@ -251,12 +270,5 @@ public class PlayerBase : MonoBehaviour {
 
     public void EndSkillEvent() {
         SetSkillActive(false);
-    }
-
-    public void Heal(int amount) {
-        hp += amount;
-        if (hp >= maxHp) {
-            hp= maxHp;
-        }
     }
 }

@@ -86,7 +86,7 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0.93768543
-        functionName: StartCol
+        functionName: GatherEnd
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: f49d187467a58414180460a3ad42aa96, type: 3}
         floatParameter: 0

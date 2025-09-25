@@ -451,5 +451,19 @@ public class InventoryManager : SystemObject<InventoryManager> {
         }
         return null;
     }
+
+    public void UseSelectedItem() {
+        var slot = GetCurrentSlot();
+        if (slot == null || slot.item == null) return;
+
+        if (slot?.item is HealItem healItem) {
+            healItem.Use(GameObject.FindGameObjectWithTag("Player"));
+            Debug.Log("hp‚ð‰ñ•œ‚µ‚½");
+            slot.amount--;
+            if (slot.amount <= 0) slot.item = null;
+            RefreshUI();
+        }
+        UpdateHeldItemUI();
+    }
     #endregion
 }

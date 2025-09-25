@@ -36,8 +36,8 @@ public class ItemManager : SystemObject<ItemManager> {
 
 
         // ここでアイテム5種を登録（ID）
-        itemList.Add(new ItemBase("回復薬", 3000, eItemType.Heal, potionIcon));
-        itemList.Add(new ItemBase("木の実", 3001, eItemType.Heal, NutIcon));
+        itemList.Add(new HealItem("回復薬", 3000, 50, potionIcon));
+        itemList.Add(new HealItem("木の実", 3001, 10, NutIcon));
         itemList.Add(new ItemBase("薬草", 4001, eItemType.Material, HerbIcon));
         itemList.Add(new ItemBase("紐", 4002, eItemType.Material, RopeIcon));
         itemList.Add(new ItemBase("石", 4020, eItemType.Material, StoneIcon));
