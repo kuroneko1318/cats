@@ -163,19 +163,29 @@ public class EnemyBase : MonoBehaviour {
         hitbox.gameObject.SetActive(false);
     }
 
-    public virtual void TakeDamage(int attack, float motionMultiplier = 1, float criticalChance = 0, float criticalMultiplier = 2,
-                                   int elementalValue = 0, float staggerValue = 0) {
-        isCritical = Random.value < criticalChance; // 20%でクリティカル
-        if (isCritical) {
-            damage = Mathf.RoundToInt
-                ((Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f) * criticalMultiplier);
-            hp -= damage;
-        }
-        else {
-            damage = Mathf.RoundToInt
-                ((Mathf.Pow(attack, 2) / attack + defence) * motionMultiplier * Random.Range(0.90f, 1.1f));
-            hp -= damage;
-        }
+    public virtual void TakeDamage(int attack, float motionMultiplier = 1f, float criticalChance = 0f, float criticalMultiplier = 2f,
+                               int elementalValue = 0, float staggerValue = 0f) {
+        if (state == EnemyState.Dead) return; // 二重呼び出し防止
+
+        // クリティカル判定
+        isCritical = Random.value < criticalChance;
+
+        // 装備・バフ込みの防御力を考慮
+        int effectiveDefence = defence;
+
+        // 基本ダメージ計算
+        int damage = Mathf.Max(0, attack - effectiveDefence);
+
+        // クリティカル補正
+        if (isCritical) damage = Mathf.RoundToInt(damage * criticalMultiplier);
+
+        // モーション倍率 + ランダム補正
+        damage = Mathf.RoundToInt(damage * motionMultiplier * Random.Range(0.90f, 1.10f));
+
+        // HP 減少
+        hp -= damage;
+
+        // ダメージポップアップ表示
         if (currentPopup != null && !currentPopup.IsFadingOut) {
             currentPopup.AddDamage(damage, isCritical);
         }
@@ -183,13 +193,16 @@ public class EnemyBase : MonoBehaviour {
             Vector3 popupPos = transform.position + Vector3.up * 2f;
             GameObject popupObj = Instantiate(damagePopupPrefab, popupPos, Quaternion.identity);
             currentPopup = popupObj.GetComponent<DamagePopupController>();
-
             currentPopup.AddDamage(damage, isCritical);
-
         }
+
+        // 死亡判定
         if (hp <= 0) Dead();
 
-        animator.SetTrigger("Hit"); // アニメーション切り替え
+        // ヒットアニメーション
+        animator.SetTrigger("Hit");
+
+        Debug.Log($"Enemy took {damage} damage {(isCritical ? "(Critical!)" : "")}. HP: {hp}");
     }
 
     public virtual void Dead() {

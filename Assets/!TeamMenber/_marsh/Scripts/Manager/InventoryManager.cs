@@ -384,6 +384,23 @@ public class InventoryManager : SystemObject<InventoryManager> {
             }
         }
 
+        // 装備スロットの場合
+        if (currentArea == UIArea.Equip) {
+            var player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBase>();
+
+            if (slot.item is WeaponBase weapon) {
+                player.EquipWeapon(weapon);
+            }
+            else if (slot.item is ArmorBase armor) {
+                player.EquipArmor(armor);
+            }
+            else if (slot.item == null) {
+                // 装備を外した場合は base ステータスに戻す
+                player.EquipWeapon(null);
+                player.EquipArmor(null);
+            }
+        }
+
         // まだ何も持っていない場合
         if (heldItem == null) {
             if (slot.item == null || slot.amount <= 0) return; // 空なら何もしない
@@ -464,6 +481,19 @@ public class InventoryManager : SystemObject<InventoryManager> {
             RefreshUI();
         }
         UpdateHeldItemUI();
+    }
+    private void ApplyEquipment(int slotIndex) {
+        PlayerBase player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBase>();
+        if (player == null) return;
+
+        if (slotIndex == 0) { // 武器スロット
+            if (equipSlots[0].item is WeaponBase weapon) player.EquipWeapon(weapon);
+            else player.EquipWeapon(null); // 空なら装備解除
+        }
+        else if (slotIndex == 1) { // 防具スロット
+            if (equipSlots[1].item is ArmorBase armor) player.EquipArmor(armor);
+            else player.EquipArmor(null); // 空なら装備解除
+        }
     }
     #endregion
 }

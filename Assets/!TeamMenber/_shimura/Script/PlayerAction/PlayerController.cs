@@ -71,9 +71,9 @@
 
 //        }
 
-//        SetDamage(attack);
+//        SetDamage(baseAttack);
 
-//        attacker = attack;
+//        attacker = baseAttack;
 
 //        PlayAttackSEOnAnimationStart();
 

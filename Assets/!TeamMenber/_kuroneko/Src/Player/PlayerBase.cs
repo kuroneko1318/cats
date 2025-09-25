@@ -12,11 +12,14 @@ public class PlayerBase : MonoBehaviour {
     private Animator anim;
     private Transform mainCamera;
     private Vector2 moveInput;
+    private SkillCooldownUI skillUI;
 
     [Header("プレイヤーのステータス")]
     [SerializeField] public int hp;
     [SerializeField] public int maxHp;
+    [SerializeField] public int baseDefence;
     [SerializeField] public int defence;
+    [SerializeField] public int baseAttack;
     [SerializeField] public int attack;
     [SerializeField] public float stamina;
     public GatheringPoint point;
@@ -91,6 +94,9 @@ public class PlayerBase : MonoBehaviour {
                 InventoryManager.Instance.UseSelectedItem();
             }
         };
+
+        //スキルクールダウンの取得
+        skillUI = GameObject.FindGameObjectWithTag("PlayerUI").GetComponent<SkillCooldownUI>();
     }
 
     void Update() {
@@ -114,13 +120,14 @@ public class PlayerBase : MonoBehaviour {
     }
 
     void OpenQuest() {
-        QuestBoardManager.Instance.OpenQuestBoard(); // ← Quest UI 管理用のシングルトンを用意
+        QuestBoardManager.Instance.OpenQuestBoard();
+        skillUI.HideUI();
         input.SwitchCurrentActionMap("Quest");       // Questアクションマップに切り替え
-                                                     // Questアクションマップの入力を取得
     }
 
     void CloseQuest() {
         QuestBoardManager.Instance.CloseQuestBoard();
+        skillUI.ShowUI();
         input.SwitchCurrentActionMap("Gameplay");    // 戻す
     }
 
@@ -146,11 +153,13 @@ public class PlayerBase : MonoBehaviour {
 
     void OpenInventory() {
         InventoryManager.Instance.OpenInventory();
+        skillUI.HideUI();
         input.SwitchCurrentActionMap("Inventory");
     }
 
     void CloseInventory() {
         InventoryManager.Instance.CloseInventory();
+        skillUI.ShowUI();
         input.SwitchCurrentActionMap("Gameplay");
     }
 
@@ -178,33 +187,37 @@ public class PlayerBase : MonoBehaviour {
     }
 
     // ダメージ処理
-    public virtual void TakeDamage(int attack, float motionMultiplier = 1,
-                                   float criticalChance = 0, float criticalMultiplier = 2,
-                                   int elementalValue = 0, float staggerValue = 0) {
+    public virtual void TakeDamage(int power, float motionMultiplier = 1f,
+                               float criticalChance = 0f, float criticalMultiplier = 2f,
+                               int elementalValue = 0, float staggerValue = 0f) {
         if (isDead || IsSkillActive) return;
         isPick = false;
 
+        // 装備やバフ込みの防御力を使う
+        int effectiveDefence = defence; // baseDefence + 装備/バフ
 
-        int damage;
-        isCritical = Random.value < criticalChance; // クリティカル判定
+        // クリティカル判定
+        isCritical = Random.value < criticalChance;
+
+        float randomFactor = UnityEngine.Random.Range(0.90f, 1.10f);
+        int damage = Mathf.Max(0, power - effectiveDefence); // 基本ダメージ計算
 
         if (isCritical) {
-            damage = Mathf.RoundToInt(
-                (Mathf.Pow(attack, 2) / attack + defence) *
-                motionMultiplier * Random.Range(0.90f, 1.1f) * criticalMultiplier);
-            hp -= damage;
+            damage = Mathf.RoundToInt(damage * criticalMultiplier);
         }
-        else {
-            damage = Mathf.RoundToInt(
-                (Mathf.Pow(attack, 2) / attack + defence) *
-                motionMultiplier * Random.Range(0.90f, 1.1f));
-            hp -= damage;
-        }
+
+        // モーション倍率・ランダム補正
+        damage = Mathf.RoundToInt(damage * motionMultiplier * randomFactor);
+
+        // HP 減少
+        hp -= damage;
 
         pAttack.AttackEnd();
 
         if (hp <= 0) Dead();
         else anim.SetTrigger("Hit");
+
+        Debug.Log($"Damage Taken: {damage} {(isCritical ? "(Critical!)" : "")} HP: {hp}/{maxHp}");
     }
 
     private void Dead() {
@@ -243,6 +256,13 @@ public class PlayerBase : MonoBehaviour {
             hp= maxHp;
         }
     }
+    public void EquipWeapon(WeaponBase weapon) {
+        attack = baseAttack + (weapon != null ? weapon.weaponAttack : 0);
+    }
+
+    public void EquipArmor(ArmorBase armor) {
+        defence = baseDefence + (armor != null ? armor.armorDefence : 0);
+    }
 
     public void GatherStart() {
         point.Interact();
@@ -255,7 +275,7 @@ public class PlayerBase : MonoBehaviour {
         public void AttackStartEvent() {
         swordTrail.emitting = true;
         pAttack.AttackStart();
-        pAttack.SetPower(attack);
+        pAttack.SetPower(baseAttack);
     }
 
     public void AttackEndEvent() {
