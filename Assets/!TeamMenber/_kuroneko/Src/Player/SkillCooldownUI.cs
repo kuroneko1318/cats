@@ -14,6 +14,9 @@ public class SkillCooldownUI : MonoBehaviour {
     [Header("対象スキル")]
     [SerializeField] private int skillIndex = 0;   // 表示するスキルのインデックス
 
+    [Header("表示非表示用")]
+    [SerializeField] private GameObject skillCooldownUI;
+
     private void Update() {
         if (player == null || cooldownSlider == null) return;
 
@@ -35,4 +38,13 @@ public class SkillCooldownUI : MonoBehaviour {
         float normalized = 1f - (remaining / max);
         cooldownSlider.value = normalized;
     }
+
+    public void ShowUI() {
+        skillCooldownUI.SetActive(true);
+    }
+
+    public void HideUI() {
+        skillCooldownUI.SetActive(false);
+    }
+
 }

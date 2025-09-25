@@ -9,6 +9,7 @@ TagManager:
   - weapon
   - Enemy
   - EnemyAttack
+  - PlayerUI
   layers:
   - Default
   - TransparentFX
