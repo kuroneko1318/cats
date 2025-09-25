@@ -208,7 +208,7 @@ public class PlayerBase : MonoBehaviour {
     private void OnTriggerStay(Collider other) {
         if (other.gameObject.CompareTag("GatheringPoint") && GatherAction.WasPressedThisFrame()) {
             var point = other.gameObject.GetComponent<GatheringPoint>();
-            if (point != null && point.IsAvailable) {
+            if (point != null && point.IsAvailable && !pMove.IsMoving()) {
                 anim.SetTrigger("Pick");
                 isPick = true;
                 point.Interact();
