@@ -844,11 +844,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &415507359 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 278950945400560208, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
-  m_PrefabInstance: {fileID: 692902432}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &527263050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1175,22 +1170,6 @@ PrefabInstance:
       propertyPath: startPos
       value: 
       objectReference: {fileID: 559551162}
-    - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
-      propertyPath: trailObject
-      value: 
-      objectReference: {fileID: 415507359}
-    - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
-      propertyPath: GatherAction.m_Name
-      value: Gather
-      objectReference: {fileID: 0}
-    - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
-      propertyPath: OpenQuestAction.m_Name
-      value: Open Quest
-      objectReference: {fileID: 0}
-    - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
-      propertyPath: OpenInventoryAction.m_Name
-      value: Open Inventory
-      objectReference: {fileID: 0}
     - target: {fileID: 8874673962408222264, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
       propertyPath: m_Name
       value: Player

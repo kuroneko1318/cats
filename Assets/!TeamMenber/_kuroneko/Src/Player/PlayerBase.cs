@@ -25,6 +25,9 @@ public class PlayerBase : MonoBehaviour {
     [SerializeField] public int attack;
     [SerializeField] public float stamina;
     public GatheringPoint point;
+    //装備関係
+    private WeaponBase currentWeapon;
+    private ArmorBase currentArmor;
     [Header("会心系ステータス")]
     [SerializeField] public float criticalChance;     // 会心率（最大値は1.00f）
     [SerializeField] public float criticalMultiplier; // 会心ダメージ倍率
@@ -277,12 +280,21 @@ public class PlayerBase : MonoBehaviour {
             hp = maxHp;
         }
     }
+    public void UpdateEquipmentStats() {
+        attack = baseAttack;
+        defence = baseDefence;
+
+        if (currentWeapon != null) attack += currentWeapon.weaponAttack;
+        if (currentArmor != null) defence += currentArmor.armorDefence;
+    }
     public void EquipWeapon(WeaponBase weapon) {
-        attack = baseAttack + (weapon != null ? weapon.weaponAttack : 0);
+        currentWeapon = weapon;
+        UpdateEquipmentStats();
     }
 
     public void EquipArmor(ArmorBase armor) {
-        defence = baseDefence + (armor != null ? armor.armorDefence : 0);
+        currentArmor = armor;
+        UpdateEquipmentStats();
     }
 
     public void GatherStart() {

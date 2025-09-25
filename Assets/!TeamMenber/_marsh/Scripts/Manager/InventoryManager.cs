@@ -179,6 +179,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
         for (int i = 0; i < equipSlots.Length; i++) {
             var ui = Instantiate(equipSlotUIPrefab, Equip).GetComponent<InventoryUI>();
             ui.SetSlot(equipSlots[i].item, equipSlots[i].amount);
+            equipUI.Add(ui);
         }
 
         UpdateHighlight();

@@ -3261,13 +3261,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input: {fileID: 0}
-  Canvas: {fileID: 0}
+  Canvas: {fileID: 4275549240827562679}
   hp: 300
   maxHp: 300
-  baseDefence: 0
-  defence: 30
-  baseAttack: 0
-  attack: 50
+  baseDefence: 30
+  defence: 0
+  baseAttack: 50
+  attack: 0
   stamina: 0
   point: {fileID: 0}
   criticalChance: 0
