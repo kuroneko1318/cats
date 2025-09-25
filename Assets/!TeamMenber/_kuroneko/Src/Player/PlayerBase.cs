@@ -13,6 +13,7 @@ public class PlayerBase : MonoBehaviour {
     private Transform mainCamera;
     private Vector2 moveInput;
     private SkillCooldownUI skillUI;
+    private bool isNearQuestBoard = false;
 
     [Header("プレイヤーのステータス")]
     [SerializeField] public int hp;
@@ -108,8 +109,9 @@ public class PlayerBase : MonoBehaviour {
                 pMove.Move(moveInput, mainCamera);
             pAttack.Update();
             if (OpenInventoryAction.WasPressedThisFrame()) OpenInventory();
-            if (OpenQuestAction.WasPressedThisFrame())
+            if (OpenQuestAction.WasPressedThisFrame() && isNearQuestBoard) {
                 OpenQuest();
+            }
         }
         else if (input.currentActionMap.name == "Inventory") {
             HandleUI();
@@ -247,6 +249,17 @@ public class PlayerBase : MonoBehaviour {
                 isPick = true;
                 
             }
+        }
+    }
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("QuestBoard")) {
+            isNearQuestBoard = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.CompareTag("QuestBoard")) {
+            isNearQuestBoard = false;
         }
     }
 

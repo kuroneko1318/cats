@@ -3088,8 +3088,10 @@ MonoBehaviour:
   input: {fileID: 0}
   hp: 300
   maxHp: 300
-  defence: 30
-  attack: 50
+  baseDefence: 30
+  defence: 0
+  baseAttack: 50
+  attack: 0
   stamina: 0
   point: {fileID: 0}
   criticalChance: 0
@@ -3118,10 +3120,28 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   OpenQuestAction:
-    m_Name: 
+    m_Name: Open Quest
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: 241706f4-547b-423d-87dc-93af928c1554
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  UseItemAction:
+    m_Name: Use Item
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: e09ee328-0a3a-4179-9313-7cc6d9b27baa
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  DropItemAction:
+    m_Name: Drop Item
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 0f2a094e-b719-4fcc-9ef2-178021adc1bd
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []

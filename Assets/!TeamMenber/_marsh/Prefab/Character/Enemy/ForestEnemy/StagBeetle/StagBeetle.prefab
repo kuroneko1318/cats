@@ -490,13 +490,14 @@ MonoBehaviour:
   hp: 400
   maxHp: 400
   attack: 25
-  defence: 50
+  defence: 20
   moveSpeed: 7
   detectionRange: 20
   combatRange: 1.5
   attackMultiplier: 1
   deadTime: 3
   damagePopupPrefab: {fileID: 6179850667043835373, guid: 2b52a3a79f3cc4041804f3e366c0b9a4, type: 3}
+  boxCollider: {fileID: -2245930714928229044}
   patrolRadius: 20
   idleTime: 3
 --- !u!136 &-2245930714928229044
