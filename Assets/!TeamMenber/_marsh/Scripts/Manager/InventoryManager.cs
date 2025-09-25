@@ -104,7 +104,9 @@ public class InventoryManager : SystemObject<InventoryManager> {
             // 選択中アイテムUIを生成
             if (selectedItemParent != null) {
                 GameObject obj = Instantiate(inventorySlotUIPrefab, selectedItemParent);
+                obj.transform.localScale *= 1.5f;   // ← 1.5倍に拡大
                 selectedItemUI = obj.GetComponent<InventoryUI>();
+                UpdateHeldItemUI();
             }
 
             RefreshUI();
@@ -218,11 +220,11 @@ public class InventoryManager : SystemObject<InventoryManager> {
 
         if (heldItem != null && heldAmount > 0) {
             selectedItemUI.SetSlot(heldItem, heldAmount);
-            selectedItemUI.gameObject.SetActive(true);
         }
         else {
-            selectedItemUI.gameObject.SetActive(false);
+            selectedItemUI.SetSlot(null, 0);
         }
+        selectedItemUI.SetHighlight(false);
     }
 
 
@@ -407,7 +409,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
             else {
                 // 移動先に何かある場合もない場合も入れ替え
                 slot.SetItem(heldItem, heldAmount);
-
+                
                 // 元スロットに元々あったアイテムを戻す
                 if (originIndex >= 0) {
                     var originSlot = GetSlot(originArea, originIndex);
@@ -422,7 +424,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
         }
 
         RefreshUI();
-
+        UpdateHeldItemUI();
         // --- クラフト結果更新 ---
         CraftManager.Instance.UpdateResult(); // これで craftSlots[2] に結果をセット
     }
@@ -434,6 +436,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
             heldItem = null;
             originIndex = -1;
             RefreshUI();
+            UpdateHeldItemUI();
         }
         else {
             CloseInventory();
