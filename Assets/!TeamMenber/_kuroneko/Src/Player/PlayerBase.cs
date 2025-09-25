@@ -13,6 +13,7 @@ public class PlayerBase : MonoBehaviour {
     private Transform mainCamera;
     private Vector2 moveInput;
     private SkillCooldownUI skillUI;
+    public GameObject Canvas; 
 
     [Header("プレイヤーのステータス")]
     [SerializeField] public int hp;
@@ -58,6 +59,7 @@ public class PlayerBase : MonoBehaviour {
     private Vector2 uiMoveInput;
 
     void Start() {
+        Canvas.SetActive(false);
         input = GetComponent<PlayerInput>();
         anim = GetComponent<Animator>();
         mainCamera = Camera.main.transform;
@@ -240,17 +242,26 @@ public class PlayerBase : MonoBehaviour {
 
 
     private void OnTriggerStay(Collider other) {
-        if (other.gameObject.CompareTag("GatheringPoint") && GatherAction.WasPressedThisFrame()) {
-             point = other.gameObject.GetComponent<GatheringPoint>();
-            if (point != null && point.IsAvailable && !pMove.IsMoving()) {
-                anim.SetTrigger("Pick");
-                isPick = true;
-                
+        if (other.gameObject.CompareTag("GatheringPoint")){
+            Canvas.SetActive(true);
+            if (GatherAction.WasPressedThisFrame()) {
+                point = other.gameObject.GetComponent<GatheringPoint>();
+                if (point != null && point.IsAvailable && !pMove.IsMoving()) {
+                    anim.SetTrigger("Pick");
+                    isPick = true;
+
+                }
             }
         }
     }
 
-    public void Heal(int amount) {
+
+    private void OnTriggerExit(Collider other) {
+        if (other.gameObject.CompareTag("GatheringPoint")) { 
+            Canvas.SetActive(false);
+        }
+    }
+        public void Heal(int amount) {
         hp += amount;
         if (hp >= maxHp) {
             hp= maxHp;

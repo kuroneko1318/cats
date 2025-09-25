@@ -44,7 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bf048621095ace4482310d4413bb1c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmList: []
+  bgmList:
+  - name: 
+    clip: {fileID: 8300000, guid: 1657925469c78374bba884d373b3a8ab, type: 3}
+    volume: 1
+    pitch: 0
   seList:
   - name: FirstAttack
     clip: {fileID: 8300000, guid: 17ab5432d7fcecb4ebee0315b29799d3, type: 3}
