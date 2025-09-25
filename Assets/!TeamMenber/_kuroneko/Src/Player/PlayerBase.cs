@@ -13,7 +13,8 @@ public class PlayerBase : MonoBehaviour {
     private Transform mainCamera;
     private Vector2 moveInput;
     private SkillCooldownUI skillUI;
-    public GameObject Canvas; 
+    public GameObject Canvas;
+    private bool isNearQuestBoard = false;
 
     [Header("プレイヤーのステータス")]
     [SerializeField] public int hp;
@@ -110,8 +111,9 @@ public class PlayerBase : MonoBehaviour {
                 pMove.Move(moveInput, mainCamera);
             pAttack.Update();
             if (OpenInventoryAction.WasPressedThisFrame()) OpenInventory();
-            if (OpenQuestAction.WasPressedThisFrame())
+            if (OpenQuestAction.WasPressedThisFrame() && isNearQuestBoard) {
                 OpenQuest();
+            }
         }
         else if (input.currentActionMap.name == "Inventory") {
             HandleUI();
@@ -242,7 +244,7 @@ public class PlayerBase : MonoBehaviour {
 
 
     private void OnTriggerStay(Collider other) {
-        if (other.gameObject.CompareTag("GatheringPoint")){
+        if (other.gameObject.CompareTag("GatheringPoint")) {
             Canvas.SetActive(true);
             if (GatherAction.WasPressedThisFrame()) {
                 point = other.gameObject.GetComponent<GatheringPoint>();
@@ -254,17 +256,25 @@ public class PlayerBase : MonoBehaviour {
             }
         }
     }
-
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("QuestBoard")) {
+            isNearQuestBoard = true;
+        }
+    }
 
     private void OnTriggerExit(Collider other) {
-        if (other.gameObject.CompareTag("GatheringPoint")) { 
+        if (other.CompareTag("QuestBoard")) {
+            isNearQuestBoard = false;
+        }
+        if (other.gameObject.CompareTag("GatheringPoint")) {
             Canvas.SetActive(false);
         }
     }
-        public void Heal(int amount) {
+
+    public void Heal(int amount) {
         hp += amount;
         if (hp >= maxHp) {
-            hp= maxHp;
+            hp = maxHp;
         }
     }
     public void EquipWeapon(WeaponBase weapon) {
@@ -282,8 +292,8 @@ public class PlayerBase : MonoBehaviour {
     public void GatherEnd() {
         point.StartCol();
     }
-        // Animatorイベント用ラッパー
-        public void AttackStartEvent() {
+    // Animatorイベント用ラッパー
+    public void AttackStartEvent() {
         swordTrail.emitting = true;
         pAttack.AttackStart();
         pAttack.SetPower(baseAttack);

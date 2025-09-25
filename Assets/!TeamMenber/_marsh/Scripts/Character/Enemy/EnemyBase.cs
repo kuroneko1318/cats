@@ -174,7 +174,7 @@ public class EnemyBase : MonoBehaviour {
         int effectiveDefence = defence;
 
         // 基本ダメージ計算
-        int damage = Mathf.Max(0, attack - effectiveDefence);
+        int damage = Mathf.Max(1, attack - effectiveDefence);
 
         // クリティカル補正
         if (isCritical) damage = Mathf.RoundToInt(damage * criticalMultiplier);

@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 public class ItemCanvasUi : MonoBehaviour
 {
-   [SerializeField] private TextMeshPro textMesh;
+   [SerializeField] private TextMeshProUGUI textMesh;
     [SerializeField] private float disappearDelay = 1f;
     [SerializeField] private float riseSpeed = 1f;
     [SerializeField] private float fadeSpeed = 2f;
