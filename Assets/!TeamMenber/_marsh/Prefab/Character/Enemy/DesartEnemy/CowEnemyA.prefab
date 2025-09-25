@@ -1434,7 +1434,6 @@ GameObject:
   - component: {fileID: 93416435191227588}
   - component: {fileID: 5603163954540156933}
   - component: {fileID: 6212782963942835383}
-  - component: {fileID: -3662813789264241629}
   m_Layer: 0
   m_Name: CowEnemyA
   m_TagString: Enemy
@@ -1577,32 +1576,6 @@ MonoBehaviour:
   deadTime: 3
   damagePopupPrefab: {fileID: 6874668722503263158, guid: 84d7f1e2f40c4cc4bb1e936cc2d76a02, type: 3}
   boxCollider: {fileID: 2736625048070947353}
-  patrolRadius: 5
-  idleTime: 2
---- !u!114 &-3662813789264241629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7120386665755974848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42fbe76e220e8c74eba77344475d0e89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyType: 0
-  hp: 0
-  maxHp: 0
-  attack: 0
-  defence: 0
-  moveSpeed: 3.5
-  detectionRange: 10
-  combatRange: 3
-  attackMultiplier: 1
-  deadTime: 3
-  damagePopupPrefab: {fileID: 0}
-  boxCollider: {fileID: 0}
   patrolRadius: 5
   idleTime: 2
 --- !u!1 &7552025604132190375
