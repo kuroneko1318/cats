@@ -44,8 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f725921d0ef3ae4f9d8c856758cced5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  questBoardPrefab: {fileID: 4542455093370892507, guid: b9929d38665d3bb438f4a23e09b8370d, type: 3}
   questPrefab: {fileID: 810913825405008466, guid: 7b9c217981d4e4d43b35db83350408d2, type: 3}
   contentParent: {fileID: 0}
+  selectedColor: {r: 1, g: 0.86571324, b: 0, a: 1}
   allQuests:
   - {fileID: 11400000, guid: 7e4e09c9525a85b4b8330a250772ef20, type: 2}
   - {fileID: 11400000, guid: d7e80446847774c4da005e0cbada328a, type: 2}

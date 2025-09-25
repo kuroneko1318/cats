@@ -13,11 +13,14 @@ public class NewPlayerMove
     private Vector3 avoidanceDir;              // 回避方向
     private float avoidanceTime = 0.3f;        // 回避の持続時間
     private float avoidanceTimer = 0f;
+    private bool isMoving = false;
 
     public NewPlayerMove(Transform transform, Animator animator) {
         playerTransform = transform;
         anim = animator;
     }
+
+    public bool IsMoving() => isMoving;
 
     // 移動処理（カメラ基準）
     public void Move(Vector2 input, Transform cameraTransform) {
@@ -53,9 +56,11 @@ public class NewPlayerMove
             );
 
             anim.SetBool("Run", true); // 移動アニメON
+            isMoving = true;
         }
         else {
             anim.SetBool("Run", false); // 移動アニメOFF
+            isMoving = false;
         }
     }
 

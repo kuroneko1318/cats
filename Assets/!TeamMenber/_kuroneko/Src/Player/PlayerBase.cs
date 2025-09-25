@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 /// 攻撃中・スキル中は移動不可
 /// </summary>
 public class PlayerBase : MonoBehaviour {
-    private PlayerInput input;
+    public PlayerInput input;
     private NewPlayerMove pMove;
     private NewPlayerAttack pAttack;
     private Animator anim;
@@ -47,11 +47,10 @@ public class PlayerBase : MonoBehaviour {
 
     public InputAction GatherAction;
     public InputAction OpenInventoryAction;
+    public InputAction OpenQuestAction;
 
     // UI用カーソル移動
     private Vector2 uiMoveInput;
-    private bool selectPressed;
-    private bool cancelPressed;
 
     void Start() {
         input = GetComponent<PlayerInput>();
@@ -75,11 +74,11 @@ public class PlayerBase : MonoBehaviour {
         input.actions["Skill"].performed += ctx => { if (!IsSkillActive && !pAttack.IsAttacking() && !isDead && !isPick) skillManager.UseSkill(0, gameObject); };
         GatherAction = input.actions["Gather"];
         OpenInventoryAction = input.actions["OpenInventory"];
+        OpenQuestAction = input.actions["OpenQuest"];
 
         // UI
         input.actions["MoveMenu"].performed += ctx => uiMoveInput = ctx.ReadValue<Vector2>();
-        input.actions["Select"].performed += ctx => selectPressed = ctx.ReadValue<float>() > 0;
-        input.actions["Cancel"].performed += ctx => cancelPressed = ctx.ReadValue<float>() > 0;
+        input.actions["MoveQuest"].performed += ctx => moveInput = ctx.ReadValue<Vector2>();
     }
 
     void Update() {
@@ -88,12 +87,48 @@ public class PlayerBase : MonoBehaviour {
                 pMove.Move(moveInput, mainCamera);
             pAttack.Update();
             if (OpenInventoryAction.WasPressedThisFrame()) OpenInventory();
+            if (OpenQuestAction.WasPressedThisFrame())
+                OpenQuest();
         }
         else if (input.currentActionMap.name == "Inventory") {
             HandleUI();
         }
-
+        else if (input.currentActionMap.name == "Quest") {
+            HandleQuestUI();
+        }
     }
+
+    void OpenQuest() {
+        QuestBoardManager.Instance.OpenQuestBoard(); // ← Quest UI 管理用のシングルトンを用意
+        input.SwitchCurrentActionMap("Quest");       // Questアクションマップに切り替え
+                                                     // Questアクションマップの入力を取得
+    }
+
+    void CloseQuest() {
+        QuestBoardManager.Instance.CloseQuestBoard();
+        input.SwitchCurrentActionMap("Gameplay");    // 戻す
+    }
+
+    void HandleQuestUI() {
+
+        // 移動
+        if (moveInput.y > 0) QuestBoardManager.Instance.MoveUp();
+        if (moveInput.y < 0) QuestBoardManager.Instance.MoveDown();
+        if (moveInput.x > 0) QuestBoardManager.Instance.MoveRight();
+        if (moveInput.x < 0) QuestBoardManager.Instance.MoveLeft();
+
+        // 決定
+        if (input.actions["Select"].WasPressedThisFrame()) {
+            QuestBoardManager.Instance.AcceptQuest();
+        }
+
+        // キャンセル
+        if (input.actions["Cancel"].WasPressedThisFrame()) {
+            CloseQuest(); // QuestUIを閉じてGameplayに戻す
+        }
+        moveInput = Vector2.zero; // 移動入力もリセット
+    }
+
     void OpenInventory() {
         InventoryManager.Instance.OpenInventory();
         input.SwitchCurrentActionMap("Inventory");
@@ -105,24 +140,23 @@ public class PlayerBase : MonoBehaviour {
     }
 
     void HandleUI() {
+
         // カーソル移動
         if (uiMoveInput.y > 0) InventoryManager.Instance.MoveUp();
         if (uiMoveInput.y < 0) InventoryManager.Instance.MoveDown();
         if (uiMoveInput.x > 0) InventoryManager.Instance.MoveRight();
         if (uiMoveInput.x < 0) InventoryManager.Instance.MoveLeft();
 
-        if (selectPressed) {
+        if (input.actions["Select"].WasPressedThisFrame()) {
             InventoryManager.Instance.HandleSelect();
-            selectPressed = false; // リセット
         }
-        if (cancelPressed) {
+        if (input.actions["Cancel"].WasPressedThisFrame()) {
             if (InventoryManager.Instance.IsHoldingItem) {
                 InventoryManager.Instance.HandleCancel(); // 持っているものを戻す
             }
             else {
                 CloseInventory(); // 何も持っていなければインベントリ閉じる
             }
-            cancelPressed = false; // リセット
         }
 
         uiMoveInput = Vector2.zero; // 移動入力もリセット
@@ -174,7 +208,7 @@ public class PlayerBase : MonoBehaviour {
     private void OnTriggerStay(Collider other) {
         if (other.gameObject.CompareTag("GatheringPoint") && GatherAction.WasPressedThisFrame()) {
             var point = other.gameObject.GetComponent<GatheringPoint>();
-            if (point != null && point.IsAvailable) {
+            if (point != null && point.IsAvailable && !pMove.IsMoving()) {
                 anim.SetTrigger("Pick");
                 isPick = true;
                 

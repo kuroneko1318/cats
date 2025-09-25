@@ -20,6 +20,12 @@ public class InventoryManager : SystemObject<InventoryManager> {
     public Transform Craft;
     public Transform Equip;
 
+    [Header("Selected Item UI")]
+    public Transform selectedItemParent; // InventoryPanel 内の SelectedItem オブジェクト
+    private InventoryUI selectedItemUI;   // 生成したUIを保持
+    public UnityEngine.UI.Image selectedItemIcon;
+    public TMPro.TextMeshProUGUI selectedItemAmountText;
+
     private GameObject inventoryPanelInstance;
 
     // インベントリUI
@@ -93,6 +99,13 @@ public class InventoryManager : SystemObject<InventoryManager> {
             InventoryBottom = inventoryPanelInstance.transform.Find("InventoryBottom");
             Craft = inventoryPanelInstance.transform.Find("Craft");
             Equip = inventoryPanelInstance.transform.Find("Equip");
+            selectedItemParent = inventoryPanelInstance.transform.Find("SelectedItem");
+
+            // 選択中アイテムUIを生成
+            if (selectedItemParent != null) {
+                GameObject obj = Instantiate(inventorySlotUIPrefab, selectedItemParent);
+                selectedItemUI = obj.GetComponent<InventoryUI>();
+            }
 
             RefreshUI();
             if (InventoryTop == null || InventoryBottom == null || Craft == null || Equip == null)
@@ -200,7 +213,17 @@ public class InventoryManager : SystemObject<InventoryManager> {
                 break;
         }
     }
+    private void UpdateHeldItemUI() {
+        if (selectedItemUI == null) return;
 
+        if (heldItem != null && heldAmount > 0) {
+            selectedItemUI.SetSlot(heldItem, heldAmount);
+            selectedItemUI.gameObject.SetActive(true);
+        }
+        else {
+            selectedItemUI.gameObject.SetActive(false);
+        }
+    }
 
 
     private InventoryUI GetCurrentUI() {
@@ -376,16 +399,23 @@ public class InventoryManager : SystemObject<InventoryManager> {
             originIndex = selectedIndex;
         }
         else {
-            // 移動先に何かある場合もない場合も入れ替え
-            slot.SetItem(heldItem, heldAmount);
+            // 同じマスに戻そうとしている場合
+            if (originArea == currentArea && originIndex == selectedIndex) {
+                // ただ持ち物を戻すだけ
+                slot.SetItem(heldItem, heldAmount);
+            }
+            else {
+                // 移動先に何かある場合もない場合も入れ替え
+                slot.SetItem(heldItem, heldAmount);
 
-            // 元スロットに元々あったアイテムを戻す
-            if (originIndex >= 0) {
-                var originSlot = GetSlot(originArea, originIndex);
-                originSlot.SetItem(slotItem, slotAmount);
+                // 元スロットに元々あったアイテムを戻す
+                if (originIndex >= 0) {
+                    var originSlot = GetSlot(originArea, originIndex);
+                    originSlot.SetItem(slotItem, slotAmount);
+                }
             }
 
-            // 持ち物を更新（今回の操作で持つものは無し）
+            // 持ち物をクリア
             heldItem = null;
             heldAmount = 0;
             originIndex = -1;

@@ -1,20 +1,9 @@
 using UnityEngine;
 
-public class QuestManager : MonoBehaviour {
-    public static QuestManager Instance { get; private set; }
+public class QuestManager : SystemObject<QuestManager> {
 
     public HuntQuest activeQuest;   // 今進行中のクエスト
     public int playerMoney;
-
-    private void Awake() {
-        if (Instance == null) {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else {
-            Destroy(gameObject);
-        }
-    }
 
     // クエスト受注
     public bool AcceptQuest(HuntQuest quest) {
