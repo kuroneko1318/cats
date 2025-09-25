@@ -28,4 +28,8 @@ public class ItemBase
         Skill = new int [_SKILL_MAX] { skill1, skill2 };
         this.icon = image;
     }
+    // アイテムを使用する（オーバーライド前提）
+    public virtual void Use(GameObject user) {
+        Debug.Log($"{itemName} を使用した（デフォルト処理なし）");
+    }
 }

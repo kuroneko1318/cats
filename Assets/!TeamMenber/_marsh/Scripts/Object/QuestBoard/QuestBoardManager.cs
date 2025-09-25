@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class QuestBoardManager : SystemObject<QuestBoardManager> {
     [Header("UI")]
+    public GameObject acceptQuestUI;
     public GameObject questBoardPrefab;   // プレハブをここにアサイン
     private GameObject questBoardInstance;
     private GameObject questBoardPanel;
@@ -122,6 +123,7 @@ public class QuestBoardManager : SystemObject<QuestBoardManager> {
     public void CloseQuestBoard() {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<PlayerBase>().input.SwitchCurrentActionMap("GamePlay");
+        Instantiate(acceptQuestUI, player.transform);
         questBoardPanel.SetActive(false);
     }
 }

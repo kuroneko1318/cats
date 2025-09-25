@@ -227,7 +227,6 @@ public class InventoryManager : SystemObject<InventoryManager> {
         selectedItemUI.SetHighlight(false);
     }
 
-
     private InventoryUI GetCurrentUI() {
         switch (currentArea) {
             case UIArea.InventoryTop: return inventoryTopUI[selectedIndex];
