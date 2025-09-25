@@ -14,7 +14,7 @@ public class OreGatheringPoint : GatheringPoint {
         Debug.Log("zÎ‚©‚ç“SzÎ‚ğÌæ‚µ‚Ü‚µ‚½I");
 
 
-        Itemrand = Random.Range(0,2);
+        Itemrand = Random.Range(0,3);
         switch (Itemrand) {
             case 0: bag.AddItem(ItemManager.Instance.GetItemByName("Î"), Random.Range(1,5));
                 break;

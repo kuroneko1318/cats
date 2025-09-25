@@ -19,7 +19,7 @@ public class PlayerBase : MonoBehaviour {
     [SerializeField] public int defence;
     [SerializeField] public int attack;
     [SerializeField] public float stamina;
-
+    public GatheringPoint point;
     [Header("会心系ステータス")]
     [SerializeField] public float criticalChance;     // 会心率（最大値は1.00f）
     [SerializeField] public float criticalMultiplier; // 会心ダメージ倍率
@@ -204,10 +204,10 @@ public class PlayerBase : MonoBehaviour {
         transform.position = startPos.transform.position;
         hp = maxHp;
     }
-
+    
     private void OnTriggerStay(Collider other) {
         if (other.gameObject.CompareTag("GatheringPoint") && GatherAction.WasPressedThisFrame()) {
-            var point = other.gameObject.GetComponent<GatheringPoint>();
+             point = other.gameObject.GetComponent<GatheringPoint>();
             if (point != null && point.IsAvailable && !pMove.IsMoving()) {
                 anim.SetTrigger("Pick");
                 isPick = true;
@@ -216,8 +216,15 @@ public class PlayerBase : MonoBehaviour {
         }
     }
 
-    // Animatorイベント用ラッパー
-    public void AttackStartEvent() {
+    public void GatherStart() {
+        point.Interact();
+    }
+
+    public void GatherEnd() {
+        point.StartCol();
+    }
+        // Animatorイベント用ラッパー
+        public void AttackStartEvent() {
         swordTrail.emitting = true;
         pAttack.AttackStart();
         pAttack.SetPower(attack);
@@ -244,5 +251,12 @@ public class PlayerBase : MonoBehaviour {
 
     public void EndSkillEvent() {
         SetSkillActive(false);
+    }
+
+    public void Heal(int amount) {
+        hp += amount;
+        if (hp >= maxHp) {
+            hp= maxHp;
+        }
     }
 }

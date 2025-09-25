@@ -181,7 +181,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4938701198831188556}
   - component: {fileID: 9060809647264385858}
-  - component: {fileID: 6954932177384488267}
   m_Layer: 0
   m_Name: ItemPopupUI
   m_TagString: Untagged
@@ -222,21 +221,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textMesh: {fileID: 2463496811961277108}
-  disappearDelay: 1
+  disappearDelay: 0.5
   riseSpeed: 1
   fadeSpeed: 2
---- !u!114 &6954932177384488267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8421513149820117960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b220f2332a8e5a458d27b529bb54af4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textObjects:
-  - {fileID: 2434031551571681639}
-  spacing: 1

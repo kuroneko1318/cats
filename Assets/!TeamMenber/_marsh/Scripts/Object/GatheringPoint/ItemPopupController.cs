@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ItemPopupController : MonoBehaviour {
     //テキストUI関係
     [SerializeField] private TextMeshPro textMesh;
-    [SerializeField] private float disappearDelay = 1f;
+    [SerializeField] private float disappearDelay = 0.2f;
     [SerializeField] private float riseSpeed = 1f;
     [SerializeField] private float fadeSpeed = 2f;
     private float timer = 0f;

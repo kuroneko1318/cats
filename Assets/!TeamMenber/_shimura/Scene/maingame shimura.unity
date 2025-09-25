@@ -1334,6 +1334,10 @@ PrefabInstance:
       value: Gather
       objectReference: {fileID: 0}
     - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
+      propertyPath: OpenQuestAction.m_Name
+      value: Open Quest
+      objectReference: {fileID: 0}
+    - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
       propertyPath: OpenInventoryAction.m_Name
       value: Open Inventory
       objectReference: {fileID: 0}

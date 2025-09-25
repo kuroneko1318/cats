@@ -45,6 +45,8 @@ public class BeefEnemy1 : EnemyBase
                 }
                 break;
         }
+
+
     }
 
     private IEnumerator AttackRoutine() {

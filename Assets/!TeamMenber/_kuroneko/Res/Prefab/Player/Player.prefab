@@ -3085,11 +3085,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f49d187467a58414180460a3ad42aa96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  input: {fileID: 0}
   hp: 300
   maxHp: 300
   defence: 30
   attack: 50
   stamina: 0
+  point: {fileID: 0}
   criticalChance: 0
   criticalMultiplier: 0
   attackCollider1: {fileID: 2101377630977014854}
@@ -3111,6 +3113,15 @@ MonoBehaviour:
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: f01839e3-d0d2-4ffd-b842-eb96425828d8
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  OpenQuestAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 241706f4-547b-423d-87dc-93af928c1554
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []

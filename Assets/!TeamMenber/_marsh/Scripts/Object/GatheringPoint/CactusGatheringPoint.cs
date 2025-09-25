@@ -4,7 +4,7 @@ using UnityEngine;
 
 //shimura is draw
 public class CactusGatheringPoint: GatheringPoint {
-
+    private int Itemrand;
     public override void Start() {
         base.Start();
         pointType = GatheringPointType.Cactus;
@@ -12,8 +12,20 @@ public class CactusGatheringPoint: GatheringPoint {
 
     public override void Gather() {
         Debug.Log("ƒTƒ{ƒeƒ“‚ğÌæ‚µ‚Ü‚µ‚½I");
-        bag.AddItem(ItemManager.Instance.GetItemByName("–ò‘"), Random.Range(1, 5));
-        bag.AddItem(ItemManager.Instance.GetItemByName("•R"), Random.Range(1, 3));
-        bag.AddItem(ItemManager.Instance.GetItemByName("j"), Random.Range(2, 5));
+        Itemrand = Random.Range(0, 4);
+        switch (Itemrand) {
+            case 0:
+                bag.AddItem(ItemManager.Instance.GetItemByName("–ò‘"), Random.Range(1, 5));
+                break;
+            case 1:
+                bag.AddItem(ItemManager.Instance.GetItemByName("•R"), Random.Range(1, 3));
+                break;
+            case 2:
+                bag.AddItem(ItemManager.Instance.GetItemByName("–Ø‚ÌÀ"), Random.Range(1, 2));
+                break;
+            case 3:
+                bag.AddItem(ItemManager.Instance.GetItemByName("–Ø"), Random.Range(2, 5));
+                break;
+        }
     }
 }

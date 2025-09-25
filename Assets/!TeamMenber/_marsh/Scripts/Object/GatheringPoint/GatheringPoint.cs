@@ -38,25 +38,17 @@ public bool IsAvailable => isAvailable;
         }
 
         Debug.Log($"Ìæ: {pointType}");
-        //Gather();
+        Gather();
         //StartCoroutine(RespawnCoroutine());
     }
 
     public abstract void Gather();
 
-    public void StartCol() {
+    public virtual void StartCol() {
         StartCoroutine(RespawnCoroutine());
     }
 
-    public void GatherStart() {
-        if (!isAvailable) return;
-        if (bag == null) {
-            bag = GameObject.FindGameObjectWithTag("bag")?.GetComponent<Inventory>();
-        }
-
-        Debug.Log($"Ìæ: {pointType}");
-        Gather();
-    }
+    
 
     private IEnumerator RespawnCoroutine() {
         isAvailable = false;
