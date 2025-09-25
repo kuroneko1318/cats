@@ -94,6 +94,9 @@ public class PlayerBase : MonoBehaviour {
     }
 
     void Update() {
+        //  クールタイムUI用
+        skillManager.Update(Time.deltaTime);
+
         if (input.currentActionMap.name == "Gameplay") {
             if (!IsSkillActive && !pAttack.IsAttacking() && !isDead && !isPick)
                 pMove.Move(moveInput, mainCamera);
@@ -216,7 +219,13 @@ public class PlayerBase : MonoBehaviour {
         transform.position = startPos.transform.position;
         hp = maxHp;
     }
-    
+
+    // PlayerBase.cs の一部
+    public SkillManager GetSkillManager() {
+        return skillManager;
+    }
+
+
     private void OnTriggerStay(Collider other) {
         if (other.gameObject.CompareTag("GatheringPoint") && GatherAction.WasPressedThisFrame()) {
              point = other.gameObject.GetComponent<GatheringPoint>();
