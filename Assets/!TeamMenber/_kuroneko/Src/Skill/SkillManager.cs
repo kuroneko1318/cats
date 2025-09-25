@@ -1,6 +1,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// SkillManagerクラス 
+// 複数のスキル(SkillBase継承クラス)をリストで管理し、順番（インデックス）で呼び出せるマネージャー 
+// 【使い方】 
+// 1. スキルを作成し、SkillBaseを継承する 
+// 2. SkillManagerのインスタンスを作成する 
+// 3. RegisterSkill() メソッドでスキルを登録する 
+// 4. UseSkill(index, user) メソッドで登録したスキルを呼び出す indexは登録順の0から始まる番号 
+// 5. GetSkillCount() で登録されているスキル数を取得できるので、UI等で活用可能 
+// 6. GetSkillNames() で登録スキルの名前リストを取得可能 
+// 【例】 // Start等で使用↓ 
+// SkillManager skillManager = new SkillManager(); 
+// skillManager.RegisterSkill(new スキルのコンストラクタ);
+// Updateで使用↓
+// skillManager.UseSkill(Listで登録されたインデックス, スキル使用者);
+// 【注意】 
+// スキルはリストの順番で管理されるため、インデックスを間違えない
+// 同じスキルインスタンスは重複登録されない
+
 public class SkillManager {
     // 登録されたスキルの一覧
     private List<SkillBase> skillList = new List<SkillBase>();
@@ -48,19 +67,5 @@ public class SkillManager {
         foreach (var s in skillList)
             names.Add(s.SkillName);
         return names;
-    }
-
-    // 指定スキルの残りクールタイムを取得
-    public float GetRemainingCooldown(int index) {
-        if (index >= 0 && index < cooldownTimers.Count)
-            return cooldownTimers[index];
-        return 0f;
-    }
-
-    // 指定スキルの最大クールタイムを取得
-    public float GetCooldownTime(int index) {
-        if (index >= 0 && index < skillList.Count)
-            return skillList[index].Cooldown;
-        return 0f;
     }
 }

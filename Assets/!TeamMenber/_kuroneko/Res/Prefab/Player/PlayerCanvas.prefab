@@ -438,6 +438,7 @@ GameObject:
   - component: {fileID: 3104057215372018456}
   - component: {fileID: 2579530224434191834}
   - component: {fileID: 5760797162499000474}
+  - component: {fileID: 1236267586602839842}
   m_Layer: 5
   m_Name: PlayerCanvas
   m_TagString: Untagged
@@ -548,6 +549,20 @@ MonoBehaviour:
   immediateHP: {fileID: 2925792520118860420}
   delayedHP: {fileID: 179854336664939611}
   delaySpeed: 0.2
+--- !u!114 &1236267586602839842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3581953206711544624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cfff43bc91b16a4bae63e369f4dee78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownSlider: {fileID: 1961030502646129048}
+  skillIndex: 0
 --- !u!1 &3771447819185416212
 GameObject:
   m_ObjectHideFlags: 0
