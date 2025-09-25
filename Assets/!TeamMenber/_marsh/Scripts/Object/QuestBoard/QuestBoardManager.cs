@@ -106,7 +106,7 @@ public class QuestBoardManager : SystemObject<QuestBoardManager> {
         var quest = allQuests[selectedIndex];
         if (QuestManager.Instance.AcceptQuest(quest)) {
             Debug.Log($"{quest.questName} を受注しました！");
-            //CloseQuestBoard();
+            CloseQuestBoard();
         }
         else {
             Debug.Log("既にクエスト受注中です！");
@@ -120,6 +120,8 @@ public class QuestBoardManager : SystemObject<QuestBoardManager> {
     }
 
     public void CloseQuestBoard() {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<PlayerBase>().input.SwitchCurrentActionMap("GamePlay");
         questBoardPanel.SetActive(false);
     }
 }

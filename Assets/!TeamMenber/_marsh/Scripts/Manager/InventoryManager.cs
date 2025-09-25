@@ -399,16 +399,23 @@ public class InventoryManager : SystemObject<InventoryManager> {
             originIndex = selectedIndex;
         }
         else {
-            // 移動先に何かある場合もない場合も入れ替え
-            slot.SetItem(heldItem, heldAmount);
+            // 同じマスに戻そうとしている場合
+            if (originArea == currentArea && originIndex == selectedIndex) {
+                // ただ持ち物を戻すだけ
+                slot.SetItem(heldItem, heldAmount);
+            }
+            else {
+                // 移動先に何かある場合もない場合も入れ替え
+                slot.SetItem(heldItem, heldAmount);
 
-            // 元スロットに元々あったアイテムを戻す
-            if (originIndex >= 0) {
-                var originSlot = GetSlot(originArea, originIndex);
-                originSlot.SetItem(slotItem, slotAmount);
+                // 元スロットに元々あったアイテムを戻す
+                if (originIndex >= 0) {
+                    var originSlot = GetSlot(originArea, originIndex);
+                    originSlot.SetItem(slotItem, slotAmount);
+                }
             }
 
-            // 持ち物を更新（今回の操作で持つものは無し）
+            // 持ち物をクリア
             heldItem = null;
             heldAmount = 0;
             originIndex = -1;
