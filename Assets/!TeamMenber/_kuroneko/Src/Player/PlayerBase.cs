@@ -259,12 +259,14 @@ public class PlayerBase : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("QuestBoard")) {
             isNearQuestBoard = true;
+            Canvas.SetActive(true);
         }
     }
 
     private void OnTriggerExit(Collider other) {
         if (other.CompareTag("QuestBoard")) {
             isNearQuestBoard = false;
+            Canvas.SetActive(false);
         }
         if (other.gameObject.CompareTag("GatheringPoint")) {
             Canvas.SetActive(false);

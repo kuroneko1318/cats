@@ -33,7 +33,7 @@ public class ItemManager : SystemObject<ItemManager> {
         Sprite RopeIcon = Resources.Load<Sprite>("icon/Rope");
         Sprite StoneIcon = Resources.Load<Sprite>("icon/Stone");
         Sprite WoodIcon = Resources.Load<Sprite>("icon/Wood");
-
+        Sprite NomarArmor = Resources.Load<Sprite>("icon/NormalArmor");
 
         // ここでアイテム5種を登録（ID）
         itemList.Add(new HealItem("回復薬", 3000, 50, potionIcon));
@@ -66,7 +66,7 @@ public class ItemManager : SystemObject<ItemManager> {
         weaponList.Add(new WeaponBase("魔剣ズルフィカール", 1004, 100));
         weaponList.Add(new WeaponBase("魔剣フルンティング", 1005, 100));
         weaponList.Add(new WeaponBase("魔剣ネイリング", 1006, 100));
-        armorList.Add(new ArmorBase("普通のアーマー", 2001, 30));
+        armorList.Add(new ArmorBase("普通のアーマー", 2001, 30,NomarArmor));
         armorList.Add(new ArmorBase("マジックアーマー", 2002, 50));
         armorList.Add(new ArmorBase("フュージョンアーマー", 2003, 50));
 
