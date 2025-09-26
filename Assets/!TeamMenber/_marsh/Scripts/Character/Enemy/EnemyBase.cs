@@ -16,6 +16,8 @@ public enum EnemyType {
     Beetle,
     StagBeetle,
     Nasty,
+    NastyDesert,
+    NastyVolcano,
     Cow,
     // 必要に応じて追加
 }
@@ -220,6 +222,8 @@ public class EnemyBase : MonoBehaviour {
         agent.isStopped = true;
         // クエストへ報告
         QuestManager.Instance.EnemyDefeated(enemyType);
+        GameManager.Instance.ReportEnemyDefeat(enemyType);
+
         Itemrand = Random.Range(0, 4);
         Drop();
         StartCoroutine(DeadRoutine());
