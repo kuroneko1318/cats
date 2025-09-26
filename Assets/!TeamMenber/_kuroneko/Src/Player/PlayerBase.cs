@@ -311,7 +311,7 @@ public class PlayerBase : MonoBehaviour {
     private void OnTriggerStay(Collider other) {
         if (other.gameObject.CompareTag("GatheringPoint")) {
             Canvas.SetActive(true);
-            if (GatherAction.WasPressedThisFrame()) {
+            if (GatherAction.WasPressedThisFrame()&&isPick==false) {
                 point = other.gameObject.GetComponent<GatheringPoint>();
                 if (point != null && point.IsAvailable && !pMove.IsMoving()) {
                     anim.SetTrigger("Pick");
@@ -425,5 +425,19 @@ public class PlayerBase : MonoBehaviour {
 
     public void EndSkillEvent() {
         SetSkillActive(false);
+    }
+
+    public void HitCancell() {
+        // 攻撃、回避、スキルなどのフラグをfalseにリセットする例
+        anim.ResetTrigger("Attack");
+        anim.ResetTrigger("Avoid");
+        anim.ResetTrigger("Skill");
+        anim.ResetTrigger("Pick");
+        anim.SetBool("Run",false);
+
+        anim.SetBool("IsAttacking", false);
+        anim.SetBool("IsAvoiding", false);
+        anim.SetBool("IsUsingSkill", false);
+        anim.SetBool("IsPicking", false);
     }
 }
