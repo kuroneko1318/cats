@@ -1284,6 +1284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f863e37293eebb4ab38246ee229bf22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   hp: 5000
   maxHp: 5000
   attack: 20
@@ -1294,6 +1295,7 @@ MonoBehaviour:
   attackMultiplier: 1
   deadTime: 5
   damagePopupPrefab: {fileID: 6179850667043835373, guid: 2b52a3a79f3cc4041804f3e366c0b9a4, type: 3}
+  boxCollider: {fileID: 6796056716146314151}
   patrolRadius: 30
   idleTime: 2
 --- !u!54 &1426240820855453917
