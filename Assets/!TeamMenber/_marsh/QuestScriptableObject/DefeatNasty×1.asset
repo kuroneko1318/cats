@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48281ee50b65e7843af14505a635b92a, type: 3}
-  m_Name: DefeatCriket
+  m_Name: "DefeatNasty\xD71"
   m_EditorClassIdentifier: 
   questName: Defeat
   targetEnemyType: 2
-  requiredAmount: 5
+  requiredAmount: 1
   rewardMoney: 100
   currentAmount: 0
   status: 0

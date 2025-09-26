@@ -254,7 +254,7 @@ public class PlayerBase : MonoBehaviour {
         isCritical = Random.value < criticalChance;
 
         float randomFactor = UnityEngine.Random.Range(0.90f, 1.10f);
-        int damage = Mathf.Max(0, power - effectiveDefence); // 基本ダメージ計算
+        int damage = Mathf.Max(1, power - effectiveDefence); // 基本ダメージ計算
 
         if (isCritical) {
             damage = Mathf.RoundToInt(damage * criticalMultiplier);
