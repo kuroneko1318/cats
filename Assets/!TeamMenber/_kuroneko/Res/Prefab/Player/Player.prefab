@@ -3112,8 +3112,8 @@ MonoBehaviour:
   hp: 300
   maxHp: 300
   baseDefence: 0
-  defence: 30
-  baseAttack: 0
+  defence: 0
+  baseAttack: 50
   attack: 50
   stamina: 0
   point: {fileID: 0}

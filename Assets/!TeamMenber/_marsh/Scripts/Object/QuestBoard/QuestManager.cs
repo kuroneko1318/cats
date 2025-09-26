@@ -7,7 +7,7 @@ public class QuestManager : SystemObject<QuestManager> {
 
     // クエスト受注
     public bool AcceptQuest(HuntQuest quest) {
-        if (activeQuest == null && !quest.isCleared) {
+        if (activeQuest == null) {
             quest.status = QuestStatus.InProgress;
             quest.currentAmount = 0;
             activeQuest = quest;
@@ -34,8 +34,8 @@ public class QuestManager : SystemObject<QuestManager> {
         activeQuest.status = QuestStatus.Completed;
         playerMoney += activeQuest.rewardMoney;
         InventoryManager.Instance.bag.AddItem(ItemManager.Instance.GetItemByName("回復薬"), Random.Range(1, 5));
-        activeQuest.isCleared = true;
         activeQuest = null; // 空にして次を受注可能にする
         QuestBoardManager.Instance.UI.SetActive(false);
+        QuestBoardManager.Instance.PopulateQuestBoard();
     }
 }

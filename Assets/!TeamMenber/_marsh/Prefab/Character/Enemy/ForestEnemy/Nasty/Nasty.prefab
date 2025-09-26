@@ -1226,6 +1226,7 @@ GameObject:
   - component: {fileID: 1426240820855453917}
   - component: {fileID: 6796056716146314151}
   - component: {fileID: 9060183968744508750}
+  - component: {fileID: 1996859414772635366}
   m_Layer: 6
   m_Name: Nasty
   m_TagString: Enemy
@@ -1284,7 +1285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f863e37293eebb4ab38246ee229bf22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
+  enemyType: 2
   hp: 5000
   maxHp: 5000
   attack: 20
@@ -1345,9 +1346,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1.0494593
-  m_Height: 4.277935
+  m_Height: 4.3261514
   m_Direction: 2
-  m_Center: {x: -0.000000003223041, y: 0.9505412, z: -0.86103415}
+  m_Center: {x: 0, y: 0.95054114, z: -0.83692575}
 --- !u!195 &9060183968744508750
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1370,6 +1371,27 @@ NavMeshAgent:
   m_BaseOffset: -0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &1996859414772635366
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3876361383180746358}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 1, z: 1}
 --- !u!1 &3876361383196009078
 GameObject:
   m_ObjectHideFlags: 0

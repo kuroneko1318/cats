@@ -56,3 +56,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0d71852b0577aae4b8cc7e4f63b09998, type: 2}
   - {fileID: 11400000, guid: 0938c2c3eb16a5745a836458ddb94acb, type: 2}
   - {fileID: 11400000, guid: 7e4e09c9525a85b4b8330a250772ef20, type: 2}
+  displayQuests: []
+  maxDisplayCount: 6

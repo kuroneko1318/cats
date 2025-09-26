@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,10 +15,12 @@ public class QuestBoardManager : SystemObject<QuestBoardManager> {
     public GameObject questPrefab;       // 作ったQuestPrefab
     public Transform contentParent;      // GridLayoutGroupがついた親（横3×縦2）
     public Color selectedColor = Color.white; // 選択枠の色
-    [NonSerialized]public GameObject UI = null;
+    [NonSerialized] public GameObject UI = null;
 
     [Header("クエストデータ")]
-    public HuntQuest[] allQuests;       // 全クエスト（最大6個）
+    public List<HuntQuest> allQuests = new List<HuntQuest>();   // 登録されている全クエスト
+    public List<HuntQuest> displayQuests = new List<HuntQuest>(); // 表示用（最大6件）
+    [SerializeField] private int maxDisplayCount = 6;
 
     private Image[] selectionImages;     // クエスト後ろの選択用Image
     private int selectedIndex = 0;
@@ -44,17 +47,33 @@ public class QuestBoardManager : SystemObject<QuestBoardManager> {
         PopulateQuestBoard();
     }
 
+    // --- クエストボードを更新 ---
     public void PopulateQuestBoard() {
         // 既存の子を削除
         foreach (Transform child in contentParent) {
             Destroy(child.gameObject);
         }
 
-        // 配列初期化
-        selectionImages = new Image[allQuests.Length];
+        // --- 表示用リストを再抽選 ---
+        displayQuests.Clear();
+        List<HuntQuest> shuffled = new List<HuntQuest>(allQuests);
+        ShuffleList(shuffled);
 
-        for (int i = 0; i < allQuests.Length; i++) {
-            var quest = allQuests[i];
+        HashSet<HuntQuest> chosen = new HashSet<HuntQuest>();
+        foreach (var quest in shuffled) {
+            if (!chosen.Contains(quest)) {
+                chosen.Add(quest);
+                displayQuests.Add(quest);
+            }
+            if (displayQuests.Count >= maxDisplayCount) break;
+        }
+
+        // 配列初期化
+        selectionImages = new Image[displayQuests.Count];
+
+        // --- UI生成 ---
+        for (int i = 0; i < displayQuests.Count; i++) {
+            var quest = displayQuests[i];
             GameObject obj = Instantiate(questPrefab, contentParent);
 
             // 名前
@@ -75,6 +94,14 @@ public class QuestBoardManager : SystemObject<QuestBoardManager> {
         }
 
         UpdateSelection();
+    }
+
+    // --- シャッフル ---
+    private void ShuffleList<T>(List<T> list) {
+        for (int i = 0; i < list.Count; i++) {
+            int rand = UnityEngine.Random.Range(i, list.Count);
+            (list[i], list[rand]) = (list[rand], list[i]);
+        }
     }
 
     public void MoveRight() {
@@ -108,8 +135,8 @@ public class QuestBoardManager : SystemObject<QuestBoardManager> {
     }
 
     public void AcceptQuest() {
-        if (allQuests == null || allQuests.Length == 0) return;
-        var quest = allQuests[selectedIndex];
+        if (displayQuests == null || displayQuests.Count == 0) return;
+        var quest = displayQuests[selectedIndex];
         if (QuestManager.Instance.AcceptQuest(quest)) {
             Debug.Log($"{quest.questName} を受注しました！");
             GameObject player = GameObject.FindGameObjectWithTag("Player");
