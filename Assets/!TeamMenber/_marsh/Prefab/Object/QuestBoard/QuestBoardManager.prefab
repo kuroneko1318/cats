@@ -50,9 +50,9 @@ MonoBehaviour:
   contentParent: {fileID: 0}
   selectedColor: {r: 1, g: 0.86571324, b: 0, a: 1}
   allQuests:
-  - {fileID: 11400000, guid: 7e4e09c9525a85b4b8330a250772ef20, type: 2}
   - {fileID: 11400000, guid: d7e80446847774c4da005e0cbada328a, type: 2}
-  - {fileID: 11400000, guid: 7e4e09c9525a85b4b8330a250772ef20, type: 2}
+  - {fileID: 11400000, guid: b014833b8b52e7b498523b9bfa51152c, type: 2}
+  - {fileID: 11400000, guid: a14af10ea9976e843a0f62a57d4de87e, type: 2}
   - {fileID: 11400000, guid: 0d71852b0577aae4b8cc7e4f63b09998, type: 2}
-  - {fileID: 11400000, guid: d7e80446847774c4da005e0cbada328a, type: 2}
-  - {fileID: 11400000, guid: d7e80446847774c4da005e0cbada328a, type: 2}
+  - {fileID: 11400000, guid: 0938c2c3eb16a5745a836458ddb94acb, type: 2}
+  - {fileID: 11400000, guid: 7e4e09c9525a85b4b8330a250772ef20, type: 2}

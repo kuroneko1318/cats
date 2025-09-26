@@ -33,6 +33,7 @@ public class QuestManager : SystemObject<QuestManager> {
     private void CompleteQuest() {
         activeQuest.status = QuestStatus.Completed;
         playerMoney += activeQuest.rewardMoney;
+        InventoryManager.Instance.bag.AddItem(ItemManager.Instance.GetItemByName("‰ñ•œ–ò"), Random.Range(1, 5));
         activeQuest.isCleared = true;
         activeQuest = null; // ‹ó‚É‚µ‚ÄŸ‚ğó’‰Â”\‚É‚·‚é
     }
