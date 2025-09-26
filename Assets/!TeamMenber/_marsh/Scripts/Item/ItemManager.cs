@@ -36,6 +36,7 @@ public class ItemManager : SystemObject<ItemManager> {
         Sprite StoneIcon = Resources.Load<Sprite>("icon/Stone");
         Sprite WoodIcon = Resources.Load<Sprite>("icon/Wood");
         Sprite NomarArmor = Resources.Load<Sprite>("icon/NormalArmor");
+        Sprite MgicSword = Resources.Load<Sprite>("icon/MgicSword");
 
         // ここでアイテム5種を登録（ID）
         itemList.Add(new HealItem("回復薬", 3000, 50, potionIcon));
@@ -61,18 +62,18 @@ public class ItemManager : SystemObject<ItemManager> {
         itemList.Add(new ItemBase("丈夫な木", 4101, eItemType.Material));
         itemList.Add(new ItemBase("棒", 4102, eItemType.Material, BarIcon));
         itemList.Add(new ItemBase("針", 4103, eItemType.Material, NeedleIcon));
-        itemList.Add(new ItemBase("魔剣の剣身", 4104, eItemType.Material));
-        itemList.Add(new ItemBase("普通の柄", 4105, eItemType.Material));
-        itemList.Add(new ItemBase("魔剣の柄", 4106, eItemType.Material));
+        //itemList.Add(new ItemBase("魔剣の剣身", 4104, eItemType.Material));
+        //itemList.Add(new ItemBase("普通の柄", 4105, eItemType.Material));
+        //itemList.Add(new ItemBase("魔剣の柄", 4106, eItemType.Material));
         weaponList.Add(new WeaponBase("普通の剣", 1001,10, swordIcon));
-        weaponList.Add(new WeaponBase("ライトソード", 1002, 10));
-        weaponList.Add(new WeaponBase("未完成の魔剣", 1003, 1));
-        weaponList.Add(new WeaponBase("魔剣ズルフィカール", 1004, 100));
-        weaponList.Add(new WeaponBase("魔剣フルンティング", 1005, 100));
-        weaponList.Add(new WeaponBase("魔剣ネイリング", 1006, 100));
-        armorList.Add(new ArmorBase("普通のアーマー", 2001, 30,NomarArmor));
+        //weaponList.Add(new WeaponBase("ライトソード", 1002, 10));
+        //weaponList.Add(new WeaponBase("未完成の魔剣", 1003, 1));
+        weaponList.Add(new WeaponBase("魔剣ズルフィカール", 1004, 500));
+        weaponList.Add(new WeaponBase("超絶最強天上天下唯我独尊ブレード極", 1005, 32768,MgicSword));
+        //weaponList.Add(new WeaponBase("魔剣ネイリング", 1006, 100));
+        armorList.Add(new ArmorBase("普通のアーマー", 2001, 30, NomarArmor));
         armorList.Add(new ArmorBase("マジックアーマー", 2002, 50));
-        armorList.Add(new ArmorBase("フュージョンアーマー", 2003, 50));
+        armorList.Add(new ArmorBase("金城鉄壁金剛二天アーマー松竹梅の型", 2003, 500));
 
     }
 

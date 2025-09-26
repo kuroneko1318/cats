@@ -82,6 +82,11 @@ public class PlayerBase : MonoBehaviour {
     // UI用カーソル移動
     private Vector2 uiMoveInput;
 
+    [SerializeField]
+    private GameObject attackBuffEffect;
+    [SerializeField]
+    private GameObject defBuffEffect;
+
     void Start() {
         AudioManager.Instance.PlayBGM("Fantasy");
         Canvas.SetActive(false);
@@ -160,13 +165,20 @@ public class PlayerBase : MonoBehaviour {
         for (int i = attackBuffs.Count - 1; i >= 0; i--) {
             attackBuffs[i].duration -= Time.deltaTime;
             if (attackBuffs[i].duration <= 0) attackBuffs.RemoveAt(i);
+            attackBuffEffect.SetActive(true);
         }
 
         // 防御バフ処理
         for (int i = defenceBuffs.Count - 1; i >= 0; i--) {
             defenceBuffs[i].duration -= Time.deltaTime;
             if (defenceBuffs[i].duration <= 0) defenceBuffs.RemoveAt(i);
+            defBuffEffect.SetActive(true);
         }
+
+        int attackBuff = attackBuffs.Count;
+        int defBuff = defenceBuffs.Count;
+        if(attackBuff <= 0) attackBuffEffect.SetActive(false);
+        if(defBuff <= 0) defBuffEffect.SetActive(false);
 
         UpdateStatsWithBuffs();
     }
