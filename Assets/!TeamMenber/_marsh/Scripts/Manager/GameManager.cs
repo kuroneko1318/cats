@@ -38,6 +38,6 @@ public class GameManager : SystemObject<GameManager> {
 
     private void OnClear() {
         Debug.Log("ゲームクリア！！");
-        if (clearUI != null) clearUI.SetActive(true);
+        if (clearUI != null) Instantiate(clearUI);
     }
 }
