@@ -16,6 +16,8 @@ public abstract class GatheringPoint : MonoBehaviour {
     public GatheringPointType pointType;
 
     public float respawnTime = 30f;
+    public GameObject effectObject;
+
     protected bool isAvailable = true;
 public bool IsAvailable => isAvailable;
     [NonSerialized]public Inventory bag;
@@ -53,8 +55,13 @@ public bool IsAvailable => isAvailable;
 
     private IEnumerator RespawnCoroutine() {
         isAvailable = false;
+        effectObject.SetActive(false);
         yield return new WaitForSeconds(respawnTime);
+        effectObject.SetActive(true);
         isAvailable = true;
     }
+
+
+
 }
 
