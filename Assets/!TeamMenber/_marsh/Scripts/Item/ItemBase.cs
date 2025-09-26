@@ -7,7 +7,8 @@ public enum eItemType {
     Armor,      // 防具(2000~2999)
     Heal,       // 回復アイテム（3000~3999）
     Material,   // 素材アイテム（4000~4999）
-    Money       // 換金アイテム・通貨など(5000~5999)
+    Money,       // 換金アイテム・通貨など(5000~5999)
+    Boost,
 }
 
 public class ItemBase

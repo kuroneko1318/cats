@@ -546,7 +546,18 @@ public class InventoryManager : SystemObject<InventoryManager> {
 
         if (slot?.item is HealItem healItem) {
             healItem.Use(GameObject.FindGameObjectWithTag("Player"));
-            Debug.Log("hp‚ð‰ñ•œ‚µ‚½");
+            slot.amount--;
+            if (slot.amount <= 0) slot.item = null;
+            RefreshUI();
+        }
+        if (slot?.item is AttackBoost ATKboost) {
+            ATKboost.Use(GameObject.FindGameObjectWithTag("Player"));
+            slot.amount--;
+            if (slot.amount <= 0) slot.item = null;
+            RefreshUI();
+        }
+        if (slot?.item is DefenceBoost DEFboost) {
+            DEFboost.Use(GameObject.FindGameObjectWithTag("Player"));
             slot.amount--;
             if (slot.amount <= 0) slot.item = null;
             RefreshUI();
