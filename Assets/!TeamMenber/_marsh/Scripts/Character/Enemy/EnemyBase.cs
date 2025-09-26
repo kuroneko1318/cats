@@ -203,7 +203,9 @@ public class EnemyBase : MonoBehaviour {
         if (hp <= 0) Dead();
 
         // ヒットアニメーション
-        animator.SetTrigger("Hit");
+        if(Random.Range(0,1) == 0) {
+            animator.SetTrigger("Hit");
+        }
         effectSpawnPos = new Vector3(transform.position.x, transform.position.y + 0.6f, transform.position.z);
         EffectManager.Instance.SpawnEffect("AttackHitEffect", effectSpawnPos, Quaternion.identity,0.5f);
 

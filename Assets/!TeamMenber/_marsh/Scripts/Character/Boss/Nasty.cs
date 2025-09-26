@@ -172,15 +172,6 @@ public class Nasty : EnemyBase {
         if (agent != null) agent.isStopped = true;
     }
 
-    public override void TakeDamage(int attack, float motionMultiplier = 1, float criticalChance = 0, float criticalMultiplier = 2,
-                                    int elementalValue = 0, float staggerValue = 0) {
-        base.TakeDamage(attack, motionMultiplier, criticalChance, criticalMultiplier, elementalValue, staggerValue);
-
-        if (state != EnemyState.Dead) {
-            animator.SetTrigger("Hit");
-        }
-    }
-
     protected override void OnStateChanged(EnemyState newState) {
         if (agent == null || !agent.isActiveAndEnabled || !agent.isOnNavMesh) return;
 
