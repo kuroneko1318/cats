@@ -21,8 +21,8 @@ public class CraftManager : SystemObject<CraftManager> {
         AddRecipe("“S", "–_", "•’Ê‚ÌŒ•");
         AddRecipe("“S", "•R", "•’Ê‚ÌƒA[ƒ}[");
         AddRecipe("–ò‘", "•R", "‰ñ•œ–ò");
-        AddRecipe("–ò‘", "–Ø‚ÌÀ", "UŒ‚–ò");
-        AddRecipe("–ò‘", "•—jÎ", "–hŒä–ò");
+        AddRecipe("‰ñ•œ–ò", "–Ø‚ÌÀ", "UŒ‚–ò");
+        AddRecipe("‰ñ•œ–ò", "•—jÎ", "–hŒä–ò");
         //AddRecipe("–Ø", "•R", "ä•v‚È–Ø");
         //AddRecipe("ƒ‰ƒCƒgƒXƒg[ƒ“", "Î", "Œ¤–Î");
         //AddRecipe("Œ¤–Î", "•—jÎ", "‰s‚¢•—jÎ");

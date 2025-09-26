@@ -1,5 +1,18 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+// バフ用クラス
+[System.Serializable]
+public class TemporaryBuff {
+    public int amount;
+    public float duration;
+
+    public TemporaryBuff(int amount, float duration) {
+        this.amount = amount;
+        this.duration = duration;
+    }
+}
 
 /// <summary>
 /// プレイヤーコントローラー（移動・回避・攻撃・スキル統合）
@@ -25,6 +38,11 @@ public class PlayerBase : MonoBehaviour {
     [SerializeField] public int attack;
     [SerializeField] public float stamina;
     public GatheringPoint point;
+
+    // バフ用
+    private List<TemporaryBuff> attackBuffs = new List<TemporaryBuff>();
+    private List<TemporaryBuff> defenceBuffs = new List<TemporaryBuff>();
+
     //装備関係
     private WeaponBase currentWeapon;
     private ArmorBase currentArmor;
@@ -137,6 +155,20 @@ public class PlayerBase : MonoBehaviour {
         if (transform.position.y <= -10) {
             DeathAnimationEnd();
         }
+
+        // 攻撃バフ処理
+        for (int i = attackBuffs.Count - 1; i >= 0; i--) {
+            attackBuffs[i].duration -= Time.deltaTime;
+            if (attackBuffs[i].duration <= 0) attackBuffs.RemoveAt(i);
+        }
+
+        // 防御バフ処理
+        for (int i = defenceBuffs.Count - 1; i >= 0; i--) {
+            defenceBuffs[i].duration -= Time.deltaTime;
+            if (defenceBuffs[i].duration <= 0) defenceBuffs.RemoveAt(i);
+        }
+
+        UpdateStatsWithBuffs();
     }
 
     void OpenQuest() {
@@ -262,7 +294,7 @@ public class PlayerBase : MonoBehaviour {
         return skillManager;
     }
 
-
+    //採取関係
     private void OnTriggerStay(Collider other) {
         if (other.gameObject.CompareTag("GatheringPoint")) {
             Canvas.SetActive(true);
@@ -293,6 +325,7 @@ public class PlayerBase : MonoBehaviour {
         }
     }
 
+    //アイテム関係の処理
     public void Heal(int amount) {
         AudioManager.Instance.PlaySE("Skill");
         hp += amount;
@@ -300,6 +333,29 @@ public class PlayerBase : MonoBehaviour {
             hp = maxHp;
         }
     }
+
+    // 装備＋バフ込みで攻撃力と防御力を更新
+    private void UpdateStatsWithBuffs() {
+        attack = baseAttack;
+        if (currentWeapon != null) attack += currentWeapon.weaponAttack;
+        foreach (var buff in attackBuffs) attack += buff.amount;
+
+        defence = baseDefence;
+        if (currentArmor != null) defence += currentArmor.armorDefence;
+        foreach (var buff in defenceBuffs) defence += buff.amount;
+    }
+
+    // アイテム使用時に呼ぶ
+    public void AttackBoost(int amount, float duration) {
+        attackBuffs.Add(new TemporaryBuff(amount, duration));
+        UpdateStatsWithBuffs();
+    }
+
+    public void DefenceBoost(int amount, float duration) {
+        defenceBuffs.Add(new TemporaryBuff(amount, duration));
+        UpdateStatsWithBuffs();
+    }
+
     public void UpdateEquipmentStats() {
         attack = baseAttack;
         defence = baseDefence;
@@ -319,6 +375,7 @@ public class PlayerBase : MonoBehaviour {
         UpdateEquipmentStats();
     }
 
+    //アニメーション関係の処理----------------------------------------------------------------------------
     public void GatherStart() {
         point.Interact();
     }

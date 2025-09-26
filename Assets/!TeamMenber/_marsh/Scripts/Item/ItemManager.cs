@@ -30,6 +30,8 @@ public class ItemManager : SystemObject<ItemManager> {
         Sprite NutIcon = Resources.Load<Sprite>("icon/Nut");
         Sprite ObsidianIcon = Resources.Load<Sprite>("icon/Obsidian");
         Sprite potionIcon = Resources.Load<Sprite>("icon/Potion");
+        Sprite AtkPotionIcon = Resources.Load<Sprite>("icon/ATKPotion");
+        Sprite DefPotionIcon = Resources.Load<Sprite>("icon/DEFPotion");
         Sprite RopeIcon = Resources.Load<Sprite>("icon/Rope");
         Sprite StoneIcon = Resources.Load<Sprite>("icon/Stone");
         Sprite WoodIcon = Resources.Load<Sprite>("icon/Wood");
@@ -38,6 +40,8 @@ public class ItemManager : SystemObject<ItemManager> {
         // Ç±Ç±Ç≈ÉAÉCÉeÉÄ5éÌÇìoò^ÅiIDÅj
         itemList.Add(new HealItem("âÒïúñÚ", 3000, 50, potionIcon));
         itemList.Add(new HealItem("ñÿÇÃé¿", 3001, 10, NutIcon));
+        itemList.Add(new AttackBoost("çUåÇñÚ", 9000, 30, 60, AtkPotionIcon));
+        itemList.Add(new DefenceBoost("ñhå‰ñÚ", 9001, 30, 60, DefPotionIcon));
         itemList.Add(new ItemBase("ñÚëê", 4001, eItemType.Material, HerbIcon));
         itemList.Add(new ItemBase("ïR", 4002, eItemType.Material, RopeIcon));
         itemList.Add(new ItemBase("êŒ", 4020, eItemType.Material, StoneIcon));
