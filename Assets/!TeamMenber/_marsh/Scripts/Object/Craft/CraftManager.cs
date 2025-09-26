@@ -26,7 +26,11 @@ public class CraftManager : SystemObject<CraftManager> {
         //AddRecipe("木", "紐", "丈夫な木");
         //AddRecipe("ライトストーン", "石", "研磨石");
         //AddRecipe("研磨石", "黒曜石", "鋭い黒曜石");
-        //AddRecipe("ライトストーン", "ブラッドストーン", "魔石");
+        AddRecipe("ライトストーン", "ブラッドストーン", "魔石");
+        AddRecipe("魔石", "普通の剣", "魔剣ズルフィカール");
+        AddRecipe("魔剣ズルフィカール", "魔剣ズルフィカール", "超絶最強天上天下唯我独尊ブレード極");
+        AddRecipe("魔石", "普通のアーマー", "マジックアーマー");
+        AddRecipe("マジックアーマー", "マジックアーマー", "金城鉄壁金剛二天アーマー松竹梅の型");
         //AddRecipe("鉄", "木", "普通の柄");
         //AddRecipe("棒", "石", "斧");
         //AddRecipe("普通の柄", "融合石", "魔剣の柄");
