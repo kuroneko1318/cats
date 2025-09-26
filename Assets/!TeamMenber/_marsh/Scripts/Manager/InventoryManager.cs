@@ -392,40 +392,57 @@ public class InventoryManager : SystemObject<InventoryManager> {
             heldItem = slot.item;
             heldAmount = slot.amount;
 
-            // クラフトスロットなら数量を消さない
-            if (currentArea != UIArea.Craft) {
-                slot.Clear();
-            }
+            slot.Clear();
 
             originArea = currentArea;
             originIndex = selectedIndex;
         }
         else {
+            // 移動先がクラフト結果スロットなら何も置かない
+            if (currentArea == UIArea.Craft && selectedIndex == 2) {
+                return;
+            }
             // 同じマスに戻そうとしている場合
             if (originArea == currentArea && originIndex == selectedIndex) {
-                // ただ持ち物を戻すだけ
+                // 元スロットにそのまま戻す
                 slot.SetItem(heldItem, heldAmount);
+
+                // ここで必ずクリアする
+                heldItem = null;
+                heldAmount = 0;
+                originIndex = -1;
             }
             else {
-                // 移動先に何かある場合もない場合も入れ替え
-                slot.SetItem(heldItem, heldAmount);
-                
-                // 元スロットに元々あったアイテムを戻す
-                if (originIndex >= 0) {
-                    var originSlot = GetSlot(originArea, originIndex);
-                    originSlot.SetItem(slotItem, slotAmount);
-                }
+                // 移動先に同じアイテムがあるなら重ねる
+                if (slot.item != null && slot.item == heldItem) {
+                    slot.amount += heldAmount;
 
-                // 装備スロットに置いた場合は即反映
-                if (currentArea == UIArea.Equip) {
-                    ApplyEquipment(selectedIndex);
+                    // 持ち物をクリア
+                    heldItem = null;
+                    heldAmount = 0;
+                    originIndex = -1;
+                }
+                else {
+                    // 移動先に何かある場合もない場合も入れ替え
+                    slot.SetItem(heldItem, heldAmount);
+
+                    // 元スロットに元々あったアイテムを戻す
+                    if (originIndex >= 0) {
+                        var originSlot = GetSlot(originArea, originIndex);
+                        originSlot.SetItem(slotItem, slotAmount);
+                    }
+
+                    // 装備スロットに置いた場合は即反映
+                    if (currentArea == UIArea.Equip) {
+                        ApplyEquipment(selectedIndex);
+                    }
+
+                    // 持ち物をクリア
+                    heldItem = null;
+                    heldAmount = 0;
+                    originIndex = -1;
                 }
             }
-
-            // 持ち物をクリア
-            heldItem = null;
-            heldAmount = 0;
-            originIndex = -1;
         }
 
         RefreshUI();
@@ -438,12 +455,72 @@ public class InventoryManager : SystemObject<InventoryManager> {
         }
     }
 
+    public void DropHeldOne() {
+        if (heldItem == null || heldAmount <= 0) return;
+
+        var slot = GetCurrentSlot();
+        if (slot == null) return;
+
+        // 移動先がクラフト結果スロットなら何も置かない
+        if (currentArea == UIArea.Craft && selectedIndex == 2) {
+            return;
+        }
+
+        // 空 or 同じアイテムなら置ける
+        if (slot.item == null) {
+            slot.SetItem(heldItem, 1);
+            heldAmount -= 1;
+        }
+        else if (slot.item == heldItem) {
+            slot.amount += 1;
+            heldAmount -= 1;
+        }
+        else {
+            // 違うアイテムがある場合は置けない
+            Debug.Log("このスロットには他のアイテムが入っています");
+            return;
+        }
+
+        // 全部置いたら持ち物をクリア
+        if (heldAmount <= 0) {
+            heldItem = null;
+            originIndex = -1;
+        }
+
+        RefreshUI();
+        UpdateHeldItemUI();
+
+        // 装備スロットなら即反映
+        if (currentArea == UIArea.Equip) {
+            ApplyEquipment(selectedIndex);
+        }
+
+        // クラフト結果更新
+        CraftManager.Instance.UpdateResult();
+    }
+
     public void HandleCancel() {
         if (heldItem != null && originIndex >= 0) {
             var originSlot = GetSlot(originArea, originIndex);
-            originSlot.SetItem(heldItem, heldAmount);
+
+            if (originSlot.item == null) {
+                // 空ならそのまま戻す
+                originSlot.SetItem(heldItem, heldAmount);
+            }
+            else if (originSlot.item == heldItem) {
+                // 同じアイテムなら合算して戻す
+                originSlot.amount += heldAmount;
+            }
+            else {
+                // 本来キャンセル時はここに入らないはず
+                Debug.LogWarning("Cancel時にオリジンスロットに別アイテムが残っている！");
+            }
+
+            // ここで必ずクリア
             heldItem = null;
+            heldAmount = 0;
             originIndex = -1;
+
             RefreshUI();
             UpdateHeldItemUI();
         }

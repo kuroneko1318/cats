@@ -107,6 +107,9 @@ public class QuestBoardManager : SystemObject<QuestBoardManager> {
         var quest = allQuests[selectedIndex];
         if (QuestManager.Instance.AcceptQuest(quest)) {
             Debug.Log($"{quest.questName} ÇéÛíçÇµÇ‹ÇµÇΩÅI");
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            player.GetComponent<PlayerBase>().input.SwitchCurrentActionMap("GamePlay");
+            Instantiate(acceptQuestUI, player.transform);
             CloseQuestBoard();
         }
         else {
@@ -121,9 +124,6 @@ public class QuestBoardManager : SystemObject<QuestBoardManager> {
     }
 
     public void CloseQuestBoard() {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        player.GetComponent<PlayerBase>().input.SwitchCurrentActionMap("GamePlay");
-        Instantiate(acceptQuestUI, player.transform);
         questBoardPanel.SetActive(false);
     }
 }

@@ -100,6 +100,12 @@ public class PlayerBase : MonoBehaviour {
                 InventoryManager.Instance.UseSelectedItem();
             }
         };
+        DropItemAction.performed += ctx => {
+            // インベントリが開いている場合のみ処理
+            if (input.currentActionMap.name == "Inventory") {
+                InventoryManager.Instance.DropHeldOne();
+            }
+        };
 
         //スキルクールダウンの取得
         skillUI = GameObject.FindGameObjectWithTag("PlayerUI").GetComponent<SkillCooldownUI>();
@@ -287,7 +293,9 @@ public class PlayerBase : MonoBehaviour {
         defence = baseDefence;
 
         if (currentWeapon != null) attack += currentWeapon.weaponAttack;
+        else attack = baseAttack;
         if (currentArmor != null) defence += currentArmor.armorDefence;
+        else defence = baseDefence;
     }
     public void EquipWeapon(WeaponBase weapon) {
         currentWeapon = weapon;
