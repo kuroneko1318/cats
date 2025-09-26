@@ -289,34 +289,61 @@ public class InventoryManager : SystemObject<InventoryManager> {
 
     public void MoveDown() {
         if (currentArea == UIArea.InventoryTop) {
-            if (selectedIndex + columns < inventoryTopCount) selectedIndex += columns;
-            else { currentArea = UIArea.InventoryBottom; selectedIndex = selectedIndex % columns; }
+            if (selectedIndex + columns < inventoryTopCount) {
+                selectedIndex += columns;
+            }
+            else {
+                currentArea = UIArea.InventoryBottom;
+                selectedIndex = selectedIndex % columns;
+            }
         }
         else if (currentArea == UIArea.InventoryBottom) {
-            if (selectedIndex + columns < inventoryBottomCount) selectedIndex += columns;
+            if (selectedIndex + columns < inventoryBottomCount) {
+                selectedIndex += columns;
+            }
+            // 下端に到達したら装備スロットに移動
+            else {
+                currentArea = UIArea.Equip;
+                selectedIndex = Mathf.Min(selectedIndex, equipUI.Count - 1);
+            }
+        }
+        else if (currentArea == UIArea.Craft) {
+            // クラフト → 装備
+            currentArea = UIArea.Equip;
+            selectedIndex = Mathf.Min(selectedIndex, equipUI.Count - 1);
         }
         UpdateHighlight();
     }
 
     public void MoveUp() {
-        if (!IsInventoryArea()) return;
+        if (!IsInventoryArea() && currentArea != UIArea.Craft && currentArea != UIArea.Equip) return;
 
         switch (currentArea) {
             case UIArea.InventoryTop:
-                // 一番上の行は上に移動できない
                 if (selectedIndex >= columns)
                     selectedIndex -= columns;
                 break;
 
             case UIArea.InventoryBottom:
-                // 下部インベントリの最上段にいる場合は上部インベントリに移動
                 if (selectedIndex < columns) {
                     currentArea = UIArea.InventoryTop;
-                    selectedIndex += inventoryTopCount - columns; // 下部最上段から上部最下段に移動
+                    selectedIndex += inventoryTopCount - columns;
                 }
                 else {
                     selectedIndex -= columns;
                 }
+                break;
+
+            case UIArea.Equip:
+                // 装備 → クラフト
+                currentArea = UIArea.Craft;
+                selectedIndex = Mathf.Min(selectedIndex, craftUI.Count - 1);
+                break;
+
+            case UIArea.Craft:
+                // クラフト → 上部インベントリに移動するなども可能
+                currentArea = UIArea.InventoryTop;
+                selectedIndex = Mathf.Min(selectedIndex, inventoryTopUI.Count - 1);
                 break;
         }
 
