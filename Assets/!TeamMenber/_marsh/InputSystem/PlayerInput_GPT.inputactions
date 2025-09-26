@@ -534,6 +534,28 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "b65a943c-32bc-44c0-8e6f-974fbcd9a015",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a97c603a-d7c4-43e0-a66a-9d4132cdcbe9",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "Keyboard",
                     "id": "b80b1a25-cf18-4b38-ba55-9d1c162ad13a",
                     "path": "2DVector",
