@@ -63,6 +63,7 @@ public class PlayerBase : MonoBehaviour {
     private Vector2 uiMoveInput;
 
     void Start() {
+        AudioManager.Instance.PlayBGM("Fantasy");
         Canvas.SetActive(false);
         input = GetComponent<PlayerInput>();
         anim = GetComponent<Animator>();
@@ -149,6 +150,7 @@ public class PlayerBase : MonoBehaviour {
         // Œˆ’è
         if (input.actions["Select"].WasPressedThisFrame()) {
             QuestBoardManager.Instance.AcceptQuest();
+            AudioManager.Instance.PlaySE("Select");
         }
 
         // ƒLƒƒƒ“ƒZƒ‹
@@ -277,6 +279,7 @@ public class PlayerBase : MonoBehaviour {
     }
 
     public void Heal(int amount) {
+        AudioManager.Instance.PlaySE("Skill");
         hp += amount;
         if (hp >= maxHp) {
             hp = maxHp;

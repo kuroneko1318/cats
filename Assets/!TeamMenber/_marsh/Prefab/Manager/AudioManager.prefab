@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmList:
-  - name: 
-    clip: {fileID: 8300000, guid: 1657925469c78374bba884d373b3a8ab, type: 3}
+  - name: Fantasy
+    clip: {fileID: 8300000, guid: af3e3da214cc46c428e4c7f0b6b077c6, type: 3}
     volume: 1
-    pitch: 0
+    pitch: 1
   seList:
   - name: FirstAttack
     clip: {fileID: 8300000, guid: 17ab5432d7fcecb4ebee0315b29799d3, type: 3}
@@ -60,6 +60,18 @@ MonoBehaviour:
     pitch: 1
   - name: ThirdAttack
     clip: {fileID: 8300000, guid: 960f5b7290c2774458e1613a671facfa, type: 3}
+    volume: 1
+    pitch: 1
+  - name: Skill
+    clip: {fileID: 8300000, guid: ae47556a24f70df47947817dcb576ed4, type: 3}
+    volume: 1
+    pitch: 1
+  - name: Select
+    clip: {fileID: 8300000, guid: b52a351459bc7f64885881bc0f36ec5d, type: 3}
+    volume: 1
+    pitch: 1
+  - name: Cursol
+    clip: {fileID: 8300000, guid: d598d1522d980e249a4d76a3fe56beed, type: 3}
     volume: 1
     pitch: 1
   initialSESourceCount: 5

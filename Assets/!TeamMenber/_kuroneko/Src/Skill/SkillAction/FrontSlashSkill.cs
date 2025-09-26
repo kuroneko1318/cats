@@ -28,6 +28,7 @@ public class FrontSlashSkill : SkillBase {
             player.SetSkillActive(true);
 
         // アニメーション再生
+        AudioManager.Instance.PlaySE("Skill");
         Animator anim = user.GetComponent<Animator>();
         if (anim != null)
             anim.SetTrigger("Skill");

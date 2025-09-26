@@ -98,11 +98,13 @@ public class StageSelectUI : MonoBehaviour {
         if (input.y > 0.5f) {
             selectedIndex--;
             if (selectedIndex < 0) selectedIndex = stageButtons.Length; // Return‚ÉˆÚ“®
+            AudioManager.Instance.PlaySE("Cursol");
         }
         // ‰ºˆÚ“®
         else if (input.y < -0.5f) {
             selectedIndex++;
             if (selectedIndex > stageButtons.Length) selectedIndex = 0; // æ“ª‚É–ß‚é
+            AudioManager.Instance.PlaySE("Cursol");
         }
 
         UpdateCursor();
