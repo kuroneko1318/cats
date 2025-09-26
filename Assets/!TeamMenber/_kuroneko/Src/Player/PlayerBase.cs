@@ -59,6 +59,8 @@ public class PlayerBase : MonoBehaviour {
     public InputAction UseItemAction;
     public InputAction DropItemAction;
 
+    private Vector3 effectSpawnPos;
+
     // UI用カーソル移動
     private Vector2 uiMoveInput;
 
@@ -228,10 +230,12 @@ public class PlayerBase : MonoBehaviour {
         // HP 減少
         hp -= damage;
 
-        pAttack.AttackEnd();
+        AttackEndEvent();
 
         if (hp <= 0) Dead();
         else anim.SetTrigger("Hit");
+        effectSpawnPos = new Vector3(transform.position.x, transform.position.y + 0.6f, transform.position.z);
+        EffectManager.Instance.SpawnEffect("AttackHitEffect", effectSpawnPos, Quaternion.identity, 0.5f);
 
         Debug.Log($"Damage Taken: {damage} {(isCritical ? "(Critical!)" : "")} HP: {hp}/{maxHp}");
     }

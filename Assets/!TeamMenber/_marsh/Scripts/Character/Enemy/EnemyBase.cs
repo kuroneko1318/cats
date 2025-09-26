@@ -52,7 +52,10 @@ public class EnemyBase : MonoBehaviour {
     public System.Action<EnemyBase> OnEnemyDead;
 
     private int Itemrand;
-    public Collider boxCollider; 
+    public Collider boxCollider;
+
+    private Vector3 effectSpawnPos;
+
     protected virtual void Start() {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -201,6 +204,8 @@ public class EnemyBase : MonoBehaviour {
 
         // ヒットアニメーション
         animator.SetTrigger("Hit");
+        effectSpawnPos = new Vector3(transform.position.x, transform.position.y + 0.6f, transform.position.z);
+        EffectManager.Instance.SpawnEffect("AttackHitEffect", effectSpawnPos, Quaternion.identity,0.5f);
 
         Debug.Log($"Enemy took {damage} damage {(isCritical ? "(Critical!)" : "")}. HP: {hp}");
     }
