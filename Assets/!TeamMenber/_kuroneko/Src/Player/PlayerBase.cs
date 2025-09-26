@@ -387,7 +387,7 @@ public class PlayerBase : MonoBehaviour {
     public void AttackStartEvent() {
         swordTrail.emitting = true;
         pAttack.AttackStart();
-        pAttack.SetPower(baseAttack);
+        pAttack.SetPower(attack);
     }
 
     public void AttackEndEvent() {
