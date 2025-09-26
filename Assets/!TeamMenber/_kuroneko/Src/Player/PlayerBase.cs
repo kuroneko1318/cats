@@ -270,6 +270,7 @@ public class PlayerBase : MonoBehaviour {
 
         if (hp <= 0) Dead();
         else anim.SetTrigger("Hit");
+        if(point != null) GatherEnd();
         effectSpawnPos = new Vector3(transform.position.x, transform.position.y + 0.6f, transform.position.z);
         EffectManager.Instance.SpawnEffect("AttackHitEffect", effectSpawnPos, Quaternion.identity, 0.5f);
 
@@ -322,6 +323,7 @@ public class PlayerBase : MonoBehaviour {
         }
         if (other.gameObject.CompareTag("GatheringPoint")) {
             Canvas.SetActive(false);
+            point = null;
         }
     }
 

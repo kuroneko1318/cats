@@ -12,7 +12,7 @@ public class ParticleHitbox : MonoBehaviour {
         if (other.CompareTag("Enemy")) {
             var enemy = other.GetComponent<EnemyBase>(); // 敵のベースクラス
             if (enemy != null) {
-                enemy.TakeDamage(player.baseAttack, skillDamageMultiplier, player.criticalChance, player.criticalMultiplier);
+                enemy.TakeDamage(player.attack, skillDamageMultiplier, player.criticalChance, player.criticalMultiplier);
             }
         }
     }
