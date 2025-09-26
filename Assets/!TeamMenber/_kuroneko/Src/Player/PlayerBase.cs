@@ -133,6 +133,10 @@ public class PlayerBase : MonoBehaviour {
         else if (input.currentActionMap.name == "Quest") {
             HandleQuestUI();
         }
+
+        if (transform.position.y <= -10) {
+            DeathAnimationEnd();
+        }
     }
 
     void OpenQuest() {
