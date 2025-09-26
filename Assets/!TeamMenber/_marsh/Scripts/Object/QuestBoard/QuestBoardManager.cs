@@ -1,4 +1,6 @@
+using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -6,12 +8,13 @@ using UnityEngine.UI;
 public class QuestBoardManager : SystemObject<QuestBoardManager> {
     [Header("UI")]
     public GameObject acceptQuestUI;
-    public GameObject questBoardPrefab;   // プレハブをここにアサイン
+    public GameObject questBoardUIPrefab;   // プレハブをここにアサイン
     private GameObject questBoardInstance;
     private GameObject questBoardPanel;
     public GameObject questPrefab;       // 作ったQuestPrefab
     public Transform contentParent;      // GridLayoutGroupがついた親（横3×縦2）
     public Color selectedColor = Color.white; // 選択枠の色
+    [NonSerialized]public GameObject UI = null;
 
     [Header("クエストデータ")]
     public HuntQuest[] allQuests;       // 全クエスト（最大6個）
@@ -21,8 +24,8 @@ public class QuestBoardManager : SystemObject<QuestBoardManager> {
 
     public override void Initialize() {
         // QuestBoardUIを生成
-        if (questBoardPrefab != null) {
-            questBoardInstance = Instantiate(questBoardPrefab);
+        if (questBoardUIPrefab != null) {
+            questBoardInstance = Instantiate(questBoardUIPrefab);
 
             // パネルを取得
             questBoardPanel = questBoardInstance.transform.Find("QuestUIPanel").gameObject;
@@ -32,9 +35,11 @@ public class QuestBoardManager : SystemObject<QuestBoardManager> {
 
             // 最初は非表示
             questBoardPanel.SetActive(false);
+            UI = GameObject.FindWithTag("QuestBoardUI");
+            UI.SetActive(false);
         }
         else {
-            Debug.LogError("QuestBoardManager: questBoardPrefab がアサインされていません！");
+            Debug.LogError("QuestBoardManager: questBoardUIPrefab がアサインされていません！");
         }
         PopulateQuestBoard();
     }
@@ -110,6 +115,7 @@ public class QuestBoardManager : SystemObject<QuestBoardManager> {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             player.GetComponent<PlayerBase>().input.SwitchCurrentActionMap("GamePlay");
             Instantiate(acceptQuestUI, player.transform);
+            UI.SetActive(true);
             CloseQuestBoard();
         }
         else {

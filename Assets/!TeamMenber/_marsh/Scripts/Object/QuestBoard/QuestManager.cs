@@ -36,5 +36,6 @@ public class QuestManager : SystemObject<QuestManager> {
         InventoryManager.Instance.bag.AddItem(ItemManager.Instance.GetItemByName("‰ñ•œ–ò"), Random.Range(1, 5));
         activeQuest.isCleared = true;
         activeQuest = null; // ‹ó‚É‚µ‚ÄŸ‚ğó’‰Â”\‚É‚·‚é
+        QuestBoardManager.Instance.UI.SetActive(false);
     }
 }

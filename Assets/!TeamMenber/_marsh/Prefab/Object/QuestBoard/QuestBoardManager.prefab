@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceptQuestUI: {fileID: 8054780056416473706, guid: c3e6b9c0737b0b6489b912e46c1813e0, type: 3}
-  questBoardPrefab: {fileID: 4542455093370892507, guid: b9929d38665d3bb438f4a23e09b8370d, type: 3}
+  questBoardUIPrefab: {fileID: 4542455093370892507, guid: b9929d38665d3bb438f4a23e09b8370d, type: 3}
   questPrefab: {fileID: 810913825405008466, guid: 7b9c217981d4e4d43b35db83350408d2, type: 3}
   contentParent: {fileID: 0}
   selectedColor: {r: 1, g: 0.86571324, b: 0, a: 1}
