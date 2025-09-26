@@ -16,6 +16,8 @@ public enum EnemyType {
     Beetle,
     StagBeetle,
     Nasty,
+    NastyDesert,
+    NastyVolcano,
     Cow,
     // 必要に応じて追加
 }
@@ -203,7 +205,9 @@ public class EnemyBase : MonoBehaviour {
         if (hp <= 0) Dead();
 
         // ヒットアニメーション
-        animator.SetTrigger("Hit");
+        if(Random.Range(0,1) == 0) {
+            animator.SetTrigger("Hit");
+        }
         effectSpawnPos = new Vector3(transform.position.x, transform.position.y + 0.6f, transform.position.z);
         EffectManager.Instance.SpawnEffect("AttackHitEffect", effectSpawnPos, Quaternion.identity,0.5f);
 
@@ -218,6 +222,8 @@ public class EnemyBase : MonoBehaviour {
         agent.isStopped = true;
         // クエストへ報告
         QuestManager.Instance.EnemyDefeated(enemyType);
+        GameManager.Instance.ReportEnemyDefeat(enemyType);
+
         Itemrand = Random.Range(0, 4);
         Drop();
         StartCoroutine(DeadRoutine());
