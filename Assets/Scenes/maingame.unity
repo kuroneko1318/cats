@@ -189,6 +189,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuestBoard
       objectReference: {fileID: 0}
+    - target: {fileID: 7907392947257903524, guid: 67f12bf5e97799942affe26a0a3ec6d6, type: 3}
+      propertyPath: m_TagString
+      value: QuestBoard
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3807,6 +3811,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 692902432}
   - {fileID: 405803073}
   - {fileID: 1985389548}
   - {fileID: 2007650467}
@@ -3816,7 +3821,6 @@ SceneRoots:
   - {fileID: 173363411}
   - {fileID: 559551161}
   - {fileID: 1700949973}
-  - {fileID: 692902432}
   - {fileID: 1859570202857006215}
   - {fileID: 1902688054}
   - {fileID: 1546612840}

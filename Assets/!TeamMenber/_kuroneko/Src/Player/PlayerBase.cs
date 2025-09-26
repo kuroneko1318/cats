@@ -148,10 +148,10 @@ public class PlayerBase : MonoBehaviour {
     void HandleQuestUI() {
 
         // ˆÚ“®
-        if (moveInput.y > 0) QuestBoardManager.Instance.MoveUp();
-        if (moveInput.y < 0) QuestBoardManager.Instance.MoveDown();
-        if (moveInput.x > 0) QuestBoardManager.Instance.MoveRight();
-        if (moveInput.x < 0) QuestBoardManager.Instance.MoveLeft();
+        if (moveInput.y > 0) { QuestBoardManager.Instance.MoveUp(); AudioManager.Instance.PlaySE("Cursol"); }
+            if (moveInput.y < 0) { QuestBoardManager.Instance.MoveDown(); AudioManager.Instance.PlaySE("Cursol"); }
+                if (moveInput.x > 0) { QuestBoardManager.Instance.MoveRight(); AudioManager.Instance.PlaySE("Cursol"); }
+                    if (moveInput.x < 0) { QuestBoardManager.Instance.MoveLeft(); AudioManager.Instance.PlaySE("Cursol"); }
 
         // Œˆ’è
         if (input.actions["Select"].WasPressedThisFrame()) {
@@ -181,13 +181,14 @@ public class PlayerBase : MonoBehaviour {
     void HandleUI() {
 
         // ƒJ[ƒ\ƒ‹ˆÚ“®
-        if (uiMoveInput.y > 0) InventoryManager.Instance.MoveUp();
-        if (uiMoveInput.y < 0) InventoryManager.Instance.MoveDown();
-        if (uiMoveInput.x > 0) InventoryManager.Instance.MoveRight();
-        if (uiMoveInput.x < 0) InventoryManager.Instance.MoveLeft();
+        if (uiMoveInput.y > 0) { InventoryManager.Instance.MoveUp(); AudioManager.Instance.PlaySE("Cursol"); }
+        if (uiMoveInput.y < 0) { InventoryManager.Instance.MoveDown(); AudioManager.Instance.PlaySE("Cursol"); }
+        if (uiMoveInput.x > 0) { InventoryManager.Instance.MoveRight(); AudioManager.Instance.PlaySE("Cursol"); }
+        if (uiMoveInput.x < 0) { InventoryManager.Instance.MoveLeft(); AudioManager.Instance.PlaySE("Cursol"); }
 
         if (input.actions["Select"].WasPressedThisFrame()) {
             InventoryManager.Instance.HandleSelect();
+            AudioManager.Instance.PlaySE("Select");
         }
         if (input.actions["Cancel"].WasPressedThisFrame()) {
             if (InventoryManager.Instance.IsHoldingItem) {
