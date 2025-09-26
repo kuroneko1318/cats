@@ -120,8 +120,9 @@ public class InventoryManager : SystemObject<InventoryManager> {
     }
 
     public void CloseInventory() {
-        if (inventoryPanelInstance != null)
+        if (inventoryPanelInstance != null) {
             inventoryPanelInstance.SetActive(false);
+        }
     }
 
     private void RefreshUI() {
