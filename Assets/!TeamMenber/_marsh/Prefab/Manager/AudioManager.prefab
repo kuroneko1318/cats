@@ -74,4 +74,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: d598d1522d980e249a4d76a3fe56beed, type: 3}
     volume: 1
     pitch: 1
-  initialSESourceCount: 5
+  - name: Quest
+    clip: {fileID: 8300000, guid: f5908c34d6e76ba42b834b9df4469da8, type: 3}
+    volume: 1
+    pitch: 1
+  initialSESourceCount: 10

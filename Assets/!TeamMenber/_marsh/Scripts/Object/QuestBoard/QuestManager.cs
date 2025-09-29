@@ -38,5 +38,6 @@ public class QuestManager : SystemObject<QuestManager> {
         QuestBoardManager.Instance.UI.SetActive(false);
         QuestBoardManager.Instance.PopulateQuestBoard();
         GameManager.Instance.QuestClear();
+        AudioManager.Instance.PlaySE("Quest");
     }
 }
