@@ -44,7 +44,7 @@ public class ItemManager : SystemObject<ItemManager> {
 
         // ここでアイテム5種を登録（ID）
         itemList.Add(new HealItem("回復薬", 3000, 50, potionIcon));
-        itemList.Add(new HealItem("木の実", 3001, 10, NutIcon));
+        itemList.Add(new AttackBoost("木の実", 3001, 10,15, NutIcon));
         itemList.Add(new AttackBoost("攻撃薬", 9000, 30, 60, AtkPotionIcon));
         itemList.Add(new DefenceBoost("防御薬", 9001, 30, 60, DefPotionIcon));
         itemList.Add(new ItemBase("薬草", 4001, eItemType.Material, HerbIcon));
@@ -76,6 +76,7 @@ public class ItemManager : SystemObject<ItemManager> {
         weaponList.Add(new WeaponBase("天上天下唯我独尊ブレード", 1005, 32768,MgicSword));
         //weaponList.Add(new WeaponBase("魔剣ネイリング", 1006, 100));
         armorList.Add(new ArmorBase("普通のアーマー", 2001, 30, NomarArmor));
+        armorList.Add(new ArmorBase("マジックアーマー", 2002, 50,NomarArmor));
         armorList.Add(new ArmorBase("マジックアーマー", 2002, 50,NomarArmor));
         armorList.Add(new ArmorBase("金城鉄壁金剛二天アーマー", 2003, 500,NomarArmor));
 
