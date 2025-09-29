@@ -1,23 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class NewPlayerMove
-{
-    private Transform playerTransform;         // プレイヤーのTransform
-    private Animator anim;                     // アニメーション管理
-    private float moveSpeed = 10f;              // 移動速度
-    private float avoidanceForce = 8f;         // 回避時の力
-    private bool isAvoiding = false;           // 回避中フラグ
-    private Vector3 avoidanceDir;              // 回避方向
-    private float avoidanceTime = 0.3f;        // 回避の持続時間
+public class NewPlayerMove {
+    private Transform playerTransform;     // プレイヤーのTransform
+    private Animator anim;                 // アニメーション管理
+    private float moveSpeed = 10f;         // 移動速度
+    private float avoidanceForce = 8f;     // 回避時の力
+    private bool isAvoiding = false;       // 回避中フラグ
+    private Vector3 avoidanceDir;          // 回避方向
+    private float avoidanceTime = 0.3f;    // 回避の持続時間
     private float avoidanceTimer = 0f;
     private bool isMoving = false;
+
+    private Vector3 lastPosition;          // 前フレーム位置
 
     public NewPlayerMove(Transform transform, Animator animator) {
         playerTransform = transform;
         anim = animator;
+        lastPosition = playerTransform.position;
     }
 
     public bool IsMoving() => isMoving;
@@ -31,6 +30,7 @@ public class NewPlayerMove
             if (avoidanceTimer <= 0) {
                 isAvoiding = false;
             }
+            UpdateMovementState();
             return;
         }
 
@@ -54,14 +54,10 @@ public class NewPlayerMove
                 Quaternion.LookRotation(move),
                 0.2f
             );
+        }
 
-            anim.SetBool("Run", true); // 移動アニメON
-            isMoving = true;
-        }
-        else {
-            anim.SetBool("Run", false); // 移動アニメOFF
-            isMoving = false;
-        }
+        // 実際に動いたかどうかをチェック
+        UpdateMovementState();
     }
 
     // 回避処理
@@ -84,5 +80,21 @@ public class NewPlayerMove
         isAvoiding = true;
         avoidanceTimer = avoidanceTime;
         anim.SetTrigger("Avoidance"); // トリガー
+    }
+
+    // 実際の移動量をチェックしてRunフラグを制御
+    private void UpdateMovementState() {
+        float movedDistance = (playerTransform.position - lastPosition).magnitude;
+
+        if (movedDistance > 0.001f) { // 少しでも動いてたらRun
+            anim.SetBool("Run", true);
+            isMoving = true;
+        }
+        else {
+            anim.SetBool("Run", false);
+            isMoving = false;
+        }
+
+        lastPosition = playerTransform.position;
     }
 }

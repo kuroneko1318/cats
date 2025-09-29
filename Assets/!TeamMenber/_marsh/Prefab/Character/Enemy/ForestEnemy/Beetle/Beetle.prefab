@@ -722,9 +722,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 0
-  hp: 100
-  maxHp: 100
-  attack: 35
+  hp: 500
+  maxHp: 500
+  attack: 25
   defence: 30
   moveSpeed: 4
   detectionRange: 20

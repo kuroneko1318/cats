@@ -240,8 +240,15 @@ public class EnemyBase : MonoBehaviour {
             case EnemyType.Nasty:
                 bag.AddItem(ItemManager.Instance.GetItemByName("魔石"), Random.Range(1, 5));
                 break;
+            case EnemyType.NastyDesert:
+                bag.AddItem(ItemManager.Instance.GetItemByName("ブラッドストーン"), Random.Range(1, 20));
+                break;
+            case EnemyType.NastyVolcano:
+                bag.AddItem(ItemManager.Instance.GetItemByName("ライトストーン"),20);
+                break;
+
             case EnemyType.Cow:
-                bag.AddItem(ItemManager.Instance.GetItemByName("鉄"), Random.Range(1, 5));
+                bag.AddItem(ItemManager.Instance.GetItemByName("木"), Random.Range(1, 10));
                 break;
         }
     }

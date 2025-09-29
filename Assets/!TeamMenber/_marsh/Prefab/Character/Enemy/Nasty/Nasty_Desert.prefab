@@ -1545,10 +1545,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 3
-  hp: 5000
-  maxHp: 5000
-  attack: 20
-  defence: 0
+  hp: 12000
+  maxHp: 12000
+  attack: 25
+  defence: 10
   moveSpeed: 3
   detectionRange: 10
   combatRange: 5
