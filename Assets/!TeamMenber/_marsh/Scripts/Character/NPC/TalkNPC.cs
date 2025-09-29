@@ -12,7 +12,7 @@ public class TalkNPC : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        Text.GetComponent<TextMeshPro>().text = ("魔石を使うと装備を強化できるらしい");
+        RandomTalkText();
         Text.SetActive(true);
     }
 
@@ -25,9 +25,19 @@ public class TalkNPC : MonoBehaviour {
 
         switch (rand) {
             case 0:
-                break; case 1:
-                break; case 2:
-                break;case 3:
+                Text.GetComponent<TextMeshPro>().text = ("魔石を使うと\n装備を強化できるらしい");
+                break; 
+            case 1:
+                Text.GetComponent<TextMeshPro>().text = ("紐を使えば薬も服も作れるぞ");
+                break; 
+            case 2:
+                Text.GetComponent<TextMeshPro>().text = ("木の実食べると\nなんか力が湧いてくるな");
+                break; 
+            case 3:
+                Text.GetComponent<TextMeshPro>().text = ("黒曜石を混ぜて\n飲むなんて正気か？");
+                break;
+            case 4:
+                Text.GetComponent<TextMeshPro>().text = ("変わった石を組み合わせると\n強そうな石が出来そうだな");
                 break;
         }
     }
