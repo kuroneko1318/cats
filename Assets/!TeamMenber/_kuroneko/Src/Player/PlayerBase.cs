@@ -436,9 +436,9 @@ public class PlayerBase : MonoBehaviour {
         anim.ResetTrigger("Pick");
         anim.SetBool("Run",false);
 
-        anim.SetBool("IsAttacking", false);
-        anim.SetBool("IsAvoiding", false);
-        anim.SetBool("IsUsingSkill", false);
-        anim.SetBool("IsPicking", false);
+        ResetAttackFlag();
+        IsSkillActive = false;
+        isPick = false;
+        isDead = false;
     }
 }
