@@ -73,11 +73,11 @@ public class ItemManager : SystemObject<ItemManager> {
         //weaponList.Add(new WeaponBase("ライトソード", 1002, 10));
         //weaponList.Add(new WeaponBase("未完成の魔剣", 1003, 1));
         weaponList.Add(new WeaponBase("魔剣ズルフィカール", 1004, 500,BloodSword));
-        weaponList.Add(new WeaponBase("超絶最強天上天下唯我独尊ブレード極", 1005, 32768,MgicSword));
+        weaponList.Add(new WeaponBase("天上天下唯我独尊ブレード", 1005, 32768,MgicSword));
         //weaponList.Add(new WeaponBase("魔剣ネイリング", 1006, 100));
         armorList.Add(new ArmorBase("普通のアーマー", 2001, 30, NomarArmor));
         armorList.Add(new ArmorBase("マジックアーマー", 2002, 50,NomarArmor));
-        armorList.Add(new ArmorBase("金城鉄壁金剛二天アーマー松竹梅の型", 2003, 500,NomarArmor));
+        armorList.Add(new ArmorBase("金城鉄壁金剛二天アーマー", 2003, 500,NomarArmor));
 
     }
 

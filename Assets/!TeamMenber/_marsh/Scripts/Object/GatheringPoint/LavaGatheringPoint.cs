@@ -27,7 +27,7 @@ public class LavaGatheringPoint : GatheringPoint {
                 bag.AddItem(ItemManager.Instance.GetItemByName("ライトストーン"), Random.Range(1, 2));
                 break;
             case 4:
-                bag.AddItem(ItemManager.Instance.GetItemByName("ブラットストーン"), Random.Range(1, 2));
+                bag.AddItem(ItemManager.Instance.GetItemByName("ブラッドストーン"), Random.Range(1, 2));
                 break;
         }
         
