@@ -16,10 +16,11 @@ public class MainGameStart : MonoBehaviour {
 
     IEnumerator PlayIntroSequence() {
         // ① 黒背景フェードアウト
-        yield return StartCoroutine(FadeCanvasGroup(fadePanel, 1f, 0f, fadeDuration));
-
-        // ② テキストフェードイン
         yield return StartCoroutine(FadeCanvasGroup(textGroup, 0f, 1f, fadeDuration));
+        yield return StartCoroutine(FadeCanvasGroup(fadePanel, 1f, 0f, fadeDuration));
+        //yield return StartCoroutine(FadeCanvasGroup(textGroup, 0f, 1f, fadeDuration));
+        // ② テキストフェードイン
+        //yield return StartCoroutine(FadeCanvasGroup(textGroup, 0f, 1f, fadeDuration));
 
         // ③ 表示時間待機
         yield return new WaitForSeconds(textDisplayTime);
