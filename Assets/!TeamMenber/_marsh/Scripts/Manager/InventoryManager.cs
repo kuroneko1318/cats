@@ -126,6 +126,11 @@ public class InventoryManager : SystemObject<InventoryManager> {
     }
 
     private void RefreshUI() {
+
+        // --- 現在の状態を保存 ---
+        int prevIndex = selectedIndex;
+        UIArea prevArea = currentArea;
+
         // インベントリ上部
         inventoryTopUI.Clear();
         ClearChildren(InventoryTop);
@@ -172,7 +177,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
         CraftManager.Instance.UpdateResult();
 
         // 選択インデックスが範囲外の場合は 0 に
-        if (selectedIndex >= craftUI.Count) selectedIndex = 0;
+        //if (selectedIndex >= craftUI.Count) selectedIndex = 0;
 
         // 装備
         equipUI.Clear();
@@ -183,7 +188,21 @@ public class InventoryManager : SystemObject<InventoryManager> {
             equipUI.Add(ui);
         }
 
+        // --- 保存していた選択状態を復元 ---
+        currentArea = prevArea;
+        selectedIndex = Mathf.Min(prevIndex, GetAreaCount(currentArea) - 1);
+
         UpdateHighlight();
+    }
+
+    private int GetAreaCount(UIArea area) {
+        return area switch {
+            UIArea.InventoryTop => inventoryTopUI.Count,
+            UIArea.InventoryBottom => inventoryBottomUI.Count,
+            UIArea.Craft => craftUI.Count,
+            UIArea.Equip => equipUI.Count,
+            _ => 0
+        };
     }
 
     private void ClearChildren(Transform parent) {
@@ -575,21 +594,20 @@ public class InventoryManager : SystemObject<InventoryManager> {
             healItem.Use(GameObject.FindGameObjectWithTag("Player"));
             slot.amount--;
             if (slot.amount <= 0) slot.item = null;
-            RefreshUI();
         }
         if (slot?.item is AttackBoost ATKboost) {
             ATKboost.Use(GameObject.FindGameObjectWithTag("Player"));
             slot.amount--;
             if (slot.amount <= 0) slot.item = null;
-            RefreshUI();
         }
         if (slot?.item is DefenceBoost DEFboost) {
             DEFboost.Use(GameObject.FindGameObjectWithTag("Player"));
             slot.amount--;
             if (slot.amount <= 0) slot.item = null;
-            RefreshUI();
         }
+        RefreshUI();
         UpdateHeldItemUI();
+        UpdateHighlight();
     }
     private void ApplyEquipment(int slotIndex) {
         PlayerBase player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBase>();
