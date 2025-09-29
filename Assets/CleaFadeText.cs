@@ -9,7 +9,7 @@ public class CleaFadeText : MonoBehaviour {
     public float displayDuration = 3f;  // •\¦ŠÔi•bj
 
     void Start() {
-        ShowMessage("Congratulation!!!");
+        ShowMessage("Congratulation!");
     }
 
     public void ShowMessage(string message) {
