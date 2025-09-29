@@ -436,11 +436,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -2080326034339334469, guid: 7d8bb35060de6894fb04954ab1931112, type: 3}
       propertyPath: hp
-      value: 500
+      value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: -2080326034339334469, guid: 7d8bb35060de6894fb04954ab1931112, type: 3}
       propertyPath: maxHp
-      value: 500
+      value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: 3874822317513216836, guid: 7d8bb35060de6894fb04954ab1931112, type: 3}
       propertyPath: m_LocalPosition.x
