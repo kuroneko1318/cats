@@ -19,7 +19,7 @@ public class Inventory : MonoBehaviour {
 
     private void Update () {
         
-        transform.position=Player.transform.position;
+        transform.position = Player.transform.position;
     }
 
     //実行時にインベントリのスロット生成する
