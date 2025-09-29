@@ -12,7 +12,7 @@ public class LavaGatheringPoint : GatheringPoint {
 
     public override void Gather() {
         Debug.Log("鉱石から鉄鉱石を採取しました！");
-        Itemrand = Random.Range(0, 3);
+        Itemrand = Random.Range(0, 5);
         switch (Itemrand) {
             case 0:
                 bag.AddItem(ItemManager.Instance.GetItemByName("石"), Random.Range(1, 5));
@@ -22,6 +22,12 @@ public class LavaGatheringPoint : GatheringPoint {
                 break;
             case 2:
                 bag.AddItem(ItemManager.Instance.GetItemByName("黒曜石"), Random.Range(1, 2));
+                break;
+            case 3:
+                bag.AddItem(ItemManager.Instance.GetItemByName("ライトストーン"), Random.Range(1, 2));
+                break;
+            case 4:
+                bag.AddItem(ItemManager.Instance.GetItemByName("ブラットストーン"), Random.Range(1, 2));
                 break;
         }
         

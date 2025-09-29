@@ -238,7 +238,7 @@ public class EnemyBase : MonoBehaviour {
                 bag.AddItem(ItemManager.Instance.GetItemByName("紐"), Random.Range(1, 5));
                 break;
             case EnemyType.Nasty:
-                bag.AddItem(ItemManager.Instance.GetItemByName("針"), Random.Range(1, 5));
+                bag.AddItem(ItemManager.Instance.GetItemByName("魔石"), Random.Range(1, 5));
                 break;
             case EnemyType.Cow:
                 bag.AddItem(ItemManager.Instance.GetItemByName("鉄"), Random.Range(1, 5));
