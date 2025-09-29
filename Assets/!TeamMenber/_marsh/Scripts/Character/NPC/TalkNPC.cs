@@ -19,4 +19,17 @@ public class TalkNPC : MonoBehaviour {
     private void OnTriggerExit(Collider other) {
         Text.SetActive(false);
     }
+
+    private void RandomTalkText() {
+        int rand = Random.Range(0, 5);
+
+        switch (rand) {
+            case 0:
+                break; case 1:
+                break; case 2:
+                break;case 3:
+                break;
+        }
+    }
+
 }
