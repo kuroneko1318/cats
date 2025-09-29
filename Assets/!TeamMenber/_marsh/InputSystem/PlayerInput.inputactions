@@ -121,6 +121,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Select1",
+                    "type": "Button",
+                    "id": "00871d87-4de5-4c84-bfc1-bfa2bad2b71a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -226,7 +235,7 @@
                 {
                     "name": "",
                     "id": "f32a843a-b11e-4af4-9c64-1f5ee9011508",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -616,6 +625,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d71a49c0-b0bc-4696-9221-ed4529b6c6b4",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
