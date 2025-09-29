@@ -293,6 +293,7 @@ public class PlayerBase : MonoBehaviour {
         if (hp <= 0) {
             isDead = true;
             anim.SetTrigger("Death");
+            AudioManager.Instance.PlaySE("YOUDIED");
             GameManager.Instance.OnDead();
         }
     }

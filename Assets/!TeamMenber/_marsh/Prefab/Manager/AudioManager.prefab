@@ -78,4 +78,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: f5908c34d6e76ba42b834b9df4469da8, type: 3}
     volume: 1
     pitch: 1
+  - name: YOUDIED
+    clip: {fileID: 8300000, guid: 35b737aefdf4e934a9c1ccc050756120, type: 3}
+    volume: 1
+    pitch: 1
   initialSESourceCount: 10
