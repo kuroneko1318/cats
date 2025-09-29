@@ -205,7 +205,7 @@ public class EnemyBase : MonoBehaviour {
         if (hp <= 0) Dead();
 
         // ヒットアニメーション
-        if(Random.Range(0,1) == 0) {
+        if(Random.Range(0,2) == 0) {
             animator.SetTrigger("Hit");
         }
         effectSpawnPos = new Vector3(transform.position.x, transform.position.y + 0.6f, transform.position.z);
