@@ -605,4 +605,9 @@ public class InventoryManager : SystemObject<InventoryManager> {
         }
     }
     #endregion
+
+    public string GetHeldItemName() {
+        if (heldItem == null) return "";
+        return heldItem.itemName; // ItemBase ‚É itemName ‚ª‚ ‚é‘O’ñ
+    }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameManager : SystemObject<GameManager> {
 
     public GameObject clearUI;
+    public GameObject deadUI;
+    public GameObject questClearUI;
 
     // どのNastyを倒したかを管理
     private Dictionary<EnemyType, bool> defeatedNasty = new Dictionary<EnemyType, bool>();
@@ -39,5 +41,13 @@ public class GameManager : SystemObject<GameManager> {
     private void OnClear() {
         Debug.Log("ゲームクリア！！");
         if (clearUI != null) Instantiate(clearUI);
+    }
+
+    public void OnDead() {
+        if (deadUI != null) Instantiate(deadUI);
+    }
+
+    public void QuestClear() {
+        if (questClearUI != null) Instantiate(questClearUI);
     }
 }

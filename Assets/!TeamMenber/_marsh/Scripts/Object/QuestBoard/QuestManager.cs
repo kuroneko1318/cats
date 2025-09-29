@@ -37,5 +37,6 @@ public class QuestManager : SystemObject<QuestManager> {
         activeQuest = null; // ‹ó‚É‚µ‚ÄŸ‚ğó’‰Â”\‚É‚·‚é
         QuestBoardManager.Instance.UI.SetActive(false);
         QuestBoardManager.Instance.PopulateQuestBoard();
+        GameManager.Instance.QuestClear();
     }
 }
