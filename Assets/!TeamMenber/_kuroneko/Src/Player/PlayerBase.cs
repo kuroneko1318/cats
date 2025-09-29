@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 // バフ用クラス
 [System.Serializable]
@@ -25,7 +27,7 @@ public class PlayerBase : MonoBehaviour {
     private Animator anim;
     private Transform mainCamera;
     private Vector2 moveInput;
-    private SkillCooldownUI skillUI;
+    [NonSerialized]public SkillCooldownUI skillUI;
     public GameObject Canvas;
     private bool isNearQuestBoard = false;
 

@@ -158,5 +158,7 @@ public class QuestBoardManager : SystemObject<QuestBoardManager> {
 
     public void CloseQuestBoard() {
         questBoardPanel.SetActive(false);
+        PlayerBase player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBase>();
+        player.skillUI.ShowUI();
     }
 }
