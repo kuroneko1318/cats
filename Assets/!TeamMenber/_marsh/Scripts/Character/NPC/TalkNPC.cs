@@ -21,7 +21,7 @@ public class TalkNPC : MonoBehaviour {
     }
 
     private void RandomTalkText() {
-        int rand = Random.Range(0, 5);
+        int rand = Random.Range(0, 6);
 
         switch (rand) {
             case 0:
@@ -38,6 +38,9 @@ public class TalkNPC : MonoBehaviour {
                 break;
             case 4:
                 Text.GetComponent<TextMeshPro>().text = ("変わった石を組み合わせると\n強そうな石が出来そうだな");
+                break;
+            case 5:
+                Text.GetComponent<TextMeshPro>().text = ("溶岩はイカれた強さしている\n奴らが沢山湧いてやがる");
                 break;
         }
     }
