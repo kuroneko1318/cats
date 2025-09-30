@@ -314,7 +314,7 @@ public class PlayerBase : MonoBehaviour {
 
     //çÃéÊä÷åW
     private void OnTriggerStay(Collider other) {
-        if (other.gameObject.CompareTag("GatheringPoint")) {
+        if (other.gameObject.CompareTag("GatheringPoint") || other.gameObject.CompareTag("Shop")) {
             Canvas.SetActive(true);
             if (GatherAction.WasPressedThisFrame()&&isPick==false) {
                 point = other.gameObject.GetComponent<GatheringPoint>();
@@ -338,7 +338,7 @@ public class PlayerBase : MonoBehaviour {
             isNearQuestBoard = false;
             Canvas.SetActive(false);
         }
-        if (other.gameObject.CompareTag("GatheringPoint")) {
+        if (other.gameObject.CompareTag("GatheringPoint") || other.gameObject.CompareTag("Shop")) {
             Canvas.SetActive(false);
             point = null;
         }
