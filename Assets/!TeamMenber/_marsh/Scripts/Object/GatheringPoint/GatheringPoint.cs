@@ -11,6 +11,8 @@ public enum GatheringPointType {
     Cactus,
     Lava,
     LavaCrystal,
+    TutorialOre,
+    TutorialBush,
 }
 
 public abstract class GatheringPoint : MonoBehaviour {
