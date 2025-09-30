@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Timers;
 using UnityEngine;
 
 public class GameManager : SystemObject<GameManager> {
@@ -7,12 +8,12 @@ public class GameManager : SystemObject<GameManager> {
     public GameObject deadUI;
     public GameObject questClearUI;
     private GameObject player;
+    private PlayerBase playerBase;
 
     // どのNastyを倒したかを管理
     private Dictionary<EnemyType, bool> defeatedNasty = new Dictionary<EnemyType, bool>();
 
-    // ラップ（周回）数
-    public int lap = 1;
+    public int laps = 1;
 
     // ステータス増加率
     [Header("Enemy Status Increase")]
@@ -25,6 +26,7 @@ public class GameManager : SystemObject<GameManager> {
         defeatedNasty[EnemyType.NastyDesert] = false;
         defeatedNasty[EnemyType.NastyVolcano] = false;
         player = GameObject.Find("Player");
+        playerBase = player.GetComponent<PlayerBase>();
     }
 
     // EnemyBaseから呼び出す
@@ -50,18 +52,17 @@ public class GameManager : SystemObject<GameManager> {
     private void OnClear() {
         Debug.Log("ゲームクリア！！");
         if (clearUI != null) Instantiate(clearUI);
-
-        // プレイヤー位置リセット
-        player.transform.position = new Vector3(0, 0.55f, 0);
-
-        // NPCアニメーション
+        laps++;
         TalkNPC.Instance.ChangeAnimation();
 
         // SE
         AudioManager.Instance.PlaySE("Clear");
 
+        //プレイヤーの位置リセット
+        playerBase.DeathAnimationEnd();
+
         // ラップ加算
-        lap++;
+        laps++;
 
         // 敵ステータスを増加
         IncreaseEnemyStatus();
@@ -80,7 +81,7 @@ public class GameManager : SystemObject<GameManager> {
             // 現在HPも最大HPに合わせる
             enemy.hp = enemy.maxHp;
         }
-        Debug.Log($"ラップ {lap} : 敵ステータスを増加しました");
+        Debug.Log($"ラップ {laps} : 敵ステータスを増加しました");
     }
 
     private void ResetDefeatedNasty() {
@@ -88,6 +89,7 @@ public class GameManager : SystemObject<GameManager> {
         foreach (var key in keys) {
             defeatedNasty[key] = false;
         }
+        Initialize();
     }
 
     public void OnDead() {

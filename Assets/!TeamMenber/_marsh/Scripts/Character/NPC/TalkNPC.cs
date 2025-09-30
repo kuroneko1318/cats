@@ -11,6 +11,8 @@ public class TalkNPC : MonoBehaviour {
 
     public static TalkNPC Instance;
 
+    private bool clearText = false;
+
     private void Awake() {
         Instance = this;
     }
@@ -31,7 +33,7 @@ public class TalkNPC : MonoBehaviour {
 
     public void ChangeAnimation() {
         animator.SetBool("Clap",true);
-        Text.GetComponent<TextMeshPro>().text = ("おめでとう！\n君は英雄だ！");
+        clearText = animator.GetBool("Clap");
     }
 
     private void RandomTalkText() {
@@ -42,7 +44,8 @@ public class TalkNPC : MonoBehaviour {
                 Text.GetComponent<TextMeshPro>().text = ("魔石を使うと\n装備を強化できるらしい");
                 break; 
             case 1:
-                Text.GetComponent<TextMeshPro>().text = ("紐を使えば薬も服も作れるぞ");
+                if (!clearText) Text.GetComponent<TextMeshPro>().text = ("紐を使えば薬も服も作れるぞ");
+                else Text.GetComponent<TextMeshPro>().text = ("君は" + GameManager.Instance.laps + "回も\n倒してくれているんだな！");
                 break; 
             case 2:
                 Text.GetComponent<TextMeshPro>().text = ("木の実食べると\nなんか力が湧いてくるな");
@@ -54,10 +57,12 @@ public class TalkNPC : MonoBehaviour {
                 Text.GetComponent<TextMeshPro>().text = ("変わった石を組み合わせると\n強そうな石が出来そうだな");
                 break;
             case 5:
-                Text.GetComponent<TextMeshPro>().text = ("溶岩はイカれた強さしている\n奴らが沢山湧いてやがる");
+                if(!clearText) Text.GetComponent<TextMeshPro>().text = ("溶岩はイカれた強さしている\n奴らが沢山湧いてやがる");
+                else Text.GetComponent<TextMeshPro>().text = ("あの化け物を一掃したが\nまた強くなって湧いてきやがる");
                 break;
             case 6:
-                Text.GetComponent<TextMeshPro>().text = ("剣を作るには\n木を棒に加工しないといけないらしいぞ");
+                if(!clearText) Text.GetComponent<TextMeshPro>().text = ("イカれた奴らを倒してきてくれ");
+                else Text.GetComponent<TextMeshPro>().text = ("よくやった！\n君は英雄だ！");
                 break;
         }
     }
