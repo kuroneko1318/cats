@@ -82,4 +82,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 35b737aefdf4e934a9c1ccc050756120, type: 3}
     volume: 1
     pitch: 1
+  - name: Clear
+    clip: {fileID: 8300000, guid: 9f49045a2b58dba4aa97c28d46d257aa, type: 3}
+    volume: 1
+    pitch: 1
   initialSESourceCount: 10

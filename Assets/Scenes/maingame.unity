@@ -3810,7 +3810,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   offset: {x: 0, y: 2.5, z: -4}
-  mouseSensitivity: 0.1
+  mouseSensitivity: 2
   minYAngle: -35
   maxYAngle: 50
 --- !u!114 &405803075

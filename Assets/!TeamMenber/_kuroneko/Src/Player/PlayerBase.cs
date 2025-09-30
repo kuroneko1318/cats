@@ -89,7 +89,7 @@ public class PlayerBase : MonoBehaviour {
     [SerializeField]
     private GameObject defBuffEffect;
 
-    void Start() {
+    void Start() {     
         AudioManager.Instance.PlayBGM("Fantasy");
         Canvas.SetActive(false);
         input = GetComponent<PlayerInput>();

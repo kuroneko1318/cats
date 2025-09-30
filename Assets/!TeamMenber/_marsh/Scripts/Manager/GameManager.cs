@@ -7,7 +7,7 @@ public class GameManager : SystemObject<GameManager> {
     public GameObject clearUI;
     public GameObject deadUI;
     public GameObject questClearUI;
-
+    private GameObject player;
     // どのNastyを倒したかを管理
     private Dictionary<EnemyType, bool> defeatedNasty = new Dictionary<EnemyType, bool>();
 
@@ -16,6 +16,7 @@ public class GameManager : SystemObject<GameManager> {
         defeatedNasty[EnemyType.Nasty] = false;
         defeatedNasty[EnemyType.NastyDesert] = false;
         defeatedNasty[EnemyType.NastyVolcano] = false;
+        player = GameObject.Find("Player");
     }
 
     // EnemyBaseから呼び出す
@@ -27,11 +28,12 @@ public class GameManager : SystemObject<GameManager> {
             // 全て倒したか確認
             if (AllNastyDefeated()) {
                 OnClear();
+                
             }
         }
     }
 
-    private bool AllNastyDefeated() {
+    public bool AllNastyDefeated() {
         foreach (var kv in defeatedNasty) {
             if (!kv.Value) return false;
         }
@@ -41,6 +43,8 @@ public class GameManager : SystemObject<GameManager> {
     private void OnClear() {
         Debug.Log("ゲームクリア！！");
         if (clearUI != null) Instantiate(clearUI);
+        player.transform.position = new Vector3(0,0.55f,0);
+        AudioManager.Instance.PlaySE("Clear");
     }
 
     public void OnDead() {
@@ -49,5 +53,6 @@ public class GameManager : SystemObject<GameManager> {
 
     public void QuestClear() {
         if (questClearUI != null) Instantiate(questClearUI);
+        
     }
 }

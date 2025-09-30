@@ -52,9 +52,9 @@ public class ItemManager : SystemObject<ItemManager> {
         itemList.Add(new ItemBase("石", 4020, eItemType.Material, StoneIcon));
         itemList.Add(new ItemBase("ライトストーン", 4021, eItemType.Material, LightStone));
         itemList.Add(new ItemBase("ブラッドストーン", 4022,eItemType.Material, Bloodstone));
-        itemList.Add(new ItemBase("ブラックマリン", 4023,eItemType.Material));
-        //itemList.Add(new ItemBase("シーネリアン", 4024,eItemType.Material));
-        //itemList.Add(new ItemBase("マカライト", 4025,eItemType.Material));
+        itemList.Add(new AttackBoost("灼熱に伝わる石", 4023,200, 999999999));
+        itemList.Add(new AttackBoost("森に伝わる石", 4024,200,999999999));
+        itemList.Add(new DefenceBoost("大地に伝わる石", 4025,200, 999999999));
         itemList.Add(new ItemBase("鉄", 4030, eItemType.Material, IronIcon));
         itemList.Add(new ItemBase("銅", 4031, eItemType.Material, CopperIcon));
         itemList.Add(new ItemBase("黒曜石", 4032, eItemType.Material, ObsidianIcon));

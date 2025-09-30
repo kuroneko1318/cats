@@ -42,6 +42,9 @@ public class TalkNPC : MonoBehaviour {
             case 5:
                 Text.GetComponent<TextMeshPro>().text = ("—nŠâ‚ÍƒCƒJ‚ê‚½‹­‚³‚µ‚Ä‚¢‚é\n“z‚ç‚ª‘òR—N‚¢‚Ä‚â‚ª‚é");
                 break;
+            case 6:
+                Text.GetComponent<TextMeshPro>().text = ("Œ•‚ğì‚é‚É‚Í\n–Ø‚ğ–_‚É‰ÁH‚µ‚È‚¢‚Æ‚¢‚¯‚È‚¢‚ç‚µ‚¢‚¼");
+                break;
         }
     }
 

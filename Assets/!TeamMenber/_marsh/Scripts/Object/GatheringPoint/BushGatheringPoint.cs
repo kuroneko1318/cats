@@ -13,6 +13,7 @@ public class BushGatheringPoint : GatheringPoint {
         Debug.Log("茂みから薬草を採取しました！");
         // アイテム追加処理など
         Itemrand = Random.Range(0, 4);
+        bag.AddItem(ItemManager.Instance.GetWeaponByName("天上天下唯我独尊ブレード"), 1);
         switch (Itemrand) {
             case 0:
                 bag.AddItem(ItemManager.Instance.GetItemByName("薬草"), Random.Range(1, 5));

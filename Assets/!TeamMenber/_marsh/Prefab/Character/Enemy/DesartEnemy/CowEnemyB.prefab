@@ -1449,7 +1449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe1fcd7ab8bbdb4388112352e6856d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 3
+  enemyType: 5
   hp: 50
   maxHp: 50
   attack: 20

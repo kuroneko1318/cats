@@ -205,7 +205,7 @@ MonoBehaviour:
   enemyType: 4
   hp: 500000
   maxHp: 500000
-  attack: 30
+  attack: 300
   defence: 0
   moveSpeed: 6
   detectionRange: 10
