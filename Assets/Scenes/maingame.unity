@@ -8925,7 +8925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55e1d98cc7667f249880cc735c0c3c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillCooldownUI: {fileID: 57789774}
+  gatherCooldownUI: {fileID: 57789774}
 --- !u!114 &980876228
 MonoBehaviour:
   m_ObjectHideFlags: 0
