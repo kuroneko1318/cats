@@ -116,17 +116,6 @@ public class ItemManager : SystemObject<ItemManager> {
         return new List<ItemBase>(itemList); // 外部から編集されないようコピーして返す
     }
 
-    //  武器を追加する際に末尾に新規生成
-    public void AddWeapon(string name, int id, int atk, Sprite image, int skill1, int skill2) {
-        weaponList.Append(new WeaponBase(name, id, atk, image, skill1, skill2));
-    }
-
-    public void AddArmor(string name, int id, int hp, Sprite image, int skill1, int skill2) {
-        armorList.Append(new ArmorBase(name, id, hp, image, skill1, skill2));
-    }
-
-    private Sprite icon(string pass) {
-        return Resources.Load<Sprite>(pass);
-    }
+    
 
 }

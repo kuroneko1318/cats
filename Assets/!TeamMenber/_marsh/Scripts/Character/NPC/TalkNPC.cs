@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 
@@ -43,7 +44,8 @@ public class TalkNPC : MonoBehaviour {
                 else Text.GetComponent<TextMeshPro>().text = ("君は" + GameManager.Instance.laps + "回も\n倒してくれているんだな！");
                 break; 
             case 2:
-                Text.GetComponent<TextMeshPro>().text = ("木の実食べると\nなんか力が湧いてくるな");
+                if (!clearText) Text.GetComponent<TextMeshPro>().text = ("木の実食べると\nなんか力が湧いてくるな");
+                else Text.GetComponent<TextMeshPro>().text = ("ボスが落とした石\n何か強大な力を感じる");
                 break; 
             case 3:
                 Text.GetComponent<TextMeshPro>().text = ("黒曜石を混ぜて\n飲むなんて正気か？");
