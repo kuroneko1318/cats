@@ -9,13 +9,8 @@ public class TalkNPC : MonoBehaviour {
 
     private Animator animator;
 
-    public static TalkNPC Instance;
-
     private bool clearText = false;
 
-    private void Awake() {
-        Instance = this;
-    }
 
     private void Start() {
         Text.SetActive(false);

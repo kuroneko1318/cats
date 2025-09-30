@@ -53,7 +53,6 @@ public class GameManager : SystemObject<GameManager> {
         Debug.Log("ゲームクリア！！");
         if (clearUI != null) Instantiate(clearUI);
         laps++;
-        TalkNPC.Instance.ChangeAnimation();
 
         // SE
         AudioManager.Instance.PlaySE("Clear");
@@ -63,6 +62,9 @@ public class GameManager : SystemObject<GameManager> {
 
         // ラップ加算
         laps++;
+
+        //  NPCのアニメーションを変更
+        TalkNpcChangeAnimation();
 
         // 敵ステータスを増加
         IncreaseEnemyStatus();
@@ -82,6 +84,13 @@ public class GameManager : SystemObject<GameManager> {
             enemy.hp = enemy.maxHp;
         }
         Debug.Log($"ラップ {laps} : 敵ステータスを増加しました");
+    }
+
+    private void TalkNpcChangeAnimation() {
+        TalkNPC[] npcs = FindObjectsOfType<TalkNPC>();
+        foreach(var npc in npcs) {
+            npc.ChangeAnimation();
+        }
     }
 
     private void ResetDefeatedNasty() {
