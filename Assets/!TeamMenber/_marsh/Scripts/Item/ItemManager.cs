@@ -44,7 +44,10 @@ public class ItemManager : SystemObject<ItemManager> {
 
         // ここでアイテム5種を登録（ID）
         itemList.Add(new HealItem("回復薬", 3000, 50, potionIcon));
-        itemList.Add(new AttackBoost("木の実", 3001, 10,15, NutIcon));
+        itemList.Add(new HealItem("HP最大値上昇薬", 3000, 50, potionIcon));
+        itemList.Add(new HealItem("毒", 3001, -20, potionIcon));
+        itemList.Add(new HealItem("めっちゃ毒", 3001, -50, potionIcon));
+        itemList.Add(new AttackBoost("木の実", 3002, 10,15, NutIcon));
         itemList.Add(new AttackBoost("攻撃薬", 9000, 30, 60, AtkPotionIcon));
         itemList.Add(new DefenceBoost("防御薬", 9001, 30, 60, DefPotionIcon));
         itemList.Add(new ItemBase("薬草", 4001, eItemType.Material, HerbIcon));
@@ -58,14 +61,15 @@ public class ItemManager : SystemObject<ItemManager> {
         itemList.Add(new ItemBase("鉄", 4030, eItemType.Material, IronIcon));
         itemList.Add(new ItemBase("銅", 4031, eItemType.Material, CopperIcon));
         itemList.Add(new ItemBase("黒曜石", 4032, eItemType.Material, ObsidianIcon));
-        //itemList.Add(new ItemBase("鋭い黒曜石", 4033, eItemType.Material));
+        itemList.Add(new ItemBase("金", 4033, eItemType.Material));
+        itemList.Add(new ItemBase("鋭い黒曜石", 4034, eItemType.Material));
         ///emList.Add(new ItemBase("研磨石", 4034, eItemType.Material));
         itemList.Add(new ItemBase("魔石", 4035, eItemType.Material,Macalight));
         //itemList.Add(new ItemBase("融合石", 4036, eItemType.Material, Macalight));
         itemList.Add(new ItemBase("木", 4100, eItemType.Material, WoodIcon));
         //itemList.Add(new ItemBase("丈夫な木", 4101, eItemType.Material));
         itemList.Add(new ItemBase("棒", 4102, eItemType.Material, BarIcon));
-        //itemList.Add(new ItemBase("針", 4103, eItemType.Material, NeedleIcon));
+        itemList.Add(new ItemBase("針", 4103, eItemType.Material, NeedleIcon));
         //itemList.Add(new ItemBase("魔剣の剣身", 4104, eItemType.Material));
         //itemList.Add(new ItemBase("普通の柄", 4105, eItemType.Material));
         //itemList.Add(new ItemBase("魔剣の柄", 4106, eItemType.Material));
@@ -79,6 +83,8 @@ public class ItemManager : SystemObject<ItemManager> {
         armorList.Add(new ArmorBase("マジックアーマー", 2002, 50,NomarArmor));
         armorList.Add(new ArmorBase("マジックアーマー", 2002, 50,NomarArmor));
         armorList.Add(new ArmorBase("金城鉄壁金剛二天アーマー", 2003, 500,NomarArmor));
+        armorList.Add(new ArmorBase("ニードルアーマー", 2003, 10,NomarArmor));
+        armorList.Add(new ArmorBase("スピードアーマー", 2003, 20,NomarArmor));
 
     }
 
