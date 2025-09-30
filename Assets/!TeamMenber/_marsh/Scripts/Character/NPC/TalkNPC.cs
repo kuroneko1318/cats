@@ -44,7 +44,8 @@ public class TalkNPC : MonoBehaviour {
                 Text.GetComponent<TextMeshPro>().text = ("魔石を使うと\n装備を強化できるらしい");
                 break; 
             case 1:
-                Text.GetComponent<TextMeshPro>().text = ("紐を使えば薬も服も作れるぞ");
+                if (!clearText) Text.GetComponent<TextMeshPro>().text = ("紐を使えば薬も服も作れるぞ");
+                else Text.GetComponent<TextMeshPro>().text = ("君は" + GameManager.Instance.laps + "回も\n倒してくれているんだな！");
                 break; 
             case 2:
                 Text.GetComponent<TextMeshPro>().text = ("木の実食べると\nなんか力が湧いてくるな");
