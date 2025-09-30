@@ -390,7 +390,7 @@ public class PlayerBase : MonoBehaviour {
 
         if (currentWeapon != null) {
             attack += currentWeapon.weaponAttack;
-            criticalChance = currentWeapon.weaponCriticalChance;
+            criticalChance = currentWeapon.weaponCriticalChance / 100;
             criticalMultiplier = currentWeapon.weaponCriticalDamage;
         }
         else {
