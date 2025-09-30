@@ -8,18 +8,14 @@ public class GaterCooldownUI : MonoBehaviour {
 
 
     [Header("•\Ž¦”ñ•\Ž¦—p")]
-    [SerializeField] private GameObject skillCooldownUI;
-
-    private void Start() {
-        var gater=GetComponent<GatheringPoint>();
-    }
+    [SerializeField] private GameObject gatherCooldownUI;
 
     public void ShowUI() {
-        skillCooldownUI.SetActive(true);
+        gatherCooldownUI.SetActive(true);
     }
 
     public void HideUI() {
-        skillCooldownUI.SetActive(false);
+        gatherCooldownUI.SetActive(false);
     }
 
 }

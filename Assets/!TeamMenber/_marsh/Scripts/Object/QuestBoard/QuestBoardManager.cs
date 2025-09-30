@@ -83,7 +83,7 @@ public class QuestBoardManager : SystemObject<QuestBoardManager> {
                 $"{quest.targetEnemyType} {quest.requiredAmount}体";
             // 報酬
             obj.transform.Find("Reward").GetComponent<TextMeshProUGUI>().text =
-                $"ポーション";
+                $"{quest.rewardMoney}G" + "\nポーション";
 
             // 選択用 Image
             var selectImg = obj.transform.Find("SelectionImage").GetComponent<Image>();
