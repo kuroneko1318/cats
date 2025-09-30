@@ -31,10 +31,11 @@ public class TalkNPC : MonoBehaviour {
 
     public void ChangeAnimation() {
         animator.SetBool("Clap",true);
+        Text.GetComponent<TextMeshPro>().text = ("‚¨‚ß‚Å‚Æ‚¤I\nŒN‚Í‰p—Y‚¾I");
     }
 
     private void RandomTalkText() {
-        int rand = Random.Range(0, 6);
+        int rand = Random.Range(0, 7);
 
         switch (rand) {
             case 0:

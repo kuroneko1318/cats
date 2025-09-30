@@ -11,6 +11,7 @@ public class MainGameStart : MonoBehaviour {
     public float textDisplayTime = 3f; // テキスト表示時間
 
     void Start() {
+        AudioManager.Instance.PlayBGM("Fantasy");
         StartCoroutine(PlayIntroSequence());
     }
 
