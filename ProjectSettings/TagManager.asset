@@ -12,6 +12,7 @@ TagManager:
   - PlayerUI
   - QuestBoard
   - QuestBoardUI
+  - NPC
   layers:
   - Default
   - TransparentFX

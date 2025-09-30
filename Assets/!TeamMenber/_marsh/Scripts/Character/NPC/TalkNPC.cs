@@ -7,8 +7,17 @@ public class TalkNPC : MonoBehaviour {
 
     public GameObject Text;
 
+    private Animator animator;
+
+    public static TalkNPC Instance;
+
+    private void Awake() {
+        Instance = this;
+    }
+
     private void Start() {
         Text.SetActive(false);
+        animator = GetComponent<Animator>();
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -18,6 +27,10 @@ public class TalkNPC : MonoBehaviour {
 
     private void OnTriggerExit(Collider other) {
         Text.SetActive(false);
+    }
+
+    public void ChangeAnimation() {
+        animator.SetBool("Clap",true);
     }
 
     private void RandomTalkText() {

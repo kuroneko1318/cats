@@ -44,6 +44,7 @@ public class GameManager : SystemObject<GameManager> {
         Debug.Log("ゲームクリア！！");
         if (clearUI != null) Instantiate(clearUI);
         player.transform.position = new Vector3(0,0.55f,0);
+        TalkNPC.Instance.ChangeAnimation();
         AudioManager.Instance.PlaySE("Clear");
     }
 
