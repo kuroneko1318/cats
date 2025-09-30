@@ -203,8 +203,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 4
-  hp: 500000
-  maxHp: 500000
+  hp: 100000
+  maxHp: 100000
   attack: 300
   defence: 0
   moveSpeed: 6
