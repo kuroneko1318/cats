@@ -398,6 +398,7 @@ public class InventoryManager : SystemObject<InventoryManager> {
         ItemBase slotItem = slot.item;
         int slotAmount = slot.amount;
 
+
         // --- クラフト領域 ---
         if (currentArea == UIArea.Craft) {
             // 選択が結果スロット（完成品）なら取得処理
@@ -406,25 +407,128 @@ public class InventoryManager : SystemObject<InventoryManager> {
                 string craftedName = CraftManager.Instance.TakeResult(out craftedAmount);
                 if (string.IsNullOrEmpty(craftedName)) return;
 
+                // --- ここで手持ちアイテムがあれば元の場所に戻す ---
+                if (IsHoldingItem) {
+                    bool placed = false;
+                    // 左上から順に空きスロットを検索
+                    for (int i = 0; i < bag.slots.Length; i++) {
+                        if (bag.slots[i].item == null) {
+                            bag.slots[i].SetItem(heldItem, heldAmount);
+                            placed = true;
+                            break;
+                        }
+                    }
+                    // 空きがなければ重ねられる場所を探す
+                    if (!placed) {
+                        for (int i = 0; i < bag.slots.Length; i++) {
+                            if (bag.slots[i].item == heldItem) {
+                                bag.slots[i].amount += heldAmount;
+                                placed = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    // 置けなかった場合は捨てる（または警告）
+                    if (!placed) Debug.LogWarning("空きスロットがありません！");
+
+                    // 手持ちをクリア
+                    heldItem = null;
+                    heldAmount = 0;
+
+                    // UI更新
+                    RefreshUI();
+                    UpdateHeldItemUI();
+                }
+
                 // アイテム取得
                 ItemBase item = ItemManager.Instance.GetItemByName(craftedName);
                 if (item != null) {
-                    bag.AddItem(item, craftedAmount);
+                    heldItem = item;
+                    heldAmount = craftedAmount;
+                    // 取得したアイテムのoriginを空きスロットに設定
+                    bool originSet = false;
+                    for (int i = 0; i < bag.slots.Length; i++) {
+                        if (bag.slots[i].item == null) {
+                            originArea = UIArea.InventoryTop;
+                            originIndex = i;
+                            originSet = true;
+                            break;
+                        }
+                    }
+                    // 空きがなければ重ねる場所をoriginに設定
+                    if (!originSet) {
+                        for (int i = 0; i < bag.slots.Length; i++) {
+                            if (bag.slots[i].item == heldItem) {
+                                originArea = UIArea.InventoryTop;
+                                originIndex = i;
+                                break;
+                            }
+                        }
+                    }
                     RefreshUI();
+                    UpdateHeldItemUI();
+                    CraftManager.Instance.UpdateResult();
                     return;
                 }
 
                 WeaponBase weapon = ItemManager.Instance.GetWeaponByName(craftedName);
                 if (weapon != null) {
-                    bag.AddItem(weapon, craftedAmount);
+                    heldItem = weapon;
+                    heldAmount = craftedAmount;
+                    // 取得したアイテムのoriginを空きスロットに設定
+                    bool originSet = false;
+                    for (int i = 0; i < bag.slots.Length; i++) {
+                        if (bag.slots[i].item == null) {
+                            originArea = UIArea.InventoryTop;
+                            originIndex = i;
+                            originSet = true;
+                            break;
+                        }
+                    }
+                    // 空きがなければ重ねる場所をoriginに設定
+                    if (!originSet) {
+                        for (int i = 0; i < bag.slots.Length; i++) {
+                            if (bag.slots[i].item == heldItem) {
+                                originArea = UIArea.InventoryTop;
+                                originIndex = i;
+                                break;
+                            }
+                        }
+                    }
                     RefreshUI();
+                    UpdateHeldItemUI();
+                    CraftManager.Instance.UpdateResult();
                     return;
                 }
 
                 ArmorBase armor = ItemManager.Instance.GetArmorByName(craftedName);
                 if (armor != null) {
-                    bag.AddItem(armor, craftedAmount);
+                    heldItem = armor;
+                    heldAmount = craftedAmount;
+                    // 取得したアイテムのoriginを空きスロットに設定
+                    bool originSet = false;
+                    for (int i = 0; i < bag.slots.Length; i++) {
+                        if (bag.slots[i].item == null) {
+                            originArea = UIArea.InventoryTop;
+                            originIndex = i;
+                            originSet = true;
+                            break;
+                        }
+                    }
+                    // 空きがなければ重ねる場所をoriginに設定
+                    if (!originSet) {
+                        for (int i = 0; i < bag.slots.Length; i++) {
+                            if (bag.slots[i].item == heldItem) {
+                                originArea = UIArea.InventoryTop;
+                                originIndex = i;
+                                break;
+                            }
+                        }
+                    }
                     RefreshUI();
+                    UpdateHeldItemUI();
+                    CraftManager.Instance.UpdateResult();
                     return;
                 }
 
