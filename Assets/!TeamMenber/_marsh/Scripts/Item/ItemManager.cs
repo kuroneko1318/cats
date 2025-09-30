@@ -41,6 +41,9 @@ public class ItemManager : SystemObject<ItemManager> {
         Sprite Macalight = Resources.Load<Sprite>("icon/Macalight");
         Sprite LightStone = Resources.Load<Sprite>("icon/LightStone");
         Sprite Bloodstone = Resources.Load<Sprite>("icon/Bloodstone");
+        Sprite FireStone = Resources.Load<Sprite>("icon/FireStone");
+        Sprite SandStone = Resources.Load<Sprite>("icon/SandStone");
+        Sprite ForestStone = Resources.Load<Sprite>("icon/ForestStone");
 
         // ‚±‚±‚ÅƒAƒCƒeƒ€5í‚ğ“o˜^iIDj
         itemList.Add(new HealItem("‰ñ•œ–ò", 3000, 50, potionIcon));
@@ -55,9 +58,9 @@ public class ItemManager : SystemObject<ItemManager> {
         itemList.Add(new ItemBase("Î", 4020, eItemType.Material, StoneIcon));
         itemList.Add(new ItemBase("ƒ‰ƒCƒgƒXƒg[ƒ“", 4021, eItemType.Material, LightStone));
         itemList.Add(new ItemBase("ƒuƒ‰ƒbƒhƒXƒg[ƒ“", 4022, eItemType.Material, Bloodstone));
-        itemList.Add(new BaseAttackBoost("Ü”M‚É“`‚í‚éÎ", 4023, 200));
-        itemList.Add(new BaseAttackBoost("X‚É“`‚í‚éÎ", 4024, 200));
-        itemList.Add(new BaseDefenceBoost("‘å’n‚É“`‚í‚éÎ", 4025, 200));
+        itemList.Add(new BaseAttackBoost("Ü”M‚É“`‚í‚éÎ", 4023, 200,FireStone));
+        itemList.Add(new BaseAttackBoost("X‚É“`‚í‚éÎ", 4024, 200,ForestStone));
+        itemList.Add(new BaseDefenceBoost("‘å’n‚É“`‚í‚éÎ", 4025, 200, SandStone));
         itemList.Add(new ItemBase("“S", 4030, eItemType.Material, IronIcon));
         itemList.Add(new ItemBase("“º", 4031, eItemType.Material, CopperIcon));
         itemList.Add(new ItemBase("•—jÎ", 4032, eItemType.Material, ObsidianIcon));
