@@ -18,9 +18,9 @@ public class OreGatheringPoint : GatheringPoint {
         switch (Itemrand) {
             case 0: bag.AddItem(ItemManager.Instance.GetItemByName("êŒ"), Random.Range(1,5));
                 break;
-            case 1:bag.AddItem(ItemManager.Instance.GetItemByName("ìS"), Random.Range(1,3));
+            case 1:bag.AddItem(ItemManager.Instance.GetItemByName("ìS"), Random.Range(1,4));
                 break;
-            case 2:bag.AddItem(ItemManager.Instance.GetItemByName("ì∫"), Random.Range(1,2));
+            case 2:bag.AddItem(ItemManager.Instance.GetItemByName("ì∫"), Random.Range(1,3));
                 break;
         }
        
