@@ -302,6 +302,7 @@ public class PlayerBase : MonoBehaviour {
 
     public void DeathAnimationEnd() {
         isDead = false;
+        HitCancell();
         transform.position = startPos.transform.position;
         hp = maxHp;
     }
