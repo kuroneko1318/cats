@@ -76,6 +76,8 @@ public class EnemyBase : MonoBehaviour {
             // 万一 null ならシーン内の Inventory を探す
             bag = GameObject.FindGameObjectWithTag("bag")?.GetComponent<Inventory>();
         }
+
+        OnSpawned();
     }
 
     protected virtual void OnEnable() {
@@ -297,5 +299,16 @@ public class EnemyBase : MonoBehaviour {
 
         // ヒットボックスOFF
         if (hitbox != null) hitbox.gameObject.SetActive(false);
+
+        InitializeWithLap(GameManager.Instance.laps);
+    }
+
+    public void InitializeWithLap(int lap) {
+        float hpRate = Mathf.Pow(1.2f, lap);      // 例: ラップごとに20%増
+        float attackRate = Mathf.Pow(1.1f, lap);  // 例: ラップごとに10%増
+
+        maxHp = Mathf.RoundToInt(maxHp * hpRate);
+        hp = maxHp;
+        attack = Mathf.RoundToInt(attack * attackRate);
     }
 }

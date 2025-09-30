@@ -314,7 +314,7 @@ public class PlayerBase : MonoBehaviour {
 
     //çÃéÊä÷åW
     private void OnTriggerStay(Collider other) {
-        if (other.gameObject.CompareTag("GatheringPoint")) {
+        if (other.gameObject.CompareTag("GatheringPoint") || other.gameObject.CompareTag("Shop")) {
             Canvas.SetActive(true);
             if (GatherAction.WasPressedThisFrame()&&isPick==false) {
                 point = other.gameObject.GetComponent<GatheringPoint>();
@@ -338,7 +338,7 @@ public class PlayerBase : MonoBehaviour {
             isNearQuestBoard = false;
             Canvas.SetActive(false);
         }
-        if (other.gameObject.CompareTag("GatheringPoint")) {
+        if (other.gameObject.CompareTag("GatheringPoint") || other.gameObject.CompareTag("Shop")) {
             Canvas.SetActive(false);
             point = null;
         }
@@ -373,6 +373,15 @@ public class PlayerBase : MonoBehaviour {
     public void DefenceBoost(int amount, float duration) {
         defenceBuffs.Add(new TemporaryBuff(amount, duration));
         UpdateStatsWithBuffs();
+    }
+    public void BaseAttackBoost(int amount) {
+        baseAttack += amount;
+    }
+    public void BaseDefenceBoost(int amount) {
+        baseDefence += amount;
+    }
+    public void MaxHpBoost(int amount) {
+        maxHp += amount;
     }
 
     public void UpdateEquipmentStats() {
