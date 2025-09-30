@@ -11,6 +11,8 @@ public class TalkNPC : MonoBehaviour {
 
     public static TalkNPC Instance;
 
+    private bool clearText = false;
+
     private void Awake() {
         Instance = this;
     }
@@ -31,7 +33,7 @@ public class TalkNPC : MonoBehaviour {
 
     public void ChangeAnimation() {
         animator.SetBool("Clap",true);
-        Text.GetComponent<TextMeshPro>().text = ("‚¨‚ß‚Å‚Æ‚¤I\nŒN‚Í‰p—Y‚¾I");
+        clearText = animator.GetBool("Clap");
     }
 
     private void RandomTalkText() {
@@ -54,10 +56,12 @@ public class TalkNPC : MonoBehaviour {
                 Text.GetComponent<TextMeshPro>().text = ("•Ï‚í‚Á‚½Î‚ğ‘g‚İ‡‚í‚¹‚é‚Æ\n‹­‚»‚¤‚ÈÎ‚ªo—ˆ‚»‚¤‚¾‚È");
                 break;
             case 5:
-                Text.GetComponent<TextMeshPro>().text = ("—nŠâ‚ÍƒCƒJ‚ê‚½‹­‚³‚µ‚Ä‚¢‚é\n“z‚ç‚ª‘òR—N‚¢‚Ä‚â‚ª‚é");
+                if(!clearText) Text.GetComponent<TextMeshPro>().text = ("—nŠâ‚ÍƒCƒJ‚ê‚½‹­‚³‚µ‚Ä‚¢‚é\n“z‚ç‚ª‘òR—N‚¢‚Ä‚â‚ª‚é");
+                else Text.GetComponent<TextMeshPro>().text = ("‚ ‚Ì‰»‚¯•¨‚ğˆê‘|‚µ‚½‚ª\n‚Ü‚½‹­‚­‚È‚Á‚Ä—N‚¢‚Ä‚«‚â‚ª‚é");
                 break;
             case 6:
-                Text.GetComponent<TextMeshPro>().text = ("Œ•‚ğì‚é‚É‚Í\n–Ø‚ğ–_‚É‰ÁH‚µ‚È‚¢‚Æ‚¢‚¯‚È‚¢‚ç‚µ‚¢‚¼");
+                if(!clearText) Text.GetComponent<TextMeshPro>().text = ("ƒCƒJ‚ê‚½“z‚ç‚ğ“|‚µ‚Ä‚«‚Ä‚­‚ê");
+                else Text.GetComponent<TextMeshPro>().text = ("‚æ‚­‚â‚Á‚½I\nŒN‚Í‰p—Y‚¾I");
                 break;
         }
     }
