@@ -5918,6 +5918,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6721621714373450627, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
+      propertyPath: fadeDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6721621714373450627, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
+      propertyPath: textDisplayTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8388771101802457169, guid: ab54ac3869f133c46b29513989515fe5, type: 3}
       propertyPath: Canvas
       value: 
