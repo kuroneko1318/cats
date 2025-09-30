@@ -47,7 +47,7 @@ public class ItemManager : SystemObject<ItemManager> {
         itemList.Add(new HealItem("“Å", 3001, -20, potionIcon));
         itemList.Add(new AttackBoost("–Ø‚ÌÀ", 3002, 10, 15, NutIcon));
         itemList.Add(new HealItem("‚ß‚Á‚¿‚á“Å", 3003, -50, potionIcon));
-        itemList.Add(new HealItem("HPÅ‘å’lã¸–ò", 3004, 50, potionIcon));
+        itemList.Add(new MaxHpBoost("HPÅ‘å’lã¸–ò", 3004, 50, potionIcon));
         itemList.Add(new AttackBoost("UŒ‚–ò", 9000, 30, 60, AtkPotionIcon));
         itemList.Add(new DefenceBoost("–hŒä–ò", 9001, 30, 60, DefPotionIcon));
         itemList.Add(new ItemBase("–ò‘", 4001, eItemType.Material, HerbIcon));

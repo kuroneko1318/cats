@@ -374,6 +374,15 @@ public class PlayerBase : MonoBehaviour {
         defenceBuffs.Add(new TemporaryBuff(amount, duration));
         UpdateStatsWithBuffs();
     }
+    public void BaseAttackBoost(int amount) {
+        baseAttack += amount;
+    }
+    public void BaseDefenceBoost(int amount) {
+        baseDefence += amount;
+    }
+    public void MaxHpBoost(int amount) {
+        maxHp += amount;
+    }
 
     public void UpdateEquipmentStats() {
         attack = baseAttack;
