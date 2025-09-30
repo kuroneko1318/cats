@@ -388,10 +388,19 @@ public class PlayerBase : MonoBehaviour {
         attack = baseAttack;
         defence = baseDefence;
 
-        if (currentWeapon != null) attack += currentWeapon.weaponAttack;
-        else attack = baseAttack;
-        if (currentArmor != null) defence += currentArmor.armorDefence;
-        else defence = baseDefence;
+        if (currentWeapon != null) {
+            attack += currentWeapon.weaponAttack;
+            attack += currentWeapon.weaponAttack;
+        }
+        else {
+            attack = baseAttack;
+        }
+        if (currentArmor != null) {
+            defence += currentArmor.armorDefence;
+        }
+        else {
+            defence = baseDefence;
+        }
     }
     public void EquipWeapon(WeaponBase weapon) {
         currentWeapon = weapon;
