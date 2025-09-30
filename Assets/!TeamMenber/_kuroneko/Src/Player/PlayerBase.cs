@@ -383,6 +383,9 @@ public class PlayerBase : MonoBehaviour {
     public void MaxHpBoost(int amount) {
         maxHp += amount;
     }
+    public void AddCash(int amount) {
+        QuestManager.Instance.playerMoney += amount;
+    }
 
     public void UpdateEquipmentStats() {
         attack = baseAttack;

@@ -709,6 +709,21 @@ public class InventoryManager : SystemObject<InventoryManager> {
             slot.amount--;
             if (slot.amount <= 0) slot.item = null;
         }
+        if (slot?.item is BaseAttackBoost BaseATKboost) {
+            BaseATKboost.Use(GameObject.FindGameObjectWithTag("Player"));
+            slot.amount--;
+            if (slot.amount <= 0) slot.item = null;
+        }
+        if (slot?.item is BaseDefenceBoost BaseDEFboost) {
+            BaseDEFboost.Use(GameObject.FindGameObjectWithTag("Player"));
+            slot.amount--;
+            if (slot.amount <= 0) slot.item = null;
+        }
+        if (slot?.item is CashableItem cash) {
+            cash.Use(GameObject.FindGameObjectWithTag("Player"));
+            slot.amount--;
+            if (slot.amount <= 0) slot.item = null;
+        }
         RefreshUI();
         UpdateHeldItemUI();
         UpdateHighlight();
