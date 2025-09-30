@@ -18,6 +18,8 @@ public class CraftManager : SystemObject<CraftManager> {
         Debug.Log("CraftManager Initialize called!");
         // ƒŒƒVƒs“o˜^—á
         AddRecipe("–Ø", "–Ø", "–_");
+        AddRecipe("–_", "–_", "‚¦‚®‚¢–_");
+        AddRecipe("‚¦‚®‚¢–_", "‚¦‚®‚¢–_", "‚«‚à‚¢–_");
         AddRecipe("“S", "–_", "•’Ê‚ÌŒ•");
         AddRecipe("“S", "•R", "•’Ê‚ÌƒA[ƒ}[");
         AddRecipe("–ò‘", "•R", "‰ñ•œ–ò");
