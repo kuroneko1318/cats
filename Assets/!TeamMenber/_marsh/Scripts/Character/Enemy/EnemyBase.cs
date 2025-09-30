@@ -300,7 +300,7 @@ public class EnemyBase : MonoBehaviour {
         // ヒットボックスOFF
         if (hitbox != null) hitbox.gameObject.SetActive(false);
 
-        InitializeWithLap(GameManager.Instance.lap);
+        InitializeWithLap(GameManager.Instance.laps);
     }
 
     public void InitializeWithLap(int lap) {
