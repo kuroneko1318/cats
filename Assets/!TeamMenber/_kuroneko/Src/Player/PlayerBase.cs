@@ -388,10 +388,22 @@ public class PlayerBase : MonoBehaviour {
         attack = baseAttack;
         defence = baseDefence;
 
-        if (currentWeapon != null) attack += currentWeapon.weaponAttack;
-        else attack = baseAttack;
-        if (currentArmor != null) defence += currentArmor.armorDefence;
-        else defence = baseDefence;
+        if (currentWeapon != null) {
+            attack += currentWeapon.weaponAttack;
+            criticalChance = currentWeapon.weaponCriticalChance / 100;
+            criticalMultiplier = currentWeapon.weaponCriticalDamage;
+        }
+        else {
+            attack = baseAttack;
+            criticalChance = 0;
+            criticalMultiplier = 1;
+        }
+        if (currentArmor != null) {
+            defence += currentArmor.armorDefence;
+        }
+        else {
+            defence = baseDefence;
+        }
     }
     public void EquipWeapon(WeaponBase weapon) {
         currentWeapon = weapon;
