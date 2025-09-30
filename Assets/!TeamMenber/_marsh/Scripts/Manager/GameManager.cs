@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,8 +7,17 @@ public class GameManager : SystemObject<GameManager> {
     public GameObject deadUI;
     public GameObject questClearUI;
     private GameObject player;
+
     // どのNastyを倒したかを管理
     private Dictionary<EnemyType, bool> defeatedNasty = new Dictionary<EnemyType, bool>();
+
+    // ラップ（周回）数
+    public int lap = 1;
+
+    // ステータス増加率
+    [Header("Enemy Status Increase")]
+    public float hpIncreaseRate = 1.2f;   // 20%ずつ増加
+    public float attackIncreaseRate = 1.1f; // 10%ずつ増加
 
     public override void Initialize() {
         defeatedNasty.Clear();
@@ -28,7 +36,6 @@ public class GameManager : SystemObject<GameManager> {
             // 全て倒したか確認
             if (AllNastyDefeated()) {
                 OnClear();
-                
             }
         }
     }
@@ -43,9 +50,44 @@ public class GameManager : SystemObject<GameManager> {
     private void OnClear() {
         Debug.Log("ゲームクリア！！");
         if (clearUI != null) Instantiate(clearUI);
-        player.transform.position = new Vector3(0,0.55f,0);
+
+        // プレイヤー位置リセット
+        player.transform.position = new Vector3(0, 0.55f, 0);
+
+        // NPCアニメーション
         TalkNPC.Instance.ChangeAnimation();
+
+        // SE
         AudioManager.Instance.PlaySE("Clear");
+
+        // ラップ加算
+        lap++;
+
+        // 敵ステータスを増加
+        IncreaseEnemyStatus();
+
+        // 敵の倒したフラグリセット
+        ResetDefeatedNasty();
+    }
+
+    private void IncreaseEnemyStatus() {
+        // すべてのEnemyBaseを取得
+        EnemyBase[] enemies = FindObjectsOfType<EnemyBase>();
+        foreach (var enemy in enemies) {
+            enemy.maxHp = Mathf.RoundToInt(enemy.maxHp * hpIncreaseRate);
+            enemy.attack = Mathf.RoundToInt(enemy.attack * attackIncreaseRate);
+
+            // 現在HPも最大HPに合わせる
+            enemy.hp = enemy.maxHp;
+        }
+        Debug.Log($"ラップ {lap} : 敵ステータスを増加しました");
+    }
+
+    private void ResetDefeatedNasty() {
+        var keys = new List<EnemyType>(defeatedNasty.Keys);
+        foreach (var key in keys) {
+            defeatedNasty[key] = false;
+        }
     }
 
     public void OnDead() {
@@ -54,6 +96,5 @@ public class GameManager : SystemObject<GameManager> {
 
     public void QuestClear() {
         if (questClearUI != null) Instantiate(questClearUI);
-        
     }
 }
